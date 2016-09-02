@@ -43,9 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\TOFI.DataAccess.csproj">
       <Project>{12d792cb-c027-4244-b9e0-9f33743dade3}</Project>
-      <Name>DAL</Name>
+      <Name>TOFI.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

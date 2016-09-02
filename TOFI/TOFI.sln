@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{12D792CB-C027-4244-B9E0-9F33743DADE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.DataAccess", "DAL\TOFI.DataAccess.csproj", "{12D792CB-C027-4244-B9E0-9F33743DADE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{83E0CA30-658B-47BB-8431-C722E39CAD2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.BusinessLayer", "BLL\TOFI.BusinessLayer.csproj", "{83E0CA30-658B-47BB-8431-C722E39CAD2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
