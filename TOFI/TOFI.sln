@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.DataAccess", "TOFI.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.BusinessLayer", "TOFI.BusinessLayer\TOFI.BusinessLayer.csproj", "{83E0CA30-658B-47BB-8431-C722E39CAD2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.Web", "TOFI.Web\TOFI.Web.csproj", "{EF19289A-20D0-430A-9104-373A908ACBA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{83E0CA30-658B-47BB-8431-C722E39CAD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83E0CA30-658B-47BB-8431-C722E39CAD2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83E0CA30-658B-47BB-8431-C722E39CAD2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF19289A-20D0-430A-9104-373A908ACBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF19289A-20D0-430A-9104-373A908ACBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF19289A-20D0-430A-9104-373A908ACBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF19289A-20D0-430A-9104-373A908ACBA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

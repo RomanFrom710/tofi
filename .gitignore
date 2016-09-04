@@ -283,3 +283,9 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+
+# front-end libs from nuget
+TOFI/TOFI.Web/Scripts
+TOFI/TOFI.Web/Content/bootstrap
+TOFI/TOFI.Web/Content/fonts
