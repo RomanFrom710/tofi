@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BLL.Interfaces;
 using DAL.Interfaces;
+using System;
 
 namespace BLL.Services
 {
@@ -28,6 +29,16 @@ namespace BLL.Services
         public virtual TViewModel GetViewModel(int id)
         {
             return MapModel(Repository.GetModel(id));
+        }
+
+        public virtual TViewModel GetViewModel(Predicate<TModel> predicate)
+        {
+            return MapModel(Repository.GetModel(predicate));
+        }
+
+        public virtual IEnumerable<TViewModel> GetViewModels(Predicate<TModel> predicate)
+        {
+            return Repository.GetModels(predicate).Select(m => MapModel(m));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DAL.Interfaces
 {
@@ -8,5 +9,9 @@ namespace DAL.Interfaces
         TModel GetModel(int id);
 
         IEnumerable<TModel> GetAllModels();
+
+        TModel GetModel(Predicate<TModel> predicate);
+
+        IEnumerable<TModel> GetModels(Predicate<TModel> predicate);
     }
 }
