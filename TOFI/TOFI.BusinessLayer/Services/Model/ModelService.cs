@@ -1,18 +1,18 @@
-﻿using System.Linq;
+﻿using System;
 using System.Collections.Generic;
-using BLL.Interfaces;
-using DAL.Interfaces;
-using System;
+using System.Linq;
+using DAL.Repositories;
+using DAL.Repositories.Model;
 
-namespace BLL.Services
+namespace BLL.Services.Model
 {
-    public abstract class BaseModelService<TModel, TViewModel, TRepository> : IModelService<TModel, TViewModel, TRepository>
+    public abstract class ModelService<TModel, TViewModel, TRepository> : IModelService<TModel, TViewModel, TRepository>
         where TModel : IModel where TViewModel : IViewModel where TRepository : IModelRepository<TModel>
     {
         protected TRepository Repository;
 
 
-        protected BaseModelService(TRepository repository)
+        protected ModelService(TRepository repository)
         {
             Repository = repository;
         }
@@ -23,7 +23,7 @@ namespace BLL.Services
 
         public virtual IEnumerable<TViewModel> GetAllViewModels()
         {
-            return Repository.GetAllModels().Select(m => MapModel(m));
+            return Repository.GetAllModels().Select(MapModel);
         }
 
         public virtual TViewModel GetViewModel(int id)
@@ -38,7 +38,7 @@ namespace BLL.Services
 
         public virtual IEnumerable<TViewModel> GetViewModels(Predicate<TModel> predicate)
         {
-            return Repository.GetModels(predicate).Select(m => MapModel(m));
+            return Repository.GetModels(predicate).Select(MapModel);
         }
     }
 }

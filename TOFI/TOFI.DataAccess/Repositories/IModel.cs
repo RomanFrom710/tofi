@@ -1,4 +1,4 @@
-﻿namespace DAL.Interfaces
+﻿namespace DAL.Repositories
 {
     public interface IModel
     {

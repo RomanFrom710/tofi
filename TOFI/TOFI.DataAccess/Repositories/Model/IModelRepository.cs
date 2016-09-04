@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DAL.Interfaces
+namespace DAL.Repositories.Model
 {
     public interface IModelRepository<TModel> : IRepository
         where TModel : IModel
