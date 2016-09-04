@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using BundleTransformer.Core.Bundles;
 
 namespace TOFI.Web
 {
@@ -13,8 +14,8 @@ namespace TOFI.Web
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/styles").Include(
-                      "~/Content/bootstrap.css"));
+            bundles.Add(new CustomStyleBundle("~/styles").Include(
+                      "~/Content/style/main.less"));
         }
     }
 }

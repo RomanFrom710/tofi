@@ -287,5 +287,5 @@ __pycache__/
 
 # front-end libs from nuget
 TOFI/TOFI.Web/Scripts
-TOFI/TOFI.Web/fonts
-TOFI/TOFI.Web/Content
+TOFI/TOFI.Web/Content/bootstrap
+TOFI/TOFI.Web/Content/fonts
