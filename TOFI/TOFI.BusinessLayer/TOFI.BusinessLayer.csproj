@@ -43,7 +43,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\TOFI.DataAccess.csproj">
+    <ProjectReference Include="..\TOFI.DataAccess\TOFI.DataAccess.csproj">
       <Project>{12d792cb-c027-4244-b9e0-9f33743dade3}</Project>
       <Name>TOFI.DataAccess</Name>
     </ProjectReference>
