@@ -13,5 +13,13 @@ namespace DAL.Repositories.Model
         TModel GetModel(Predicate<TModel> predicate);
 
         IEnumerable<TModel> GetModels(Predicate<TModel> predicate);
+
+        TModel Add(TModel model);
+
+        TModel Update(TModel model);
+
+        TModel Delete(TModel model);
+
+        int Save();
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace DAL.Repositories
+﻿using System;
+
+namespace DAL.Repositories
 {
-    public interface IRepository
+    public interface IRepository: IDisposable
     {
     }
 }
