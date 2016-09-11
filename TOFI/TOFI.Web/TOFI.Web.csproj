@@ -329,6 +329,10 @@
       <Project>{83e0ca30-658b-47bb-8431-c722e39cad2d}</Project>
       <Name>TOFI.BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TOFI.TransferObjects\TOFI.TransferObjects.csproj">
+      <Project>{16c9f8f2-41fb-4fb1-9a2e-f976dfdf1352}</Project>
+      <Name>TOFI.TransferObjects</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
