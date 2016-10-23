@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.Web", "TOFI.Web\TOFI.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.TransferObjects", "TOFI.TransferObjects\TOFI.TransferObjects.csproj", "{16C9F8F2-41FB-4FB1-9A2E-F976DFDF1352}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOFI.DependencyInjection", "TOFI.DependencyInjection\TOFI.DependencyInjection.csproj", "{3E90398A-E2E3-4656-99E1-38FAC57E96F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{16C9F8F2-41FB-4FB1-9A2E-F976DFDF1352}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16C9F8F2-41FB-4FB1-9A2E-F976DFDF1352}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16C9F8F2-41FB-4FB1-9A2E-F976DFDF1352}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E90398A-E2E3-4656-99E1-38FAC57E96F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E90398A-E2E3-4656-99E1-38FAC57E96F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E90398A-E2E3-4656-99E1-38FAC57E96F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E90398A-E2E3-4656-99E1-38FAC57E96F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
