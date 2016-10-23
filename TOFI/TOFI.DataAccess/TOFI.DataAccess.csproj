@@ -50,12 +50,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
+    <Compile Include="Repositories\BaseRepository\BaseCommandRepository.cs" />
+    <Compile Include="Repositories\BaseRepository\BaseQueryRepository.cs" />
+    <Compile Include="Repositories\BaseRepository\IBaseCommandRepository.cs" />
+    <Compile Include="Repositories\BaseRepository\IBaseQueryRepository.cs" />
     <Compile Include="Repositories\IModel.cs" />
     <Compile Include="Repositories\Model\IModelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Model\ModelRepository.cs" />
     <Compile Include="Repositories\Model\Models\Model.cs" />
+    <Compile Include="Repositories\MyRepository\IMyCommandRepository.cs" />
+    <Compile Include="Repositories\MyRepository\IMyQueryRepository.cs" />
+    <Compile Include="Repositories\MyRepository\MyCommandRepository.cs" />
+    <Compile Include="Repositories\MyRepository\MyQueryRepository.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
