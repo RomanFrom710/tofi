@@ -64,8 +64,6 @@
     <Compile Include="Repositories\MyRepository\IMyQueryRepository.cs" />
     <Compile Include="Repositories\MyRepository\MyCommandRepository.cs" />
     <Compile Include="Repositories\MyRepository\MyQueryRepository.cs" />
-    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
-    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

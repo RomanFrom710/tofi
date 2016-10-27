@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using DAL.Contexts;
+using Ninject;
 using Ninject.Extensions.Conventions;
 
 namespace TOFI.DependencyInjection
@@ -16,6 +17,7 @@ namespace TOFI.DependencyInjection
             //add other the same way
             kernel.Bind(
                 m => m.From("BLL").Select(t => t.Namespace == "BLL.Services").BindDefaultInterface());
+            kernel.Bind<TofiContext>().ToSelf().InSingletonScope();
         }
     }
 }
