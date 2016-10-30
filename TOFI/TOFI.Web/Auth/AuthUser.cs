@@ -6,7 +6,7 @@ namespace TOFI.Web.Auth
 {
     public class AuthUser : IUser<string>
     {
-        public string Id { get; } = "1";
+        public string Id { get; } = "1"; // todo: remove mock
         public string UserName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
