@@ -1,6 +1,6 @@
 ﻿namespace TOFI.TransferObjects.Base
 {
-    class BaseQuery
+    public class BaseQuery
     {
 
     }

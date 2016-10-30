@@ -1,6 +1,6 @@
 ﻿namespace TOFI.TransferObjects.Base
 {
-    class BaseCommand
+    public class BaseCommand
     {
 
     }
