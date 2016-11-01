@@ -5,8 +5,8 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Models;
 using DAL.Repositories;
-using DAL.Repositories.Model.Models;
 
 namespace DAL.Contexts
 {
@@ -22,6 +22,7 @@ namespace DAL.Contexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().ToTable("Users");
 
         }
     }
