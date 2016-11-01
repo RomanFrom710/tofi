@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DAL.Models;
 using DAL.Repositories;
 using DAL.Repositories.Model;
 

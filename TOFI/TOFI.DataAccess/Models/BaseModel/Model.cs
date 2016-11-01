@@ -1,4 +1,4 @@
-﻿namespace DAL.Repositories.Model.Models
+﻿namespace DAL.Models
 {
     public class Model : IModel
     {

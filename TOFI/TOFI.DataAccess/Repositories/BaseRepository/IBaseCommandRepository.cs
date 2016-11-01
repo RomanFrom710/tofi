@@ -8,6 +8,6 @@ namespace DAL.Repositories.BaseRepository
 {
     public interface IBaseCommandRepository : IDisposable
     {
-
+        int Save();
     }
 }

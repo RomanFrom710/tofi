@@ -50,20 +50,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
+    <Compile Include="Models\User\IUser.cs" />
+    <Compile Include="Models\User\User.cs" />
     <Compile Include="Repositories\BaseRepository\BaseCommandRepository.cs" />
     <Compile Include="Repositories\BaseRepository\BaseQueryRepository.cs" />
     <Compile Include="Repositories\BaseRepository\IBaseCommandRepository.cs" />
     <Compile Include="Repositories\BaseRepository\IBaseQueryRepository.cs" />
-    <Compile Include="Repositories\IModel.cs" />
+    <Compile Include="Models\BaseModel\IModel.cs" />
     <Compile Include="Repositories\Model\IModelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Model\ModelRepository.cs" />
-    <Compile Include="Repositories\Model\Models\Model.cs" />
-    <Compile Include="Repositories\MyRepository\IMyCommandRepository.cs" />
-    <Compile Include="Repositories\MyRepository\IMyQueryRepository.cs" />
-    <Compile Include="Repositories\MyRepository\MyCommandRepository.cs" />
-    <Compile Include="Repositories\MyRepository\MyQueryRepository.cs" />
+    <Compile Include="Models\BaseModel\Model.cs" />
+    <Compile Include="Repositories\UserRepository\IUserCommandRepository.cs" />
+    <Compile Include="Repositories\UserRepository\IUserQueryRepository.cs" />
+    <Compile Include="Repositories\UserRepository\UserCommandRepository.cs" />
+    <Compile Include="Repositories\UserRepository\UserQueryRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,6 +77,7 @@
       <Name>TOFI.TransferObjects</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
