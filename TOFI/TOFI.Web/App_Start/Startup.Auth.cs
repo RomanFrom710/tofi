@@ -5,7 +5,6 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using TOFI.Web.Auth;
-using TOFI.Web.Models;
 
 namespace TOFI.Web
 {
