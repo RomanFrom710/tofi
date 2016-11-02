@@ -16,7 +16,7 @@ namespace TOFI.DependencyInjection
             //binding for BLL serices
             //add other the same way
             kernel.Bind(
-                m => m.From("BLL").Select(t => t.Namespace == "BLL.Services").BindDefaultInterface());
+                m => m.From("BLL").Select(t => t.Namespace.Contains("BLL.Services")).BindDefaultInterface());
             kernel.Bind<TofiContext>().ToSelf().InSingletonScope();
         }
     }
