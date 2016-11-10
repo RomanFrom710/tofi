@@ -43,6 +43,9 @@
     <Compile Include="Base\BaseCommand.cs" />
     <Compile Include="Base\BaseQuery.cs" />
     <Compile Include="Base\BaseViewModel.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="IDto.cs" />
+    <Compile Include="IQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

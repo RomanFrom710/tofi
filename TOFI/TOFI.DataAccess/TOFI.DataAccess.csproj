@@ -50,18 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
-    <Compile Include="Models\User\IUser.cs" />
-    <Compile Include="Models\User\User.cs" />
-    <Compile Include="Repositories\BaseRepository\BaseCommandRepository.cs" />
-    <Compile Include="Repositories\BaseRepository\BaseQueryRepository.cs" />
-    <Compile Include="Repositories\BaseRepository\IBaseCommandRepository.cs" />
-    <Compile Include="Repositories\BaseRepository\IBaseQueryRepository.cs" />
-    <Compile Include="Models\BaseModel\IModel.cs" />
-    <Compile Include="Repositories\Model\IModelRepository.cs" />
+    <Compile Include="Models\User\IUserModel.cs" />
+    <Compile Include="Models\User\UserModel.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Repositories\ICommandRepository.cs" />
+    <Compile Include="Repositories\IQueryRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Model\ModelRepository.cs" />
-    <Compile Include="Models\BaseModel\Model.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Repositories\ModelRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserRepository\IUserCommandRepository.cs" />
     <Compile Include="Repositories\UserRepository\IUserQueryRepository.cs" />
     <Compile Include="Repositories\UserRepository\UserCommandRepository.cs" />

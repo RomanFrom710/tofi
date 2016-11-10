@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using DAL.Models;
-using DAL.Repositories;
+using DAL.Models.User;
 
 namespace DAL.Contexts
 {
     public class TofiContext : DbContext
     {
+        public DbSet<Model> Entities { get; set; }
+
+
         public TofiContext() : base("TofiContext")
         {
             
         }
 
-        public DbSet<Model> Entities { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<UserModel>().ToTable("Users");
 
         }
     }
