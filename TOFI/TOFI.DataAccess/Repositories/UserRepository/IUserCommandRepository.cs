@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Models;
-using DAL.Repositories.BaseRepository;
-
-namespace DAL.Repositories.UserRepository
+﻿namespace DAL.Repositories.UserRepository
 {
-    public interface IUserCommandRepository: IBaseCommandRepository
+    public interface IUserCommandRepository : IRepository
     {
-        IUser AddUser(IUser user);
     }
 }
