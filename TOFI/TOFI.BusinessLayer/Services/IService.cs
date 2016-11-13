@@ -1,6 +1,8 @@
-﻿namespace BLL.Services
+﻿using System;
+
+namespace BLL.Services
 {
-    public interface IService
+    public interface IService : IDisposable
     {
     }
 }

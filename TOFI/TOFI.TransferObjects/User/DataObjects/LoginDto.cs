@@ -12,6 +12,6 @@ namespace TOFI.TransferObjects.User.DataObjects
 
         public int FailedLogonCnt { get; set; }
 
-        public DateTime NextLogonTime { get; set; }
+        public DateTime? NextLogonTime { get; set; }
     }
 }
