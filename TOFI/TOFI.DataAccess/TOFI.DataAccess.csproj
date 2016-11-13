@@ -50,9 +50,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
+    <Compile Include="Models\Admin\AdminModel.cs" />
+    <Compile Include="Models\Admin\IAdminModel.cs" />
+    <Compile Include="Models\Client\ClientModel.cs" />
+    <Compile Include="Models\Client\IClientModel.cs" />
+    <Compile Include="Models\Employee\EmployeeModel.cs" />
+    <Compile Include="Models\Employee\IEmployeeModel.cs" />
     <Compile Include="Models\User\IUserModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\IModel.cs" />
+    <Compile Include="Repositories\Admin\AdminCommandRepository.cs" />
+    <Compile Include="Repositories\Admin\AdminQueryRepository.cs" />
+    <Compile Include="Repositories\Admin\IAdminCommandRepository.cs" />
+    <Compile Include="Repositories\Admin\IAdminQueryRepository.cs" />
+    <Compile Include="Repositories\Client\ClientCommandRepository.cs" />
+    <Compile Include="Repositories\Client\ClientQueryRepository.cs" />
+    <Compile Include="Repositories\Client\IClientCommandRepository.cs" />
+    <Compile Include="Repositories\Client\IClientQueryRepository.cs" />
+    <Compile Include="Repositories\Employee\EmployeeCommandRepository.cs" />
+    <Compile Include="Repositories\Employee\EmployeeQueryRepository.cs" />
+    <Compile Include="Repositories\Employee\IEmployeeCommandRepository.cs" />
+    <Compile Include="Repositories\Employee\IEmployeeQueryRepository.cs" />
     <Compile Include="Repositories\ICommandRepository.cs" />
     <Compile Include="Repositories\IQueryRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
@@ -60,10 +78,10 @@
     <Compile Include="Models\Model.cs" />
     <Compile Include="Repositories\ModelRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\UserRepository\IUserCommandRepository.cs" />
-    <Compile Include="Repositories\UserRepository\IUserQueryRepository.cs" />
-    <Compile Include="Repositories\UserRepository\UserCommandRepository.cs" />
-    <Compile Include="Repositories\UserRepository\UserQueryRepository.cs" />
+    <Compile Include="Repositories\User\IUserCommandRepository.cs" />
+    <Compile Include="Repositories\User\IUserQueryRepository.cs" />
+    <Compile Include="Repositories\User\UserCommandRepository.cs" />
+    <Compile Include="Repositories\User\UserQueryRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

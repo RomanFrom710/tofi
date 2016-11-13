@@ -1,6 +1,6 @@
 ﻿namespace TOFI.TransferObjects
 {
-    public interface IDto
+    public abstract class Command
     {
     }
 }
