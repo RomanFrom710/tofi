@@ -41,12 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\Model\IModelService.cs" />
     <Compile Include="Services\IService.cs" />
-    <Compile Include="Services\IViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Model\ModelService.cs" />
-    <Compile Include="Services\Model\ViewModels\ModelViewModel.cs" />
     <Compile Include="Services\Security\ISecurityService.cs" />
     <Compile Include="Services\Security\SecurityService.cs" />
   </ItemGroup>

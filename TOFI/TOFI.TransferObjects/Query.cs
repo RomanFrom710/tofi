@@ -1,6 +1,6 @@
 ﻿namespace TOFI.TransferObjects
 {
-    public interface ICommand
+    public abstract class Query
     {
     }
 }

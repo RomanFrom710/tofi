@@ -40,13 +40,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BaseCommand.cs" />
-    <Compile Include="Base\BaseQuery.cs" />
-    <Compile Include="Base\BaseViewModel.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="IDto.cs" />
-    <Compile Include="IQuery.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="Dto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query.cs" />
+    <Compile Include="User\Commands\RegisterCommand.cs" />
+    <Compile Include="User\DataObjects\LoginDto.cs" />
+    <Compile Include="User\DataObjects\UserDto.cs" />
+    <Compile Include="User\Queries\LoginQuery.cs" />
+    <Compile Include="User\Queries\UserQuery.cs" />
+    <Compile Include="ViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Admin\Commands\" />
+    <Folder Include="Admin\DataObjects\" />
+    <Folder Include="Admin\Queries\" />
+    <Folder Include="Admin\ViewModels\" />
+    <Folder Include="Client\Commands\" />
+    <Folder Include="Client\DataObjects\" />
+    <Folder Include="Client\Queries\" />
+    <Folder Include="Client\ViewModels\" />
+    <Folder Include="Employee\Commands\" />
+    <Folder Include="Employee\DataObjects\" />
+    <Folder Include="Employee\Queries\" />
+    <Folder Include="Employee\ViewModels\" />
+    <Folder Include="User\ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

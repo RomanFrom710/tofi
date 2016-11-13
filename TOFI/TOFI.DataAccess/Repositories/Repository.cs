@@ -6,7 +6,9 @@ namespace DAL.Repositories
     public abstract class Repository : IRepository
     {
         protected readonly TofiContext Context;
-        protected bool Disposed;
+
+
+        protected bool Disposed { get; private set; }
 
 
         protected Repository(TofiContext context)
@@ -41,7 +43,6 @@ namespace DAL.Repositories
             if (disposing)
             {
                 // Free any other managed objects.
-                Context.Dispose();
                 DisposeManagedOverride();
             }
 
@@ -52,7 +53,7 @@ namespace DAL.Repositories
 
         protected virtual void DisposeManagedOverride()
         {
-            
+            Context.Dispose();
         }
 
         protected virtual void DisposeUnManagedOverride()
