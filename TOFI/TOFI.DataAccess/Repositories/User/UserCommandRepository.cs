@@ -5,7 +5,7 @@ using TOFI.TransferObjects.User.Commands;
 namespace DAL.Repositories.User
 {
     public abstract class UserCommandRepository<TUser> : ModelRepository<TUser>, IUserCommandRepository
-        where TUser : UserModel
+        where TUser : UserModel, new()
     {
         protected UserCommandRepository(TofiContext context) : base(context)
         {
@@ -14,7 +14,15 @@ namespace DAL.Repositories.User
 
         public void Execute(RegisterCommand command)
         {
-            throw new System.NotImplementedException();
+            var user = new TUser
+            {
+                Email = command.Email,
+                Username = command.Username,
+                PasswordHash = command.PasswordHash,
+                FirstName = command.FirstName,
+                LastName = command.LastName
+            };
+            ModelsDao.Add(user);
         }
     }
 }

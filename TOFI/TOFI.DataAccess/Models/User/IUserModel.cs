@@ -22,6 +22,6 @@ namespace DAL.Models.User
 
         int FailedLogonCnt { get; }
 
-        DateTime NextLogonTime { get; }
+        DateTime? NextLogonTime { get; }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BLL.Services.Security
 {
-    public class SecurityService : ISecurityService
+    public class SecurityService : Service, ISecurityService
     {
         private readonly byte[] _pepper;
 

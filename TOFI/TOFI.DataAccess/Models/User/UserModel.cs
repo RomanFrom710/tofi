@@ -22,7 +22,7 @@ namespace DAL.Models.User
 
         public int FailedLogonCnt { get; set; }
 
-        public DateTime NextLogonTime { get; set; }
+        public DateTime? NextLogonTime { get; set; }
 
 
         protected UserModel()
@@ -31,7 +31,7 @@ namespace DAL.Models.User
             SuccessfulLogonAttempts = 0;
             FailedLogonAttempts = 0;
             FailedLogonCnt = 0;
-            NextLogonTime = DateTime.MinValue;
+            NextLogonTime = null;
         }
     }
 }
