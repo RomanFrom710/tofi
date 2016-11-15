@@ -54,6 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
+    <Compile Include="Models\Auth\AuthModel.cs" />
+    <Compile Include="Models\Auth\IAuthModel.cs" />
+    <Compile Include="Repositories\Auth\AuthCommandRepository.cs" />
+    <Compile Include="Repositories\Auth\AuthQueryRepository.cs" />
+    <Compile Include="Repositories\Auth\IAuthCommandRepository.cs" />
+    <Compile Include="Repositories\Auth\IAuthQueryRepository.cs" />
     <Compile Include="Repositories\IListQueryRepository.cs" />
     <Compile Include="Mapping\MapperConfig.cs" />
     <Compile Include="Models\Admin\AdminModel.cs" />

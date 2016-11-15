@@ -1,7 +1,8 @@
-﻿namespace BLL.Services.User
+﻿using BLL.Services.Auth;
+
+namespace BLL.Services.User
 {
-    public interface IUserService : IService
+    public interface IUserService : IAuthService
     {
-        
     }
 }
