@@ -1,6 +1,6 @@
 ﻿namespace TOFI.TransferObjects.User.Queries
 {
-    public class UserQuery : Query
+    public class UserInfoQuery : Query
     {
         public int? Id { get; set; }
 

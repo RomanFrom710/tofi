@@ -14,14 +14,20 @@ namespace DAL.Models.User
 
         string LastName { get; }
 
+        string MiddleName { get; }
+
         bool EmailConfirmed { get; }
 
-        int SuccessfulLogonAttempts { get; }
+        int AccessGrantedTotal { get; }
 
-        int FailedLogonAttempts { get; }
+        DateTime? LastAccessGrantedDateUtc { get; }
 
-        int FailedLogonCnt { get; }
+        int AccessFailedTotal { get; }
 
-        DateTime? NextLogonTime { get; }
+        DateTime? LastAccessFailedDateUtc { get; }
+
+        int AccessFailedCnt { get; }
+
+        DateTime? LockoutDateUtc { get; }
     }
 }

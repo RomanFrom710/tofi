@@ -1,9 +1,10 @@
-﻿using TOFI.TransferObjects.User.Commands;
+﻿using DAL.Repositories.Model;
+using TOFI.TransferObjects.User.DataObjects;
 
 namespace DAL.Repositories.User
 {
-    public interface IUserCommandRepository : IRepository,
-        ICommandRepository<RegisterCommand>
+    public interface IUserCommandRepository<TUserDto> : IModelCommandRepository<TUserDto> 
+        where TUserDto : UserDto
     {
     }
 }
