@@ -1,8 +1,9 @@
 ﻿using System;
+using TOFI.TransferObjects.Model.DataObjects;
 
 namespace TOFI.TransferObjects.User.DataObjects
 {
-    public class LoginDto : Dto
+    public class LoginDto : ModelDto
     {
         public string Username { get; set; }
 
@@ -10,8 +11,8 @@ namespace TOFI.TransferObjects.User.DataObjects
 
         public string PasswordHash { get; set; }
 
-        public int FailedLogonCnt { get; set; }
+        public int AccessFailedCnt { get; set; }
 
-        public DateTime? NextLogonTime { get; set; }
+        public DateTime? LockoutDateUtc { get; set; }
     }
 }

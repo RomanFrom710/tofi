@@ -1,10 +1,9 @@
 ﻿using System.Data.Entity;
 using DAL.Contexts;
-using DAL.Models;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.Model
 {
-    public abstract class ModelRepository<TModel> : Repository where TModel : class, IModel
+    public abstract class ModelRepository<TModel> : Repository where TModel : Models.Model
     {
         protected readonly DbSet<TModel> ModelsDao;
 

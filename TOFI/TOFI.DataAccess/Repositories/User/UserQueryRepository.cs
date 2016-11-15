@@ -1,77 +1,51 @@
 ﻿using System.Linq;
+using AutoMapper;
 using DAL.Contexts;
 using DAL.Models.User;
+using DAL.Repositories.Model;
 using TOFI.TransferObjects.User.DataObjects;
 using TOFI.TransferObjects.User.Queries;
 
 namespace DAL.Repositories.User
 {
-    public abstract class UserQueryRepository<TUser> : ModelRepository<TUser>, IUserQueryRepository
-        where TUser : UserModel
+    public abstract class UserQueryRepository<TUser, TUserDto> : ModelQueryRepository<TUser, TUserDto>, IUserQueryRepository<TUserDto>
+        where TUser : UserModel where TUserDto : UserDto
     {
         protected UserQueryRepository(TofiContext context) : base(context)
         {
         }
 
 
-        public IQueryable<LoginDto> Handle(LoginQuery query)
+        public LoginDto Handle(LoginQuery query)
         {
-            IQueryable<TUser> resModels = null;
+            TUser resModel = null;
             if (!string.IsNullOrWhiteSpace(query.Email))
             {
-                resModels = ModelsDao.Where(user => user.Email == query.Email);
+                resModel = ModelsDao.FirstOrDefault(user => user.Email == query.Email);
             }
             if (!string.IsNullOrWhiteSpace(query.Username))
             {
-                resModels = ModelsDao.Where(user => user.Username == query.Username);
+                resModel = ModelsDao.FirstOrDefault(user => user.Username == query.Username);
             }
-            if (resModels == null)
-            {
-                return Enumerable.Empty<LoginDto>().AsQueryable();
-            }
-            var res = resModels.Select(
-                model => new LoginDto
-                {
-                    Id = model.Id,
-                    Email = model.Email,
-                    Username = model.Username,
-                    PasswordHash = model.PasswordHash,
-                    FailedLogonCnt = model.FailedLogonCnt,
-                    NextLogonTime = model.NextLogonTime
-                });
-            return res;
+            return resModel == null ? null : Mapper.Map<LoginDto>(resModel);
         }
 
-        public IQueryable<UserDto> Handle(UserQuery query)
+        public UserInfoDto Handle(UserInfoQuery query)
         {
-            IQueryable<TUser> resModels = null;
+            TUser resModel = null;
             if (query.Id.HasValue)
             {
-                resModels = ModelsDao.Where(user => user.Id == query.Id.Value);
+                resModel = ModelsDao.Find(query.Id.Value);
             }
             if (!string.IsNullOrWhiteSpace(query.Email))
             {
-                resModels = ModelsDao.Where(user => user.Email == query.Email);
+                resModel = ModelsDao.FirstOrDefault(user => user.Email == query.Email);
             }
             if (!string.IsNullOrWhiteSpace(query.Username))
             {
-                resModels = ModelsDao.Where(user => user.Username == query.Username);
+                resModel = ModelsDao.FirstOrDefault(user => user.Username == query.Username);
             }
-            if (resModels == null)
-            {
-                return Enumerable.Empty<UserDto>().AsQueryable();
-            }
-            var res = resModels.Select(
-                model => new UserDto()
-                {
-                    Id = model.Id,
-                    Email = model.Email,
-                    Username = model.Username,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    EmailConfirmed = model.EmailConfirmed
-                });
-            return res;
+            return resModel == null ? null : Mapper.Map<UserInfoDto>(resModel);
         }
     }
 }

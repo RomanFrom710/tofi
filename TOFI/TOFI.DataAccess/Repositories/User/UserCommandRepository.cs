@@ -1,28 +1,15 @@
 ﻿using DAL.Contexts;
 using DAL.Models.User;
-using TOFI.TransferObjects.User.Commands;
+using DAL.Repositories.Model;
+using TOFI.TransferObjects.User.DataObjects;
 
 namespace DAL.Repositories.User
 {
-    public abstract class UserCommandRepository<TUser> : ModelRepository<TUser>, IUserCommandRepository
-        where TUser : UserModel, new()
+    public abstract class UserCommandRepository<TUser, TUserDto> : ModelCommandRepository<TUser, TUserDto>, IUserCommandRepository<TUserDto>
+        where TUser : UserModel, new() where TUserDto : UserDto
     {
         protected UserCommandRepository(TofiContext context) : base(context)
         {
-        }
-
-
-        public void Execute(RegisterCommand command)
-        {
-            var user = new TUser
-            {
-                Email = command.Email,
-                Username = command.Username,
-                PasswordHash = command.PasswordHash,
-                FirstName = command.FirstName,
-                LastName = command.LastName
-            };
-            ModelsDao.Add(user);
         }
     }
 }

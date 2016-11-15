@@ -12,26 +12,34 @@ namespace DAL.Models.User
 
         public string FirstName { get; set; }
 
+        public string MiddleName { get; set; }
+
         public string LastName { get; set; }
 
         public bool EmailConfirmed { get; set; }
 
-        public int SuccessfulLogonAttempts { get; set; }
+        public int AccessGrantedTotal { get; set; }
 
-        public int FailedLogonAttempts { get; set; }
+        public DateTime? LastAccessGrantedDateUtc { get; set; }
 
-        public int FailedLogonCnt { get; set; }
+        public int AccessFailedTotal { get; set; }
 
-        public DateTime? NextLogonTime { get; set; }
+        public DateTime? LastAccessFailedDateUtc { get; set; }
+
+        public int AccessFailedCnt { get; set; }
+
+        public DateTime? LockoutDateUtc { get; set; }
 
 
         protected UserModel()
         {
             EmailConfirmed = false;
-            SuccessfulLogonAttempts = 0;
-            FailedLogonAttempts = 0;
-            FailedLogonCnt = 0;
-            NextLogonTime = null;
+            AccessGrantedTotal = 0;
+            LastAccessGrantedDateUtc = null;
+            AccessFailedTotal = 0;
+            LastAccessFailedDateUtc = null;
+            AccessFailedCnt = 0;
+            LockoutDateUtc = null;
         }
     }
 }
