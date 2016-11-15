@@ -1,4 +1,4 @@
-﻿namespace TOFI.TransferObjects.User.Queries
+﻿namespace TOFI.TransferObjects.Auth.Queries
 {
     public class LoginQuery : Query
     {

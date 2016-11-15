@@ -1,7 +1,7 @@
 ﻿using System;
 using TOFI.TransferObjects.Model.DataObjects;
 
-namespace TOFI.TransferObjects.User.DataObjects
+namespace TOFI.TransferObjects.Auth.DataObjects
 {
     public class LoginDto : ModelDto
     {

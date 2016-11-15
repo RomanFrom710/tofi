@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Linq;
+using BLL.Result;
+using DAL.Repositories;
+using TOFI.TransferObjects;
 
 namespace BLL.Services
 {
@@ -49,6 +53,94 @@ namespace BLL.Services
         protected virtual void DisposeUnManagedOverride()
         {
 
+        }
+
+        protected QueryResult<TDto> RunQuery<TQuery, TDto>(IQueryRepository<TQuery, TDto> repository, TQuery query)
+            where TQuery : Query where TDto : Dto
+        {
+            TDto queryRes;
+            try
+            {
+                queryRes = repository.Handle(query);
+            }
+            catch (Exception ex)
+            {
+                return new QueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
+            }
+            return queryRes == null
+                ? new QueryResult<TDto>(query, null).Error("Query return nothing")
+                : new QueryResult<TDto>(query, queryRes);
+        }
+
+        protected ListQueryResult<TDto> RunListQuery<TQuery, TDto>(IListQueryRepository<TQuery, TDto> repository, TQuery query)
+            where TQuery : Query where TDto : Dto
+        {
+            IQueryable<TDto> queryRes;
+            try
+            {
+                queryRes = repository.Handle(query);
+            }
+            catch (Exception ex)
+            {
+                return new ListQueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
+            }
+            return queryRes == null
+                ? new ListQueryResult<TDto>(query, null).Error("Query return nothing")
+                : new ListQueryResult<TDto>(query, queryRes);
+        }
+
+        protected CommandResult ExecuteCommand<TCommand>(ICommandRepository<TCommand> repository, TCommand command)
+            where TCommand : Command
+        {
+            try
+            {
+                repository.Execute(command);
+            }
+            catch (Exception ex)
+            {
+                return new CommandResult(command, false).Fatal($"Unhandled exception: {ex.Message}", ex);
+            }
+            return new CommandResult(command);
+        }
+
+        protected ServiceResult InfoResult(string message, Exception exception = null)
+        {
+            return new ServiceResult(false).Info(message, exception);
+        }
+
+        protected ValueResult<T> InfoResult<T>(T val, string message, Exception exception = null)
+        {
+            return new ValueResult<T>(val, false).Info(message, exception);
+        }
+
+        protected ServiceResult WarningResult(string message, Exception exception = null)
+        {
+            return new ServiceResult(false).Warning(message, exception);
+        }
+
+        protected ValueResult<T> WarningResult<T>(T val, string message, Exception exception = null)
+        {
+            return new ValueResult<T>(val, false).Warning(message, exception);
+        }
+
+        protected ServiceResult ErrorResult(string message, Exception exception = null)
+        {
+            return new ServiceResult(false).Error(message, exception);
+        }
+
+        protected ValueResult<T> ErrorResult<T>(T val, string message, Exception exception = null)
+        {
+            return new ValueResult<T>(val, false).Error(message, exception);
+        }
+
+        protected ServiceResult FatalResult(string message, Exception exception = null)
+        {
+            return new ServiceResult(false).Fatal(message, exception);
+        }
+
+        protected ValueResult<T> FatalResult<T>(T val, string message, Exception exception = null)
+        {
+            return new ValueResult<T>(val, false).Fatal(message, exception);
         }
     }
 }

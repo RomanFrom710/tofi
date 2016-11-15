@@ -1,15 +1,9 @@
-﻿using TOFI.TransferObjects.Model.DataObjects;
+﻿using TOFI.TransferObjects.Auth.DataObjects;
 
 namespace TOFI.TransferObjects.User.DataObjects
 {
-    public class UserDto : ModelDto
+    public class UserDto : AuthDto
     {
-        public string Username { get; set; }
-
-        public string Email { get; set; }
-
-        public string PasswordHash { get; set; }
-
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }
