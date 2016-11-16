@@ -1,24 +1,35 @@
-﻿using TOFI.TransferObjects;
+﻿using AutoMapper;
+using TOFI.TransferObjects;
 
 namespace BLL.Result
 {
-    public class QueryResult<TDto> : ServiceResult<TDto, QueryResult<TDto>>
-        where TDto : Dto
+    public class QueryResult<T> : ValueResult<T, QueryResult<T>>
     {
         public Query Query { get; protected set; }
 
 
-        public QueryResult(Query query) : this(query, default(TDto), true)
+        public QueryResult(Query query) : this(query, default(T), true)
         {
         }
 
-        public QueryResult(Query query, TDto result) : this(query, result, true)
+        public QueryResult(Query query, T value) : this(query, value, true)
         {
         }
 
-        public QueryResult(Query query, TDto result, bool executionCompleted) : base(result, executionCompleted)
+        public QueryResult(Query query, T value, bool executionCompleted) : base(value, executionCompleted)
         {
             Query = query;
+        }
+
+
+        public QueryResult<TNew> MapTo<TNew>()
+        {
+            return new QueryResult<TNew>(Query, Mapper.Map<TNew>(Value), ExecutionComleted)
+            {
+                Message = Message,
+                Exception = Exception,
+                Severity = Severity
+            };
         }
     }
 }

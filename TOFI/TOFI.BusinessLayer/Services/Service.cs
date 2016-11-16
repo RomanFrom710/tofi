@@ -105,22 +105,22 @@ namespace BLL.Services
 
         protected ServiceResult InfoResult(string message, Exception exception = null)
         {
-            return new ServiceResult(false).Info(message, exception);
+            return new ServiceResult(true).Info(message, exception);
         }
 
         protected ValueResult<T> InfoResult<T>(T val, string message, Exception exception = null)
         {
-            return new ValueResult<T>(val, false).Info(message, exception);
+            return new ValueResult<T>(val, true).Info(message, exception);
         }
 
         protected ServiceResult WarningResult(string message, Exception exception = null)
         {
-            return new ServiceResult(false).Warning(message, exception);
+            return new ServiceResult(true).Warning(message, exception);
         }
 
         protected ValueResult<T> WarningResult<T>(T val, string message, Exception exception = null)
         {
-            return new ValueResult<T>(val, false).Warning(message, exception);
+            return new ValueResult<T>(val, true).Warning(message, exception);
         }
 
         protected ServiceResult ErrorResult(string message, Exception exception = null)

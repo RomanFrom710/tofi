@@ -1,8 +1,9 @@
-﻿using BLL.Services.User;
+﻿using BLL.Services.Employee.ViewModels;
+using BLL.Services.User;
 
 namespace BLL.Services.Employee
 {
-    public interface IEmployeeService : IUserService
+    public interface IEmployeeService : IUserService<EmployeeViewModel>
     {
     }
 }
