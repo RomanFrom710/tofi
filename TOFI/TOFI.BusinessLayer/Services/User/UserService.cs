@@ -5,14 +5,14 @@ using TOFI.TransferObjects.User.DataObjects;
 
 namespace BLL.Services.User
 {
-    public class UserService : ModelService<UserDto, UserViewModel>, IUserService<UserViewModel>
+    public class UserService : ModelService<UserDto, UserViewModel>, IUserService
     {
-        private readonly IUserQueryRepository<UserDto> _queryRepository;
-        private readonly IUserCommandRepository<UserDto> _commandRepository;
+        private readonly IUserQueryRepository _queryRepository;
+        private readonly IUserCommandRepository _commandRepository;
 
 
-        public UserService(IUserQueryRepository<UserDto> queryRepository,
-            IUserCommandRepository<UserDto> commandRepository) : base(queryRepository, commandRepository)
+        public UserService(IUserQueryRepository queryRepository,
+            IUserCommandRepository commandRepository) : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;

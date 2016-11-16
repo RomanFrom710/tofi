@@ -25,7 +25,7 @@ namespace DAL.Models.Auth
         public DateTime? LockoutDateUtc { get; set; }
 
 
-        protected AuthModel()
+        public AuthModel()
         {
             AccessGrantedTotal = 0;
             LastAccessGrantedDateUtc = null;

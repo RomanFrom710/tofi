@@ -4,9 +4,8 @@ using TOFI.TransferObjects.Auth.Queries;
 
 namespace DAL.Repositories.Auth
 {
-    public interface IAuthQueryRepository<TAuthDto> : IModelQueryRepository<TAuthDto>,
+    public interface IAuthQueryRepository : IModelQueryRepository<AuthDto>,
         IQueryRepository<LoginQuery, LoginDto>
-        where TAuthDto : AuthDto
     {
     }
 }

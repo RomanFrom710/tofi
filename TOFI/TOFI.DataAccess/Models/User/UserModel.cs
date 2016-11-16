@@ -4,7 +4,7 @@ using DAL.Models.Auth;
 namespace DAL.Models.User
 {
     [Table("Users")]
-    public abstract class UserModel : Model, IUserModel
+    public class UserModel : Model, IUserModel
     {
         public string FirstName { get; set; }
 
@@ -19,7 +19,7 @@ namespace DAL.Models.User
         public virtual AuthModel Auth { get; set; }
 
 
-        protected UserModel()
+        public UserModel()
         {
             EmailConfirmed = false;
         }
