@@ -18,4 +18,25 @@
             Value = value;
         }
     }
+
+
+    public abstract class ValueResult<TVal, TThis> : ServiceResult<TThis>
+        where TThis : ValueResult<TVal, TThis>
+    {
+        public TVal Value { get; protected set; }
+
+
+        protected ValueResult() : this(default(TVal), true)
+        {
+        }
+
+        protected ValueResult(TVal value) : this(value, true)
+        {
+        }
+
+        protected ValueResult(TVal value, bool executionCompleted) : base(executionCompleted)
+        {
+            Value = value;
+        }
+    }
 }

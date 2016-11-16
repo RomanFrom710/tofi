@@ -1,15 +1,15 @@
 ﻿using BLL.Services.Auth;
 using BLL.Services.User.ViewModels;
-using DAL.Repositories.Model;
+using DAL.Repositories.User;
 using TOFI.TransferObjects.User.DataObjects;
 
 namespace BLL.Services.User
 {
-    public abstract class UserService<TUserDto, TUserView> : AuthService<TUserDto, TUserView>, IUserService
+    public abstract class UserService<TUserDto, TUserView> : AuthService<TUserDto, TUserView>, IUserService<TUserView>
         where TUserDto : UserDto where TUserView : UserViewModel
     {
-        protected UserService(IModelQueryRepository<TUserDto> queryRepository,
-            IModelCommandRepository<TUserDto> commandRepository) : base(queryRepository, commandRepository)
+        protected UserService(IUserQueryRepository<TUserDto> queryRepository,
+            IUserCommandRepository<TUserDto> commandRepository) : base(queryRepository, commandRepository)
         {
         }
     }

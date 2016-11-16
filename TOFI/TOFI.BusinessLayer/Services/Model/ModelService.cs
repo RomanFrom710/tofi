@@ -1,4 +1,5 @@
-﻿using BLL.Result;
+﻿using AutoMapper;
+using BLL.Result;
 using BLL.Services.Model.ViewModels;
 using DAL.Repositories.Model;
 using TOFI.TransferObjects.Model.Commands;
@@ -7,7 +8,7 @@ using TOFI.TransferObjects.Model.Queries;
 
 namespace BLL.Services.Model
 {
-    public abstract class ModelService<TModelDto, TModelView> : Service, IModelService
+    public abstract class ModelService<TModelDto, TModelView> : Service, IModelService<TModelView>
         where TModelDto : ModelDto where TModelView : ModelViewModel
     {
         protected readonly IModelQueryRepository<TModelDto> QueryRepository;
@@ -22,29 +23,31 @@ namespace BLL.Services.Model
         }
 
 
-        public ListQueryResult<TModelDto> GetAllModels(AllModelsQuery query)
+        public ListQueryResult<TModelView> GetAllModels(AllModelsQuery query)
         {
-            return RunListQuery(QueryRepository, query);
+            return RunListQuery(QueryRepository, query).MapTo<TModelView>();
         }
 
-        public QueryResult<TModelDto> GetModel(ModelQuery query)
+        public QueryResult<TModelView> GetModel(ModelQuery query)
         {
-            return RunQuery(QueryRepository, query);
+            return RunQuery(QueryRepository, query).MapTo<TModelView>();
         }
 
-        public CommandResult CreateModel(CreateModelCommand<TModelDto> command)
+        public CommandResult CreateModel(TModelView viewModel)
         {
-            return ExecuteCommand(CommandRepository, command);
+            return ExecuteCommand(CommandRepository,
+                new CreateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)});
         }
 
-        public CommandResult UpdateModel(UpdateModelCommand<TModelDto> command)
+        public CommandResult UpdateModel(TModelView viewModel)
         {
-            return ExecuteCommand(CommandRepository, command);
+            return ExecuteCommand(CommandRepository,
+                new UpdateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)});
         }
 
-        public CommandResult DeleteModel(DeleteModelCommand command)
+        public CommandResult DeleteModel(int id)
         {
-            return ExecuteCommand(CommandRepository, command);
+            return ExecuteCommand(CommandRepository, new DeleteModelCommand {Id = id});
         }
     }
 }

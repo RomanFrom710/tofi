@@ -21,6 +21,8 @@ namespace BLL.Result
 
         public Exception Exception { get; set; }
 
+        public bool IsError => Severity > SeverityLevel.Warning;
+
 
         protected ServiceResult() : this(true)
         {
@@ -74,27 +76,6 @@ namespace BLL.Result
 
         public ServiceResult(bool executionCompleted) : base(executionCompleted)
         {
-        }
-    }
-
-
-    public abstract class ServiceResult<TVal, TThis> : ServiceResult<TThis>
-        where TThis : ServiceResult<TThis>
-    {
-        public TVal Value { get; protected set; }
-
-
-        protected ServiceResult() : this(default(TVal), true)
-        {
-        }
-
-        protected ServiceResult(TVal value) : this(value, true)
-        {
-        }
-
-        protected ServiceResult(TVal value, bool executionCompleted) : base(executionCompleted)
-        {
-            Value = value;
         }
     }
 }
