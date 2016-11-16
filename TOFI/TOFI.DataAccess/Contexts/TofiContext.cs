@@ -9,7 +9,7 @@ namespace DAL.Contexts
         public DbSet<Model> Entities { get; set; }
 
 
-        public TofiContext() : base("TofiContext")
+        public TofiContext() : base("name=tofidb")
         {
             
         }
