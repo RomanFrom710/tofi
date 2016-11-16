@@ -1,9 +1,9 @@
-﻿using BLL.Services.Auth;
+﻿using BLL.Services.Model;
 using BLL.Services.User.ViewModels;
 
 namespace BLL.Services.User
 {
-    public interface IUserService<TUserView> : IAuthService<TUserView>
+    public interface IUserService<TUserView> : IModelService<TUserView>
         where TUserView : UserViewModel
     {
     }

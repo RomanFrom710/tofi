@@ -1,8 +1,8 @@
-﻿using BLL.Services.User.ViewModels;
+﻿using BLL.Services.Model.ViewModels;
 
 namespace BLL.Services.Client.ViewModels
 {
-    public class ClientViewModel : UserViewModel
+    public class ClientViewModel : ModelViewModel
     {
     }
 }

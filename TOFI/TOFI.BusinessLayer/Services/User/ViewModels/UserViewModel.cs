@@ -1,8 +1,8 @@
-﻿using BLL.Services.Auth.ViewModels;
+﻿using BLL.Services.Model.ViewModels;
 
 namespace BLL.Services.User.ViewModels
 {
-    public class UserViewModel : AuthViewModel
+    public class UserViewModel : ModelViewModel
     {
         public string FirstName { get; set; }
 

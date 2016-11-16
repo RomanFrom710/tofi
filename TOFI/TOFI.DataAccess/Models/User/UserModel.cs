@@ -1,8 +1,10 @@
-﻿using DAL.Models.Auth;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models.Auth;
 
 namespace DAL.Models.User
 {
-    public abstract class UserModel : AuthModel, IUserModel
+    [Table("Users")]
+    public abstract class UserModel : Model, IUserModel
     {
         public string FirstName { get; set; }
 
@@ -11,6 +13,10 @@ namespace DAL.Models.User
         public string LastName { get; set; }
 
         public bool EmailConfirmed { get; set; }
+
+        public int AuthId { get; set; }
+
+        public virtual AuthModel Auth { get; set; }
 
 
         protected UserModel()

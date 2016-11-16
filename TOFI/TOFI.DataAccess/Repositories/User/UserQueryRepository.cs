@@ -2,13 +2,13 @@
 using AutoMapper;
 using DAL.Contexts;
 using DAL.Models.User;
-using DAL.Repositories.Auth;
+using DAL.Repositories.Model;
 using TOFI.TransferObjects.User.DataObjects;
 using TOFI.TransferObjects.User.Queries;
 
 namespace DAL.Repositories.User
 {
-    public abstract class UserQueryRepository<TUser, TUserDto> : AuthQueryRepository<TUser, TUserDto>, IUserQueryRepository<TUserDto>
+    public abstract class UserQueryRepository<TUser, TUserDto> : ModelQueryRepository<TUser, TUserDto>, IUserQueryRepository<TUserDto>
         where TUser : UserModel, new() where TUserDto : UserDto
     {
         protected UserQueryRepository(TofiContext context) : base(context)
@@ -25,11 +25,11 @@ namespace DAL.Repositories.User
             }
             if (!string.IsNullOrWhiteSpace(query.Email))
             {
-                resModel = ModelsDao.FirstOrDefault(user => user.Email == query.Email);
+                resModel = ModelsDao.FirstOrDefault(user => user.Auth.Email == query.Email);
             }
             if (!string.IsNullOrWhiteSpace(query.Username))
             {
-                resModel = ModelsDao.FirstOrDefault(user => user.Username == query.Username);
+                resModel = ModelsDao.FirstOrDefault(user => user.Auth.Username == query.Username);
             }
             return resModel == null ? null : Mapper.Map<UserInfoDto>(resModel);
         }

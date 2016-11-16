@@ -1,8 +1,13 @@
-﻿using DAL.Models.User;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models.User;
 
 namespace DAL.Models.Client
 {
-    public class ClientModel : UserModel, IClientModel
+    [Table("Clients")]
+    public class ClientModel : Model, IClientModel
     {
+        public int UserId { get; set; }
+
+        public virtual UserModel User { get; set; }
     }
 }
