@@ -5,12 +5,17 @@ using TOFI.TransferObjects.Auth.DataObjects;
 
 namespace BLL.Services.Auth
 {
-    public abstract class AuthService<TAuthDto, TAuthView> : ModelService<TAuthDto, TAuthView>, IAuthService<TAuthView>
-        where TAuthDto : AuthDto where TAuthView : AuthViewModel
+    public class AuthService : ModelService<AuthDto, AuthViewModel>, IAuthService<AuthViewModel>
     {
-        protected AuthService(IAuthQueryRepository<TAuthDto> queryRepository,
-            IAuthCommandRepository<TAuthDto> commandRepository) : base(queryRepository, commandRepository)
+        private readonly IAuthQueryRepository<AuthDto> _queryRepository;
+        private readonly IAuthCommandRepository<AuthDto> _commandRepository;
+
+
+        public AuthService(IAuthQueryRepository<AuthDto> queryRepository,
+            IAuthCommandRepository<AuthDto> commandRepository) : base(queryRepository, commandRepository)
         {
+            _queryRepository = queryRepository;
+            _commandRepository = commandRepository;
         }
     }
 }

@@ -1,8 +1,13 @@
-﻿using DAL.Models.User;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models.User;
 
 namespace DAL.Models.Admin
 {
-    public class AdminModel : UserModel, IAdminModel
+    [Table("Admins")]
+    public class AdminModel : Model, IAdminModel
     {
+        public int UserId { get; set; }
+
+        public virtual UserModel User { get; set; }
     }
 }

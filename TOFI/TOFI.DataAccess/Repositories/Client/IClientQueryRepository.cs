@@ -1,9 +1,9 @@
-﻿using DAL.Repositories.User;
+﻿using DAL.Repositories.Model;
 using TOFI.TransferObjects.Client.DataObjects;
 
 namespace DAL.Repositories.Client
 {
-    public interface IClientQueryRepository : IUserQueryRepository<ClientDto>
+    public interface IClientQueryRepository : IModelQueryRepository<ClientDto>
     {
     }
 }

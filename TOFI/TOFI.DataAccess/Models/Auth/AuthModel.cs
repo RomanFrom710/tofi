@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models.Auth
 {
-    public abstract class AuthModel : Model, IAuthModel
+    [Table("Auth")]
+    public class AuthModel : Model, IAuthModel
     {
         public string Username { get; set; }
 

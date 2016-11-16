@@ -1,8 +1,8 @@
-﻿using BLL.Services.User.ViewModels;
+﻿using BLL.Services.Model.ViewModels;
 
 namespace BLL.Services.Employee.ViewModels
 {
-    public class EmployeeViewModel : UserViewModel
+    public class EmployeeViewModel : ModelViewModel
     {
     }
 }

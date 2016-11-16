@@ -2,7 +2,7 @@
 
 namespace DAL.Models.User
 {
-    public interface IUserModel : IAuthModel
+    public interface IUserModel : IModel
     {
         string FirstName { get; }
 
@@ -11,5 +11,9 @@ namespace DAL.Models.User
         string MiddleName { get; }
 
         bool EmailConfirmed { get; }
+
+        int AuthId { get; }
+
+        AuthModel Auth { get; }
     }
 }
