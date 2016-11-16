@@ -8,17 +8,16 @@ using TOFI.TransferObjects.User.Queries;
 
 namespace DAL.Repositories.User
 {
-    public abstract class UserQueryRepository<TUser, TUserDto> : ModelQueryRepository<TUser, TUserDto>, IUserQueryRepository<TUserDto>
-        where TUser : UserModel, new() where TUserDto : UserDto
+    public class UserQueryRepository : ModelQueryRepository<UserModel, UserDto>, IUserQueryRepository
     {
-        protected UserQueryRepository(TofiContext context) : base(context)
+        public UserQueryRepository(TofiContext context) : base(context)
         {
         }
 
 
         public UserInfoDto Handle(UserInfoQuery query)
         {
-            TUser resModel = null;
+            UserModel resModel = null;
             if (query.Id.HasValue)
             {
                 resModel = ModelsDao.Find(query.Id.Value);

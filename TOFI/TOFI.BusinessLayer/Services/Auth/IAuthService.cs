@@ -3,8 +3,7 @@ using BLL.Services.Model;
 
 namespace BLL.Services.Auth
 {
-    public interface IAuthService<TAuthView> : IModelService<TAuthView> 
-        where TAuthView : AuthViewModel
+    public interface IAuthService : IModelService<AuthViewModel>
     {
     }
 }

@@ -17,6 +17,8 @@ namespace TOFI.DependencyInjection
             //add other the same way
             kernel.Bind(
                 m => m.From("BLL").Select(t => t.Namespace.Contains("BLL.Services")).BindDefaultInterface());
+            kernel.Bind(
+                m => m.From("DAL").Select(t => t.Namespace.Contains("DAL.Repositories")).BindDefaultInterface());
             kernel.Bind<TofiContext>().ToSelf().InSingletonScope();
         }
     }

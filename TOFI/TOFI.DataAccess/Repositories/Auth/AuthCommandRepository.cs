@@ -5,10 +5,9 @@ using TOFI.TransferObjects.Auth.DataObjects;
 
 namespace DAL.Repositories.Auth
 {
-    public abstract class AuthCommandRepository<TAuth, TAuthDto> : ModelCommandRepository<TAuth, TAuthDto>, IAuthCommandRepository<TAuthDto>
-        where TAuth : AuthModel, new() where TAuthDto : AuthDto
+    public class AuthCommandRepository : ModelCommandRepository<AuthModel, AuthDto>, IAuthCommandRepository
     {
-        protected AuthCommandRepository(TofiContext context) : base(context)
+        public AuthCommandRepository(TofiContext context) : base(context)
         {
         }
     }
