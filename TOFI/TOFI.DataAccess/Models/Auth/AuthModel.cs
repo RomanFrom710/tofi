@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models.Auth
 {
-    [Table("Auth")]
+    [Table("AuthData")]
     public class AuthModel : Model, IAuthModel
     {
-        public string Username { get; set; }
-
-        public string Email { get; set; }
-
         public string PasswordHash { get; set; }
+
+        public int AccessFailedCnt { get; set; }
+
+        public DateTime? LockoutDateUtc { get; set; }
 
         public int AccessGrantedTotal { get; set; }
 
@@ -20,19 +20,15 @@ namespace DAL.Models.Auth
 
         public DateTime? LastAccessFailedDateUtc { get; set; }
 
-        public int AccessFailedCnt { get; set; }
-
-        public DateTime? LockoutDateUtc { get; set; }
-
 
         public AuthModel()
         {
+            AccessFailedCnt = 0;
+            LockoutDateUtc = null;
             AccessGrantedTotal = 0;
             LastAccessGrantedDateUtc = null;
             AccessFailedTotal = 0;
             LastAccessFailedDateUtc = null;
-            AccessFailedCnt = 0;
-            LockoutDateUtc = null;
         }
     }
 }

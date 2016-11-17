@@ -22,10 +22,6 @@ namespace DAL.Mapping
             config.CreateMap<TOFI.TransferObjects.Admin.DataObjects.AdminDto, Models.Admin.AdminModel>();
             config.CreateMap<TOFI.TransferObjects.Client.DataObjects.ClientDto, Models.Client.ClientModel>();
             config.CreateMap<TOFI.TransferObjects.Employee.DataObjects.EmployeeDto, Models.Employee.EmployeeModel>();
-
-            config.CreateMap<Models.Auth.AuthModel, TOFI.TransferObjects.Auth.DataObjects.LoginDto>();
-
-            config.CreateMap<Models.User.UserModel, TOFI.TransferObjects.User.DataObjects.UserInfoDto>();
         }
     }
 }

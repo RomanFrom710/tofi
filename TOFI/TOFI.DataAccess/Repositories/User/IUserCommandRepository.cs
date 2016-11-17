@@ -3,7 +3,8 @@ using TOFI.TransferObjects.User.DataObjects;
 
 namespace DAL.Repositories.User
 {
-    public interface IUserCommandRepository : IModelCommandRepository<UserDto>
+    public interface IUserCommandRepository<TUserDto> : IModelCommandRepository<TUserDto>
+        where TUserDto : UserDto
     {
     }
 }

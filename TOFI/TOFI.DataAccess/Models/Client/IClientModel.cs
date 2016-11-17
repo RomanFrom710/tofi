@@ -2,10 +2,7 @@
 
 namespace DAL.Models.Client
 {
-    public interface IClientModel : IModel
+    public interface IClientModel : IUserModel
     {
-        int UserId { get; }
-
-        UserModel User { get; }
     }
 }

@@ -2,10 +2,7 @@
 
 namespace DAL.Models.Employee
 {
-    public interface IEmployeeModel : IModel
+    public interface IEmployeeModel : IUserModel
     {
-        int UserId { get; }
-
-        UserModel User { get; }
     }
 }

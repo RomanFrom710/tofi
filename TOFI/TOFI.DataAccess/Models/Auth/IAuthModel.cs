@@ -4,11 +4,11 @@ namespace DAL.Models.Auth
 {
     public interface IAuthModel : IModel
     {
-        string Username { get; }
-
-        string Email { get; }
-
         string PasswordHash { get; }
+
+        int AccessFailedCnt { get; }
+
+        DateTime? LockoutDateUtc { get; }
 
         int AccessGrantedTotal { get; }
 
@@ -17,9 +17,5 @@ namespace DAL.Models.Auth
         int AccessFailedTotal { get; }
 
         DateTime? LastAccessFailedDateUtc { get; }
-
-        int AccessFailedCnt { get; }
-
-        DateTime? LockoutDateUtc { get; }
     }
 }

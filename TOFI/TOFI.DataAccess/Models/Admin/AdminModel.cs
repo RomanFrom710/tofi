@@ -4,10 +4,7 @@ using DAL.Models.User;
 namespace DAL.Models.Admin
 {
     [Table("Admins")]
-    public class AdminModel : Model, IAdminModel
+    public class AdminModel : UserModel, IAdminModel
     {
-        public int UserId { get; set; }
-
-        public virtual UserModel User { get; set; }
     }
 }
