@@ -7,4 +7,9 @@ namespace DAL.Repositories.User
         where TUserDto : UserDto
     {
     }
+
+
+    public interface IUserCommandRepository : IUserCommandRepository<UserDto>
+    {
+    }
 }

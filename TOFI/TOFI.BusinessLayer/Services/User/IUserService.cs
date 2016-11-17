@@ -7,4 +7,9 @@ namespace BLL.Services.User
         where TUserView : UserViewModel
     {
     }
+
+
+    public interface IUserService : IUserService<UserViewModel>
+    {
+    }
 }
