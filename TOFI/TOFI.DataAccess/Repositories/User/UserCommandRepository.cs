@@ -12,4 +12,12 @@ namespace DAL.Repositories.User
         {
         }
     }
+
+
+    public class UserCommandRepository : UserCommandRepository<UserModel, UserDto>, IUserCommandRepository
+    {
+        public UserCommandRepository(TofiContext context) : base(context)
+        {
+        }
+    }
 }

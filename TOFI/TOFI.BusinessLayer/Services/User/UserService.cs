@@ -19,4 +19,19 @@ namespace BLL.Services.User
             _commandRepository = commandRepository;
         }
     }
+
+
+    public class UserService : UserService<UserDto, UserViewModel>, IUserService
+    {
+        private readonly IUserQueryRepository _queryRepository;
+        private readonly IUserCommandRepository _commandRepository;
+
+
+        public UserService(IUserQueryRepository queryRepository,
+            IUserCommandRepository commandRepository) : base(queryRepository, commandRepository)
+        {
+            _queryRepository = queryRepository;
+            _commandRepository = commandRepository;
+        }
+    }
 }
