@@ -2,7 +2,7 @@
 
 namespace DAL.Models
 {
-    public abstract class Model : IModel
+    public class Model : IModel
     {
         [Key]
         public int Id { get; set; }

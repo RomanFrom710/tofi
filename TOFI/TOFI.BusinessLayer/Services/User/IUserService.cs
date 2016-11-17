@@ -3,7 +3,8 @@ using BLL.Services.User.ViewModels;
 
 namespace BLL.Services.User
 {
-    public interface IUserService : IModelService<UserViewModel>
+    public interface IUserService<TUserView> : IModelService<TUserView>
+        where TUserView : UserViewModel
     {
     }
 }

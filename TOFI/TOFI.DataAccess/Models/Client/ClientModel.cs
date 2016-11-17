@@ -4,10 +4,7 @@ using DAL.Models.User;
 namespace DAL.Models.Client
 {
     [Table("Clients")]
-    public class ClientModel : Model, IClientModel
+    public class ClientModel : UserModel, IClientModel
     {
-        public int UserId { get; set; }
-
-        public virtual UserModel User { get; set; }
     }
 }

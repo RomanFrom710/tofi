@@ -1,9 +1,9 @@
-﻿using DAL.Repositories.Model;
+﻿using DAL.Repositories.User;
 using TOFI.TransferObjects.Employee.DataObjects;
 
 namespace DAL.Repositories.Employee
 {
-    public interface IEmployeeCommandRepository : IModelCommandRepository<EmployeeDto>
+    public interface IEmployeeCommandRepository : IUserCommandRepository<EmployeeDto>
     {
     }
 }

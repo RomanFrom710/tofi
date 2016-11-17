@@ -2,10 +2,7 @@
 
 namespace DAL.Models.Admin
 {
-    public interface IAdminModel : IModel
+    public interface IAdminModel : IUserModel
     {
-        int UserId { get; }
-
-        UserModel User { get; }
     }
 }

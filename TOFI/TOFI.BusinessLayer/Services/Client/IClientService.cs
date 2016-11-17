@@ -1,9 +1,9 @@
 ﻿using BLL.Services.Client.ViewModels;
-using BLL.Services.Model;
+using BLL.Services.User;
 
 namespace BLL.Services.Client
 {
-    public interface IClientService : IModelService<ClientViewModel>
+    public interface IClientService : IUserService<ClientViewModel>
     {
     }
 }

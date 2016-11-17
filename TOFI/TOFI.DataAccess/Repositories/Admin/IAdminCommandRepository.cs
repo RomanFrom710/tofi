@@ -1,9 +1,9 @@
-﻿using DAL.Repositories.Model;
+﻿using DAL.Repositories.User;
 using TOFI.TransferObjects.Admin.DataObjects;
 
 namespace DAL.Repositories.Admin
 {
-    public interface IAdminCommandRepository : IModelCommandRepository<AdminDto>
+    public interface IAdminCommandRepository : IUserCommandRepository<AdminDto>
     {
     }
 }
