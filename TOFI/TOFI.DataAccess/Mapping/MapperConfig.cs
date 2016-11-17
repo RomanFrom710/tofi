@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Configuration;
+using AutoMapper.Mappers;
 
 namespace DAL.Mapping
 {
@@ -11,17 +12,8 @@ namespace DAL.Mapping
 
             //cfg.CreateMap<Source, Dest>(); - simple mapping example
 
-            config.CreateMap<Models.Auth.AuthModel, TOFI.TransferObjects.Auth.DataObjects.AuthDto>();
-            config.CreateMap<Models.User.UserModel, TOFI.TransferObjects.User.DataObjects.UserDto>();
-            config.CreateMap<Models.Admin.AdminModel, TOFI.TransferObjects.Admin.DataObjects.AdminDto>();
-            config.CreateMap<Models.Client.ClientModel, TOFI.TransferObjects.Client.DataObjects.ClientDto>();
-            config.CreateMap<Models.Employee.EmployeeModel, TOFI.TransferObjects.Employee.DataObjects.EmployeeDto>();
-
-            config.CreateMap<TOFI.TransferObjects.Auth.DataObjects.AuthDto, Models.Auth.AuthModel>();
-            config.CreateMap<TOFI.TransferObjects.User.DataObjects.UserDto, Models.User.UserModel>();
-            config.CreateMap<TOFI.TransferObjects.Admin.DataObjects.AdminDto, Models.Admin.AdminModel>();
-            config.CreateMap<TOFI.TransferObjects.Client.DataObjects.ClientDto, Models.Client.ClientModel>();
-            config.CreateMap<TOFI.TransferObjects.Employee.DataObjects.EmployeeDto, Models.Employee.EmployeeModel>();
+            config.AddConditionalObjectMapper().Where((s, d) => s.Name.Replace("Model", "Dto") == d.Name);
+            config.AddConditionalObjectMapper().Where((s, d) => s.Name.Replace("Dto", "Model") == d.Name);
         }
     }
 }
