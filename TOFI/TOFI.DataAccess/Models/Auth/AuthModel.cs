@@ -8,6 +8,8 @@ namespace DAL.Models.Auth
     {
         public string PasswordHash { get; set; }
 
+        public string Salt { get; set; }
+
         public int AccessFailedCnt { get; set; }
 
         public DateTime? LockoutDateUtc { get; set; }
@@ -19,16 +21,5 @@ namespace DAL.Models.Auth
         public int AccessFailedTotal { get; set; }
 
         public DateTime? LastAccessFailedDateUtc { get; set; }
-
-
-        public AuthModel()
-        {
-            AccessFailedCnt = 0;
-            LockoutDateUtc = null;
-            AccessGrantedTotal = 0;
-            LastAccessGrantedDateUtc = null;
-            AccessFailedTotal = 0;
-            LastAccessFailedDateUtc = null;
-        }
     }
 }

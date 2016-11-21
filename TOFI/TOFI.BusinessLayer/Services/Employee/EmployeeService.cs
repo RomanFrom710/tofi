@@ -1,4 +1,5 @@
-﻿using BLL.Services.Employee.ViewModels;
+﻿using BLL.Services.Auth;
+using BLL.Services.Employee.ViewModels;
 using BLL.Services.User;
 using DAL.Repositories.Employee;
 using TOFI.TransferObjects.Employee.DataObjects;
@@ -12,7 +13,8 @@ namespace BLL.Services.Employee
 
 
         public EmployeeService(IEmployeeQueryRepository queryRepository,
-            IEmployeeCommandRepository commandRepository) : base(queryRepository, commandRepository)
+            IEmployeeCommandRepository commandRepository, IAuthService authService)
+            : base(queryRepository, commandRepository, authService)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;

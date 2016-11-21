@@ -18,18 +18,21 @@ namespace DAL.Repositories.Model
         {
             var model = Mapper.Map<TModel>(command.ModelDto);
             ModelsDao.Add(model);
+            Save();
         }
 
         public void Execute(UpdateModelCommand<TModelDto> command)
         {
             var model = Mapper.Map<TModel>(command.ModelDto);
             Context.Entry(model).State = EntityState.Modified;
+            Save();
         }
 
         public void Execute(DeleteModelCommand command)
         {
             var model = new TModel {Id = command.Id};
             ModelsDao.Remove(model);
+            Save();
         }
     }
 }
