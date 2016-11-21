@@ -8,7 +8,7 @@ using TOFI.TransferObjects.Model.Queries;
 
 namespace BLL.Services.Model
 {
-    public abstract class ModelService<TModelDto, TModelView> : Service, IModelService<TModelView>
+    public abstract class ModelService<TModelDto, TModelView> : Service, IModelService<TModelDto, TModelView>
         where TModelDto : ModelDto where TModelView : ModelViewModel
     {
         private readonly IModelQueryRepository<TModelDto> _queryRepository;
@@ -33,10 +33,20 @@ namespace BLL.Services.Model
             return RunQuery(_queryRepository, query).MapTo<TModelView>();
         }
 
+        public CommandResult CreateModel(TModelDto dto)
+        {
+            return ExecuteCommand(_commandRepository, new CreateModelCommand<TModelDto> {ModelDto = dto});
+        }
+
         public CommandResult CreateModel(TModelView viewModel)
         {
             return ExecuteCommand(_commandRepository,
                 new CreateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)});
+        }
+
+        public CommandResult UpdateModel(TModelDto dto)
+        {
+            return ExecuteCommand(_commandRepository, new UpdateModelCommand<TModelDto> {ModelDto = dto});
         }
 
         public CommandResult UpdateModel(TModelView viewModel)

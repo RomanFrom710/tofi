@@ -1,17 +1,22 @@
 ﻿using BLL.Result;
 using BLL.Services.Model.ViewModels;
+using TOFI.TransferObjects.Model.DataObjects;
 using TOFI.TransferObjects.Model.Queries;
 
 namespace BLL.Services.Model
 {
-    public interface IModelService<TModelView> : IService
-        where TModelView : ModelViewModel
+    public interface IModelService<TModelDto, TModelView> : IService
+        where TModelDto : ModelDto where TModelView : ModelViewModel
     {
         ListQueryResult<TModelView> GetAllModels(AllModelsQuery query);
 
         QueryResult<TModelView> GetModel(ModelQuery query);
 
+        CommandResult CreateModel(TModelDto dto);
+
         CommandResult CreateModel(TModelView viewModel);
+
+        CommandResult UpdateModel(TModelDto dto);
 
         CommandResult UpdateModel(TModelView viewModel);
 

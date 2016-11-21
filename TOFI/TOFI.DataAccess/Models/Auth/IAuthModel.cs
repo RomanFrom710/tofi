@@ -6,6 +6,8 @@ namespace DAL.Models.Auth
     {
         string PasswordHash { get; }
 
+        string Salt { get; }
+
         int AccessFailedCnt { get; }
 
         DateTime? LockoutDateUtc { get; }

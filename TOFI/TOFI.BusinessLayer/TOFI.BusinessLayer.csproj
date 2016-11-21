@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -73,6 +74,7 @@
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\User\IUserService.cs" />
     <Compile Include="Services\User\UserService.cs" />
+    <Compile Include="Services\User\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Services\User\ViewModels\UserViewModel.cs" />
     <Compile Include="Services\ViewModel.cs" />
   </ItemGroup>
