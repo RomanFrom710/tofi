@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using AutoMapper;
 using DAL.Contexts;
 using TOFI.TransferObjects.Model.Commands;
@@ -23,7 +24,15 @@ namespace DAL.Repositories.Model
 
         public void Execute(UpdateModelCommand<TModelDto> command)
         {
-            var model = Mapper.Map<TModel>(command.ModelDto);
+            // if we requested a model with certain then
+            // context already has an attached model with this id
+            // therefore we have to find it or we will get key conflict
+            var model = ModelsDao.Find(command.ModelDto.Id);
+            if (model == null)
+            {
+                throw new ArgumentException("Model with given Id not found");
+            }
+            Mapper.Map(command.ModelDto, model);
             Context.Entry(model).State = EntityState.Modified;
             Save();
         }
