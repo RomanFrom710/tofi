@@ -57,6 +57,7 @@ namespace BLL.Services.Auth
             {
                 auth.AccessGrantedTotal++;
                 auth.LastAccessGrantedDateUtc = DateTime.UtcNow;
+                auth.AccessFailedCnt = 0;
             }
             else
             {
