@@ -23,6 +23,8 @@ namespace BLL.Result
 
         public bool IsError => Severity > SeverityLevel.Warning;
 
+        public bool IsFailed => !ExecutionComleted || IsError;
+
 
         protected ServiceResult() : this(true)
         {
@@ -55,6 +57,15 @@ namespace BLL.Result
         public TThis Fatal(string message, Exception exception = null)
         {
             return SetState(SeverityLevel.Fatal, message, exception);
+        }
+
+        public TThis From<TOther>(ServiceResult<TOther> other) 
+            where TOther : ServiceResult<TOther>
+        {
+            Severity = other.Severity;
+            Message = other.Message;
+            Exception = other.Exception;
+            return (TThis) this;
         }
 
 
