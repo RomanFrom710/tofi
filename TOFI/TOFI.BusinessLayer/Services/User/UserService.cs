@@ -33,43 +33,26 @@ namespace BLL.Services.User
         {
             if (model.Password != model.ConfirmPassword)
             {
-                return new ServiceResult(false).Error("Password and ConfirmPassword should be equal");
+                return ErrorResult("Password and ConfirmPassword should be equal");
             }
 
             var userDto = Mapper.Map<TUserDto>(model);
             var authResult = AuthService.GetNewAuth(model.Password);
-            if (!authResult.ExecutionComleted || authResult.IsError)
+            if (authResult.IsFailed)
             {
-                return new ServiceResult(authResult.ExecutionComleted)
-                {
-                    Message = authResult.Message,
-                    Exception = authResult.Exception,
-                    Severity = authResult.Severity
-                };
+                return new ServiceResult(false).From(authResult);
             }
             userDto.Auth = authResult.Value;
             var createResult = CreateModel(userDto);
-            return new ServiceResult(createResult.ExecutionComleted)
-            {
-                Message = createResult.Message,
-                Exception = createResult.Exception,
-                Severity = createResult.Severity
-            };
+            return new ServiceResult(createResult.ExecutionComleted).From(createResult);
         }
 
         public ValueResult<bool> Authenticate(UserQuery query, string password)
         {
             var userResult = RunQuery<UserQuery, TUserDto>(_queryRepository, query);
-            if (!userResult.ExecutionComleted || userResult.IsError)
-            {
-                return new ValueResult<bool>(false, false)
-                {
-                    Exception = userResult.Exception,
-                    Severity = userResult.Severity,
-                    Message = userResult.Message
-                };
-            }
-            return AuthService.Authenticate(password, userResult.Value.Auth);
+            return userResult.IsFailed
+                ? new ValueResult<bool>(false, false).From(userResult)
+                : AuthService.Authenticate(password, userResult.Value.Auth);
         }
     }
 

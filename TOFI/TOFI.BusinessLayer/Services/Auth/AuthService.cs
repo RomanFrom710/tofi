@@ -41,7 +41,7 @@ namespace BLL.Services.Auth
             }
             catch (Exception ex)
             {
-                return new ValueResult<AuthDto>(null).Fatal($"Unhandled exception: {ex.Message}", ex);
+                return FatalResult<AuthDto>(null, $"Unhandled exception: {ex.Message}", ex);
             }
         }
 
@@ -73,14 +73,9 @@ namespace BLL.Services.Auth
                 }
             }
             var updateResult = UpdateModel(auth);
-            if (!updateResult.ExecutionComleted || updateResult.IsError)
+            if (updateResult.IsFailed)
             {
-                return new ValueResult<bool>(false, false)
-                {
-                    Exception = updateResult.Exception,
-                    Message = updateResult.Message,
-                    Severity = updateResult.Severity
-                };
+                return new ValueResult<bool>(false, false).From(updateResult);
             }
             return string.IsNullOrEmpty(message)
                 ? new ValueResult<bool>(correctPassword)
