@@ -9,7 +9,7 @@ namespace TOFI.Web
         {
             var config = new MapperConfigurationExpression();
 
-            BLL.Mapping.MapperConfig.LoadConfig(ref config);
+            Mapping.MapperConfig.LoadConfig(ref config);
 
             Mapper.Initialize(config);
         }
