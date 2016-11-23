@@ -31,11 +31,6 @@ namespace BLL.Services.User
 
         public ServiceResult Register(RegisterViewModel model)
         {
-            if (model.Password != model.ConfirmPassword)
-            {
-                return ErrorResult("Password and ConfirmPassword should be equal");
-            }
-
             var userDto = Mapper.Map<TUserDto>(model);
             var authResult = AuthService.GetNewAuth(model.Password);
             if (authResult.IsFailed)

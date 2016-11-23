@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TOFI.Web.Auth;
 using TOFI.Web.Models;
+using RegisterViewModel = BLL.Services.User.ViewModels.RegisterViewModel;
 
 namespace TOFI.Web.Controllers
 {
@@ -149,7 +151,7 @@ namespace TOFI.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AuthUser { UserName = model.Email, Email = model.Email };
+                var user = Mapper.Map<AuthUser>(model);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
