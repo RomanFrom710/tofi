@@ -68,7 +68,7 @@ namespace BLL.Services
                 return new QueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
-                ? new QueryResult<TDto>(query, null).Error("Query return nothing")
+                ? new QueryResult<TDto>(query, null).Warning("Query return nothing")
                 : new QueryResult<TDto>(query, queryRes);
         }
 
@@ -85,7 +85,7 @@ namespace BLL.Services
                 return new ListQueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
-                ? new ListQueryResult<TDto>(query, null).Error("Query return nothing")
+                ? new ListQueryResult<TDto>(query, null).Warning("Query return nothing")
                 : new ListQueryResult<TDto>(query, queryRes);
         }
 

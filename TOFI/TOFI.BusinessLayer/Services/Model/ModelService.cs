@@ -45,17 +45,15 @@ namespace BLL.Services.Model
 
         public CommandResult CreateModel(TModelDto dto)
         {
-            var command = new CreateModelCommand<TModelDto> { ModelDto = dto };
-            var result = ExecuteCommand(_commandRepository, command);
-            dto.Id = command.ModelDto.Id;
-
-            return result;
+            return ExecuteCommand(_commandRepository, new CreateModelCommand<TModelDto> {ModelDto = dto});
         }
 
         public CommandResult CreateModel(TModelView viewModel)
         {
-            return ExecuteCommand(_commandRepository,
-                new CreateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)});
+            var command = new CreateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)};
+            var res = ExecuteCommand(_commandRepository, command);
+            viewModel.Id = command.ModelDto.Id;
+            return res;
         }
 
         public CommandResult UpdateModel(TModelDto dto)
