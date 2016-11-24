@@ -8,6 +8,8 @@ using BLL.Services.User;
 using BLL.Services.User.ViewModels;
 using Microsoft.AspNet.Identity;
 using Ninject;
+using TOFI.TransferObjects.Model.Queries;
+using TOFI.TransferObjects.User.Queries;
 
 namespace TOFI.Web.Auth
 {
@@ -52,6 +54,7 @@ namespace TOFI.Web.Auth
 
         public Task<AuthUser> FindByIdAsync(string userId)
         {
+            _userService.GetModel(new ModelQuery { Id = int.Parse(userId) });
             return Task.FromResult(_user);
         }
 
