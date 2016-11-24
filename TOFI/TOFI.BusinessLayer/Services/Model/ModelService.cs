@@ -35,7 +35,11 @@ namespace BLL.Services.Model
 
         public CommandResult CreateModel(TModelDto dto)
         {
-            return ExecuteCommand(_commandRepository, new CreateModelCommand<TModelDto> {ModelDto = dto});
+            var command = new CreateModelCommand<TModelDto> { ModelDto = dto };
+            var result = ExecuteCommand(_commandRepository, command);
+            dto.Id = command.ModelDto.Id;
+
+            return result;
         }
 
         public CommandResult CreateModel(TModelView viewModel)
