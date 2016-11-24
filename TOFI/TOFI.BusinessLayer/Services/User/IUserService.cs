@@ -12,6 +12,10 @@ namespace BLL.Services.User
         ServiceResult Register(RegisterViewModel model);
 
         ValueResult<bool> Authenticate(UserQuery query, string password);
+
+        QueryResult<TUserDto> GetUserDto(UserQuery query);
+
+        QueryResult<TUserView> GetUser(UserQuery query);
     }
 
 
