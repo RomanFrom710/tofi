@@ -23,9 +23,19 @@ namespace BLL.Services.Model
         }
 
 
+        public ListQueryResult<TModelDto> GetAllModelDtos(AllModelsQuery query)
+        {
+            return RunListQuery(_queryRepository, query);
+        }
+
         public ListQueryResult<TModelView> GetAllModels(AllModelsQuery query)
         {
             return RunListQuery(_queryRepository, query).MapTo<TModelView>();
+        }
+
+        public QueryResult<TModelDto> GetModelDto(ModelQuery query)
+        {
+            return RunQuery(_queryRepository, query);
         }
 
         public QueryResult<TModelView> GetModel(ModelQuery query)

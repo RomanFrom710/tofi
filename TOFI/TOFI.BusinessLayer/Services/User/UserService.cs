@@ -50,6 +50,16 @@ namespace BLL.Services.User
                 ? new ValueResult<bool>(false, false).From(userResult)
                 : AuthService.Authenticate(password, userResult.Value.Auth);
         }
+
+        public QueryResult<TUserDto> GetUserDto(UserQuery query)
+        {
+            return RunQuery<UserQuery, TUserDto>(_queryRepository, query);
+        }
+
+        public QueryResult<TUserView> GetUser(UserQuery query)
+        {
+            return RunQuery<UserQuery, TUserDto>(_queryRepository, query).MapTo<TUserView>();
+        }
     }
 
 
