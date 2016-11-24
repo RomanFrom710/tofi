@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BLL.Services.Model.ViewModels;
 
 namespace BLL.Services.User.ViewModels
 {
-    public class RegisterViewModel : ViewModel
+    public class RegisterViewModel : ModelViewModel
     {
         [Required]
         [EmailAddress]
