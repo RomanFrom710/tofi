@@ -11,7 +11,7 @@ namespace DAL.Contexts
         public DbSet<UserModel> Users { get; set; }
 
 
-        public TofiContext() : base("name=tofidb")
+        public TofiContext() : base("name=TofiContext")
         {
             
         }

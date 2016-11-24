@@ -39,6 +39,7 @@ namespace BLL.Services.User
             }
             userDto.Auth = authResult.Value;
             var createResult = CreateModel(userDto);
+            model.Id = userDto.Id;
             return new ServiceResult(createResult.ExecutionComleted).From(createResult);
         }
 

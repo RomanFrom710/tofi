@@ -20,6 +20,7 @@ namespace DAL.Repositories.Model
             var model = Mapper.Map<TModel>(command.ModelDto);
             ModelsDao.Add(model);
             Save();
+            command.ModelDto.Id = model.Id;
         }
 
         public void Execute(UpdateModelCommand<TModelDto> command)
