@@ -28,11 +28,12 @@ namespace TOFI.Web
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
+                //RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                //RequireUppercase = true,
             };
+            manager.PasswordHasher = new CustomPasswordHasher();
 
             // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = false;

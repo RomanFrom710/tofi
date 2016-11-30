@@ -1,13 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using AutoMapper;
-using BLL.Services.Auth;
-using BLL.Services.Security;
+using BLL.Result;
 using BLL.Services.User;
-using BLL.Services.User.ViewModels;
 using Microsoft.AspNet.Identity;
-using Ninject;
 using TOFI.TransferObjects.Model.Queries;
 using TOFI.TransferObjects.User.Queries;
 
@@ -20,74 +17,76 @@ namespace TOFI.Web.Auth
         IUserLockoutStore<AuthUser, string>,
         IUserTwoFactorStore<AuthUser, string>
     {
-        private static AuthUser _user;
-
-        private readonly IAuthService _authService;
         private readonly IUserService _userService;
-        private readonly ISecurityService _securityService;
 
         public CustomUserStore()
         { // There is complicated classes hierarchy with all that asp.net stuff. Too lazy to use DI here
-            _authService = DependencyResolver.Current.GetService<IAuthService>();
             _userService = DependencyResolver.Current.GetService<IUserService>();
-            _securityService = DependencyResolver.Current.GetService<ISecurityService>();
         }
 
         public Task CreateAsync(AuthUser user)
         {
-            var registerViewModel = Mapper.Map<RegisterViewModel>(user);
-            var result = _userService.Register(registerViewModel);
-            return Task.FromResult(result.ExecutionComleted);
+            var result = _userService.CreateModel(user.Dto);
+            return ProcessCommandResult(result);
         }
 
         public Task UpdateAsync(AuthUser user)
         {
-            _user = user;
-            return Task.FromResult(0);
+            var result = _userService.UpdateModel(user.Dto);
+            return ProcessCommandResult(result);
         }
 
         public Task DeleteAsync(AuthUser user)
         {
-            _user = null;
-            return Task.FromResult(0);
+            var result = _userService.DeleteModel(user.Dto.Id);
+            return ProcessCommandResult(result);
         }
 
         public Task<AuthUser> FindByIdAsync(string userId)
         {
-            _userService.GetModel(new ModelQuery { Id = int.Parse(userId) });
-            return Task.FromResult(_user);
+            var result = _userService.GetModelDto(new ModelQuery {Id = int.Parse(userId)});
+            return Task.FromResult(AuthUser.FromDto(ProcessQueryResult(result)));
         }
 
         public Task<AuthUser> FindByNameAsync(string userName)
         {
-            return Task.FromResult(_user);
+            var result = _userService.GetUserDto(new UserQuery { Email = userName});
+            return Task.FromResult(AuthUser.FromDto(ProcessQueryResult(result)));
         }
+
         public void Dispose()
-        { }
+        {
+            _userService.Dispose();
+        }
 
         #region password
+
         public Task SetPasswordHashAsync(AuthUser user, string passwordHash)
         {
-            user.Password = passwordHash;
-            return Task.FromResult(0);
+            var passwordParts = passwordHash.Split(' ');
+            user.Dto.Auth.PasswordHash = passwordParts[0];
+            user.Dto.Auth.Salt = passwordParts[1];
+            return UpdateAsync(user);
         }
 
         public Task<string> GetPasswordHashAsync(AuthUser user)
         {
-            return Task.FromResult(user.Password);
+            return Task.FromResult($"{user.Dto.Auth.PasswordHash} {user.Dto.Auth.Salt}");
         }
 
         public Task<bool> HasPasswordAsync(AuthUser user)
         {
-            return Task.FromResult(string.IsNullOrEmpty(user.Password));
+            return Task.FromResult(user.HasPassword);
         }
+
         #endregion
 
         #region email
+
         public Task SetEmailAsync(AuthUser user, string email)
         {
             user.Email = email;
-            return Task.FromResult(0);
+            return UpdateAsync(user);
         }
 
         public Task<string> GetEmailAsync(AuthUser user)
@@ -97,22 +96,25 @@ namespace TOFI.Web.Auth
 
         public Task<bool> GetEmailConfirmedAsync(AuthUser user)
         {
-            return Task.FromResult(true);
+            return Task.FromResult(user.EmailConfirmed);
         }
 
         public Task SetEmailConfirmedAsync(AuthUser user, bool confirmed)
         {
-            return Task.FromResult(0);
+            user.Dto.EmailConfirmed = confirmed;
+            return UpdateAsync(user);
         }
 
         public Task<AuthUser> FindByEmailAsync(string email)
         {
-            return Task.FromResult(_user);
+            var result = _userService.GetUserDto(new UserQuery {Email = email});
+            return Task.FromResult(AuthUser.FromDto(ProcessQueryResult(result)));
         }
+
         #endregion
 
-        #region Not needed lockout stuff
-        // It's not used in our app, but somewhy .NET wants us to implement it.
+        #region lockout
+        
         public Task<DateTimeOffset> GetLockoutEndDateAsync(AuthUser user)
         {
             return Task.FromResult(DateTimeOffset.MinValue);
@@ -147,6 +149,7 @@ namespace TOFI.Web.Auth
         {
             return Task.FromResult(0);
         }
+
         #endregion
 
         #region two factor
@@ -160,5 +163,24 @@ namespace TOFI.Web.Auth
             return Task.FromResult(false);
         }
         #endregion
+
+
+        private Task ProcessCommandResult(CommandResult result)
+        {
+            if (result.IsFailed)
+            {
+                Debug.WriteLine(result.Message);
+            }
+            return Task.FromResult(result.ExecutionComleted);
+        }
+
+        private T ProcessQueryResult<T>(QueryResult<T> result)
+        {
+            if (result.IsFailed)
+            {
+                Debug.WriteLine(result.Message);
+            }
+            return result.Value;
+        }
     }
 }
