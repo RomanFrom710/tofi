@@ -1,4 +1,5 @@
-﻿using BLL.Result;
+﻿using System.Threading.Tasks;
+using BLL.Result;
 using BLL.Services.Model;
 using BLL.Services.User.ViewModels;
 using TOFI.TransferObjects.User.DataObjects;
@@ -9,13 +10,13 @@ namespace BLL.Services.User
     public interface IUserService<TUserDto, TUserView> : IModelService<TUserDto, TUserView>
         where TUserDto : UserDto where TUserView : UserViewModel
     {
-        ServiceResult Register(RegisterViewModel model);
-
-        ValueResult<bool> Authenticate(UserQuery query, string password);
-
         QueryResult<TUserDto> GetUserDto(UserQuery query);
 
+        Task<QueryResult<TUserDto>> GetUserDtoAsync(UserQuery query);
+
         QueryResult<TUserView> GetUser(UserQuery query);
+
+        Task<QueryResult<TUserView>> GetUserAsync(UserQuery query);
     }
 
 

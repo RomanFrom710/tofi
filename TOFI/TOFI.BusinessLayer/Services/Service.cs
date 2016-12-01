@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BLL.Result;
 using DAL.Repositories;
 using TOFI.TransferObjects;
@@ -72,6 +73,24 @@ namespace BLL.Services
                 : new QueryResult<TDto>(query, queryRes);
         }
 
+        protected async Task<QueryResult<TDto>> RunQueryAsync<TQuery, TDto>(
+            IQueryRepository<TQuery, TDto> repository, TQuery query)
+            where TQuery : Query where TDto : Dto
+        {
+            TDto queryRes;
+            try
+            {
+                queryRes = await repository.HandleAsync(query);
+            }
+            catch (Exception ex)
+            {
+                return new QueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
+            }
+            return queryRes == null
+                ? new QueryResult<TDto>(query, null).Warning("Query return nothing")
+                : new QueryResult<TDto>(query, queryRes);
+        }
+
         protected ListQueryResult<TDto> RunListQuery<TQuery, TDto>(IListQueryRepository<TQuery, TDto> repository, TQuery query)
             where TQuery : Query where TDto : Dto
         {
@@ -89,12 +108,45 @@ namespace BLL.Services
                 : new ListQueryResult<TDto>(query, queryRes);
         }
 
+        protected async Task<ListQueryResult<TDto>> RunListQueryAsync<TQuery, TDto>(
+            IListQueryRepository<TQuery, TDto> repository, TQuery query)
+            where TQuery : Query where TDto : Dto
+        {
+            IQueryable<TDto> queryRes;
+            try
+            {
+                queryRes = await repository.HandleAsync(query);
+            }
+            catch (Exception ex)
+            {
+                return new ListQueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
+            }
+            return queryRes == null
+                ? new ListQueryResult<TDto>(query, null).Warning("Query return nothing")
+                : new ListQueryResult<TDto>(query, queryRes);
+        }
+
         protected CommandResult ExecuteCommand<TCommand>(ICommandRepository<TCommand> repository, TCommand command)
             where TCommand : Command
         {
             try
             {
                 repository.Execute(command);
+            }
+            catch (Exception ex)
+            {
+                return new CommandResult(command, false).Fatal($"Unhandled exception: {ex.Message}", ex);
+            }
+            return new CommandResult(command);
+        }
+
+        protected async Task<CommandResult> ExecuteCommandAsync<TCommand>(
+            ICommandRepository<TCommand> repository, TCommand command)
+            where TCommand : Command
+        {
+            try
+            {
+                await repository.ExecuteAsync(command);
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Threading.Tasks;
 using AutoMapper;
 using DAL.Contexts;
 using TOFI.TransferObjects.Model.Commands;
@@ -23,6 +24,14 @@ namespace DAL.Repositories.Model
             command.ModelDto.Id = model.Id;
         }
 
+        public async Task ExecuteAsync(CreateModelCommand<TModelDto> command)
+        {
+            var model = Mapper.Map<TModel>(command.ModelDto);
+            ModelsDao.Add(model);
+            await SaveAsync();
+            command.ModelDto.Id = model.Id;
+        }
+
         public void Execute(UpdateModelCommand<TModelDto> command)
         {
             // if we requested a model with certain then
@@ -38,11 +47,30 @@ namespace DAL.Repositories.Model
             Save();
         }
 
+        public async Task ExecuteAsync(UpdateModelCommand<TModelDto> command)
+        {
+            var model = await ModelsDao.FindAsync(command.ModelDto.Id);
+            if (model == null)
+            {
+                throw new ArgumentException("Model with given Id not found");
+            }
+            Mapper.Map(command.ModelDto, model);
+            Context.Entry(model).State = EntityState.Modified;
+            await SaveAsync();
+        }
+
         public void Execute(DeleteModelCommand command)
         {
             var model = new TModel {Id = command.Id};
             ModelsDao.Remove(model);
             Save();
+        }
+
+        public async Task ExecuteAsync(DeleteModelCommand command)
+        {
+            var model = new TModel { Id = command.Id };
+            ModelsDao.Remove(model);
+            await SaveAsync();
         }
     }
 }

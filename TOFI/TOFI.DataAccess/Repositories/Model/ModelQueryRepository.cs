@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DAL.Contexts;
@@ -20,9 +21,19 @@ namespace DAL.Repositories.Model
             return ModelsDao.ProjectTo<TModelDto>();
         }
 
+        public Task<IQueryable<TModelDto>> HandleAsync(AllModelsQuery query)
+        {
+            return Task.FromResult(ModelsDao.ProjectTo<TModelDto>());
+        }
+
         public TModelDto Handle(ModelQuery query)
         {
             return Mapper.Map<TModelDto>(ModelsDao.Find(query.Id));
+        }
+
+        public async Task<TModelDto> HandleAsync(ModelQuery query)
+        {
+            return Mapper.Map<TModelDto>(await ModelsDao.FindAsync(query.Id));
         }
     }
 }

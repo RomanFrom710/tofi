@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DAL.Contexts;
 
 namespace DAL.Repositories
@@ -32,6 +33,11 @@ namespace DAL.Repositories
         public int Save()
         {
             return Context.SaveChanges();
+        }
+
+        public Task<int> SaveAsync()
+        {
+            return Context.SaveChangesAsync();
         }
 
 

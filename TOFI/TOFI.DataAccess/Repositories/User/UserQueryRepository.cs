@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using DAL.Contexts;
 using DAL.Models.User;
@@ -30,6 +32,24 @@ namespace DAL.Repositories.User
             if (!string.IsNullOrEmpty(query.Username))
             {
                 model = ModelsDao.FirstOrDefault(u => u.Username == query.Username);
+            }
+            return model == null ? null : Mapper.Map<TUserDto>(model);
+        }
+
+        public async Task<TUserDto> HandleAsync(UserQuery query)
+        {
+            TUser model = null;
+            if (query.Id.HasValue)
+            {
+                model = await ModelsDao.FindAsync(query.Id.Value);
+            }
+            if (!string.IsNullOrEmpty(query.Email))
+            {
+                model = await ModelsDao.FirstOrDefaultAsync(u => u.Email == query.Email);
+            }
+            if (!string.IsNullOrEmpty(query.Username))
+            {
+                model = await ModelsDao.FirstOrDefaultAsync(u => u.Username == query.Username);
             }
             return model == null ? null : Mapper.Map<TUserDto>(model);
         }
