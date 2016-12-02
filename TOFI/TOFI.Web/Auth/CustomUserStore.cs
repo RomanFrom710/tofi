@@ -15,7 +15,8 @@ namespace TOFI.Web.Auth
         IUserPasswordStore<AuthUser>,
         IUserEmailStore<AuthUser>,
         IUserLockoutStore<AuthUser, string>,
-        IUserTwoFactorStore<AuthUser, string>
+        IUserTwoFactorStore<AuthUser, string>,
+        IUserSecurityStampStore<AuthUser>
     {
         private readonly IUserService _userService;
 
@@ -24,34 +25,34 @@ namespace TOFI.Web.Auth
             _userService = DependencyResolver.Current.GetService<IUserService>();
         }
 
-        public Task CreateAsync(AuthUser user)
+        public async Task CreateAsync(AuthUser user)
         {
-            var result = _userService.CreateModel(user.Dto);
-            return ProcessCommandResult(result);
+            var result = await _userService.CreateModelAsync(user.Dto);
+            ProcessCommandResult(result);
         }
 
-        public Task UpdateAsync(AuthUser user)
+        public async Task UpdateAsync(AuthUser user)
         {
-            var result = _userService.UpdateModel(user.Dto);
-            return ProcessCommandResult(result);
+            var result = await _userService.UpdateModelAsync(user.Dto);
+            ProcessCommandResult(result);
         }
 
-        public Task DeleteAsync(AuthUser user)
+        public async Task DeleteAsync(AuthUser user)
         {
-            var result = _userService.DeleteModel(user.Dto.Id);
-            return ProcessCommandResult(result);
+            var result = await _userService.DeleteModelAsync(user.Dto.Id);
+            ProcessCommandResult(result);
         }
 
-        public Task<AuthUser> FindByIdAsync(string userId)
+        public async Task<AuthUser> FindByIdAsync(string userId)
         {
-            var result = _userService.GetModelDto(new ModelQuery {Id = int.Parse(userId)});
-            return Task.FromResult(AuthUser.FromDto(ProcessQueryResult(result)));
+            var result = await _userService.GetModelDtoAsync(new ModelQuery {Id = int.Parse(userId)});
+            return AuthUser.FromDto(ProcessQueryResult(result));
         }
 
-        public Task<AuthUser> FindByNameAsync(string userName)
+        public async Task<AuthUser> FindByNameAsync(string userName)
         {
-            var result = _userService.GetUserDto(new UserQuery { Email = userName});
-            return Task.FromResult(AuthUser.FromDto(ProcessQueryResult(result)));
+            var result = await _userService.GetUserDtoAsync(new UserQuery { Email = userName});
+            return AuthUser.FromDto(ProcessQueryResult(result));
         }
 
         public void Dispose()
@@ -66,7 +67,7 @@ namespace TOFI.Web.Auth
             var passwordParts = passwordHash.Split(' ');
             user.Dto.Auth.PasswordHash = passwordParts[0];
             user.Dto.Auth.Salt = passwordParts[1];
-            return UpdateAsync(user);
+            return Task.FromResult(0);
         }
 
         public Task<string> GetPasswordHashAsync(AuthUser user)
@@ -86,7 +87,7 @@ namespace TOFI.Web.Auth
         public Task SetEmailAsync(AuthUser user, string email)
         {
             user.Email = email;
-            return UpdateAsync(user);
+            return Task.FromResult(0);
         }
 
         public Task<string> GetEmailAsync(AuthUser user)
@@ -102,13 +103,13 @@ namespace TOFI.Web.Auth
         public Task SetEmailConfirmedAsync(AuthUser user, bool confirmed)
         {
             user.Dto.EmailConfirmed = confirmed;
-            return UpdateAsync(user);
+            return Task.FromResult(0);
         }
 
-        public Task<AuthUser> FindByEmailAsync(string email)
+        public async Task<AuthUser> FindByEmailAsync(string email)
         {
-            var result = _userService.GetUserDto(new UserQuery {Email = email});
-            return Task.FromResult(AuthUser.FromDto(ProcessQueryResult(result)));
+            var result = await _userService.GetUserDtoAsync(new UserQuery {Email = email});
+            return AuthUser.FromDto(ProcessQueryResult(result));
         }
 
         #endregion
@@ -117,42 +118,62 @@ namespace TOFI.Web.Auth
         
         public Task<DateTimeOffset> GetLockoutEndDateAsync(AuthUser user)
         {
-            return Task.FromResult(DateTimeOffset.MinValue);
+            return Task.FromResult(user.Dto.Auth.LockoutDateUtc ?? DateTimeOffset.MinValue);
         }
 
         public Task SetLockoutEndDateAsync(AuthUser user, DateTimeOffset lockoutEnd)
         {
+            user.Dto.Auth.LockoutDateUtc = lockoutEnd;
             return Task.FromResult(0);
         }
 
         public Task<int> IncrementAccessFailedCountAsync(AuthUser user)
         {
-            return Task.FromResult(0);
+            user.Dto.Auth.AccessFailedCnt++;
+            return Task.FromResult(user.Dto.Auth.AccessFailedCnt);
         }
 
         public Task ResetAccessFailedCountAsync(AuthUser user)
         {
+            user.Dto.Auth.AccessFailedCnt = 0;
             return Task.FromResult(0);
         }
 
         public Task<int> GetAccessFailedCountAsync(AuthUser user)
         {
-            return Task.FromResult(0);
+            return Task.FromResult(user.Dto.Auth.AccessFailedCnt);
         }
 
         public Task<bool> GetLockoutEnabledAsync(AuthUser user)
         {
-            return Task.FromResult(false);
+            return Task.FromResult(user.Dto.Auth.LockoutEnabled);
         }
 
         public Task SetLockoutEnabledAsync(AuthUser user, bool enabled)
         {
+            user.Dto.Auth.LockoutEnabled = enabled;
             return Task.FromResult(0);
         }
 
         #endregion
 
+        #region security stamp
+
+        public Task SetSecurityStampAsync(AuthUser user, string stamp)
+        {
+            user.Dto.Auth.SecurityStamp = stamp;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetSecurityStampAsync(AuthUser user)
+        {
+            return Task.FromResult(user.Dto.Auth.SecurityStamp);
+        }
+
+        #endregion
+
         #region two factor
+
         public Task SetTwoFactorEnabledAsync(AuthUser user, bool enabled)
         {
             return Task.FromResult(0);
@@ -162,16 +183,16 @@ namespace TOFI.Web.Auth
         {
             return Task.FromResult(false);
         }
+
         #endregion
 
 
-        private Task ProcessCommandResult(CommandResult result)
+        private void ProcessCommandResult(CommandResult result)
         {
             if (result.IsFailed)
             {
                 Debug.WriteLine(result.Message);
             }
-            return Task.FromResult(result.ExecutionComleted);
         }
 
         private T ProcessQueryResult<T>(QueryResult<T> result)

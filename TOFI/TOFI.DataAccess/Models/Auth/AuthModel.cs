@@ -10,16 +10,20 @@ namespace DAL.Models.Auth
 
         public string Salt { get; set; }
 
+        public string SecurityStamp { get; set; }
+
+        public bool LockoutEnabled { get; set; }
+
         public int AccessFailedCnt { get; set; }
 
-        public DateTime? LockoutDateUtc { get; set; }
+        public DateTimeOffset? LockoutDateUtc { get; set; }
 
         public int AccessGrantedTotal { get; set; }
 
-        public DateTime? LastAccessGrantedDateUtc { get; set; }
+        public DateTimeOffset? LastAccessGrantedDateUtc { get; set; }
 
         public int AccessFailedTotal { get; set; }
 
-        public DateTime? LastAccessFailedDateUtc { get; set; }
+        public DateTimeOffset? LastAccessFailedDateUtc { get; set; }
     }
 }

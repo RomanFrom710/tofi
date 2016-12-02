@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -36,9 +37,9 @@ namespace TOFI.Web
             manager.PasswordHasher = new CustomPasswordHasher();
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = false;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+            manager.UserLockoutEnabledByDefault = true;
+            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(30);
+            manager.MaxFailedAccessAttemptsBeforeLockout = 7;
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
@@ -47,6 +48,24 @@ namespace TOFI.Web
                     new DataProtectorTokenProvider<AuthUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+
+        public override async Task<bool> CheckPasswordAsync(AuthUser user, string password)
+        {
+            var res = await base.CheckPasswordAsync(user, password);
+            if (res)
+            {
+                user.Dto.Auth.AccessGrantedTotal++;
+                user.Dto.Auth.LastAccessGrantedDateUtc = DateTime.UtcNow;
+            }
+            else
+            {
+                user.Dto.Auth.AccessFailedTotal++;
+                user.Dto.Auth.LastAccessFailedDateUtc = DateTime.UtcNow;
+            }
+            await Store.UpdateAsync(user);
+            return res;
         }
     }
 
