@@ -1,6 +1,9 @@
 ﻿using System.Data.Entity;
 using DAL.Models.Auth;
 using DAL.Models.User;
+using DAL.Models.Common;
+using DAL.Models.Credits.BankCredits;
+using DAL.Models.Credits;
 
 namespace DAL.Contexts
 {
@@ -10,10 +13,18 @@ namespace DAL.Contexts
 
         public DbSet<UserModel> Users { get; set; }
 
+        public DbSet<CurrencyModel> Currency { get; set; }
 
-        public TofiContext() : base("name=TofiContext")
+        public DbSet<PriceModel> Prices { get; set; }
+
+        public DbSet<BankCreditModel> BankCredits { get; set; }
+
+        public DbSet<CreditAccountModel> CreditAccounts { get; set; }
+
+
+        public TofiContext() : base("TofiContext")
         {
-            
+            Database.Initialize(false);
         }
     }
 }
