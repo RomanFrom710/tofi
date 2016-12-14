@@ -46,8 +46,12 @@
   <ItemGroup>
     <Compile Include="Admin\DataObjects\AdminDto.cs" />
     <Compile Include="Auth\DataObjects\AuthDto.cs" />
+    <Compile Include="Credits\BankCredit\DataObjects\BankCreditDTO.cs" />
     <Compile Include="Client\DataObjects\ClientDto.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="Common\DataObjects\CurrencyDTO.cs" />
+    <Compile Include="Common\DataObjects\PriceDTO.cs" />
+    <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDTO.cs" />
     <Compile Include="Dto.cs" />
     <Compile Include="Employee\DataObjects\EmployeeDto.cs" />
     <Compile Include="Model\Commands\CreateModelCommand.cs" />
@@ -68,6 +72,12 @@
     <Folder Include="Auth\Queries\" />
     <Folder Include="Client\Commands\" />
     <Folder Include="Client\Queries\" />
+    <Folder Include="Common\Commands\" />
+    <Folder Include="Common\Queries\" />
+    <Folder Include="Credits\BankCredit\Commands\" />
+    <Folder Include="Credits\BankCredit\Queries\" />
+    <Folder Include="Credits\CreditAccount\Commands\" />
+    <Folder Include="Credits\CreditAccount\Queries\" />
     <Folder Include="Employee\Commands\" />
     <Folder Include="Employee\Queries\" />
     <Folder Include="User\Commands\" />
