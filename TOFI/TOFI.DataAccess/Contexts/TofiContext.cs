@@ -4,6 +4,9 @@ using DAL.Models.User;
 using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits;
 using DAL.Models.Credits;
+using DAL.Models.Credits.BankCredits.CreditCondition;
+using DAL.Models.Credits.BankCredits.CreditRequirements;
+using DAL.Models.Credits.BankCredits.CreditType;
 
 namespace DAL.Contexts
 {
@@ -19,8 +22,13 @@ namespace DAL.Contexts
 
         public DbSet<BankCreditModel> BankCredits { get; set; }
 
-        public DbSet<CreditAccountModel> CreditAccounts { get; set; }
+        public DbSet<CreditConditionModel> CreditConditions { get; set; }
 
+        public DbSet<CreditRequirementModel> CreditRequirements { get; set; }
+
+        public DbSet<CreditTypeModel> CreditTypes { get; set; }
+
+        public DbSet<CreditAccountModel> CreditAccounts { get; set; }
 
         public TofiContext() : base("TofiContext")
         {

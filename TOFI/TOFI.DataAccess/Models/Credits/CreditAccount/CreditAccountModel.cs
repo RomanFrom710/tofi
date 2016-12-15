@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Models.Credits.BankCredits;
 
 namespace DAL.Models.Credits
 {
@@ -23,5 +24,7 @@ namespace DAL.Models.Credits
         public virtual PriceModel RemainDebt { get; set; }
 
         public virtual IUserModel User { get; set; }
+
+        public virtual IBankCreditModel BankCredit { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DAL.Models.Common;
+using DAL.Models.Credits.BankCredits;
 using DAL.Models.User;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,11 @@ namespace DAL.Models.Credits
         PriceModel TotalDebt { get; set; }
 
         PriceModel RemainDebt { get; set; }
-
-        double Persent { get; set; }
-
+        
         PriceModel FinesForOverdue { get; set; }
 
         IUserModel User { get; set; }
 
+        IBankCreditModel BankCredit { get; set; }
     }
 }

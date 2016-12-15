@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TOFI.TransferObjects.Common.DataObjects;
+using TOFI.TransferObjects.Credits.BankCredits.BankCredit.DataObjects;
 using TOFI.TransferObjects.Model.DataObjects;
 using TOFI.TransferObjects.User.DataObjects;
 
@@ -22,5 +23,7 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
         public PriceDTO RemainDebt { get; set; }
 
         public UserDto User { get; set; }
+
+        public BankCreditDTO BankCredit { get; set; }
     }
 }
