@@ -1,0 +1,10 @@
+﻿<nav>
+    <ul class="nav nav-pills nav-stacked">
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+            @Html.ActionLink("Изменить данные", "Index", "Client")
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Credit" ? "active" : "")">
+            @Html.ActionLink("Кредит", "Credit", "Client")
+        </li>
+    </ul>
+</nav>

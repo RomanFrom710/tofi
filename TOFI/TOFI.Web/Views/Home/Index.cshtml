@@ -6,3 +6,10 @@
     <h1>Home Chaley Bank</h1>
     <p>Добро пожаловать в наш банк</p>
 </div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="jumbotron text-center">
+        @Html.ActionLink("Войти", "Index", "Client", null, new { @class = "btn btn-primary btn-xl" })
+    </div>
+}
