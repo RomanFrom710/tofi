@@ -1,0 +1,31 @@
+﻿@model BLL.Services.Client.ViewModels.ClientViewModel
+@{
+    ViewBag.Title = "Личный кабинет";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_ClientMenuPartial")
+    </div>
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+        
+        @using (Html.BeginForm("Index", "Client", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName)
+                @Html.TextBoxFor(model => model.FirstName, new { @class="form-control" })
+                @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @class="text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address)
+                @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Address, string.Empty, new { @class = "text-danger" })
+            </div>
+
+            <button class="btn btn-primary" type="submit">Сохранить</button>
+        }
+    </div>
+</div>

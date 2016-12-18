@@ -1,0 +1,14 @@
+﻿@model BLL.Services.Client.ViewModels.ClientViewModel
+@{
+    ViewBag.Title = "Credit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_ClientMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
