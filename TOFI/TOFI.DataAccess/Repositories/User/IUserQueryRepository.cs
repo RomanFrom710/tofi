@@ -4,14 +4,8 @@ using TOFI.TransferObjects.User.Queries;
 
 namespace DAL.Repositories.User
 {
-    public interface IUserQueryRepository<TUserDto> : IModelQueryRepository<TUserDto>,
-        IQueryRepository<UserQuery, TUserDto>
-        where TUserDto : UserDto
-    {
-    }
-
-
-    public interface IUserQueryRepository : IUserQueryRepository<UserDto>
+    public interface IUserQueryRepository : IModelQueryRepository<UserDto>,
+        IQueryRepository<UserQuery, UserDto>
     {
     }
 }

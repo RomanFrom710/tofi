@@ -5,16 +5,7 @@ using TOFI.TransferObjects.User.DataObjects;
 
 namespace DAL.Repositories.User
 {
-    public abstract class UserCommandRepository<TUser, TUserDto> : ModelCommandRepository<TUser, TUserDto>, IUserCommandRepository<TUserDto>
-        where TUser : UserModel, new() where TUserDto : UserDto
-    {
-        protected UserCommandRepository(TofiContext context) : base(context)
-        {
-        }
-    }
-
-
-    public class UserCommandRepository : UserCommandRepository<UserModel, UserDto>, IUserCommandRepository
+    public class UserCommandRepository : ModelCommandRepository<UserModel, UserDto>, IUserCommandRepository
     {
         public UserCommandRepository(TofiContext context) : base(context)
         {

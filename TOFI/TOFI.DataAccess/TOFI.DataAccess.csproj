@@ -91,14 +91,9 @@
     <Compile Include="Repositories\Credits\CreditAccount\ICreditAccountQueryRepository.cs" />
     <Compile Include="Repositories\IListQueryRepository.cs" />
     <Compile Include="Mapping\MapperConfig.cs" />
-    <Compile Include="Models\Admin\AdminModel.cs" />
     <Compile Include="Models\Client\ClientModel.cs" />
     <Compile Include="Models\Employee\EmployeeModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
-    <Compile Include="Repositories\Admin\AdminCommandRepository.cs" />
-    <Compile Include="Repositories\Admin\AdminQueryRepository.cs" />
-    <Compile Include="Repositories\Admin\IAdminCommandRepository.cs" />
-    <Compile Include="Repositories\Admin\IAdminQueryRepository.cs" />
     <Compile Include="Repositories\Client\ClientCommandRepository.cs" />
     <Compile Include="Repositories\Client\ClientQueryRepository.cs" />
     <Compile Include="Repositories\Client\IClientCommandRepository.cs" />

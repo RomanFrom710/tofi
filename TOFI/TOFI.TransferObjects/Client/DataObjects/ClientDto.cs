@@ -1,8 +1,8 @@
-﻿using TOFI.TransferObjects.User.DataObjects;
+﻿using TOFI.TransferObjects.Model.DataObjects;
 
 namespace TOFI.TransferObjects.Client.DataObjects
 {
-    public class ClientDto : UserDto
+    public class ClientDto : ModelDto
     { 
     }
 }

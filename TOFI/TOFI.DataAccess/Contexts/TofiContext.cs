@@ -1,11 +1,13 @@
 ﻿using System.Data.Entity;
 using DAL.Models.Auth;
+using DAL.Models.Client;
 using DAL.Models.User;
 using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Credits.CreditAccount;
+using DAL.Models.Employee;
 
 namespace DAL.Contexts
 {
@@ -21,6 +23,10 @@ namespace DAL.Contexts
 
         public DbSet<UserModel> Users { get; set; }
 
+        public DbSet<ClientModel> Clients { get; set; }
+
+        public DbSet<EmployeeModel> Employees { get; set; }
+
         public DbSet<CurrencyModel> Currency { get; set; }
 
         public DbSet<PriceModel> Prices { get; set; }
@@ -33,6 +39,7 @@ namespace DAL.Contexts
 
         public DbSet<CreditAccountModel> CreditAccounts { get; set; }
 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -40,6 +47,14 @@ namespace DAL.Contexts
             modelBuilder.Entity<AuthModel>()
                 .HasRequired(a => a.User)
                 .WithRequiredPrincipal(u => u.Auth);
+
+            modelBuilder.Entity<ClientModel>()
+                .HasRequired(c => c.User)
+                .WithOptional(u => u.Client);
+
+            modelBuilder.Entity<EmployeeModel>()
+                .HasRequired(e => e.User)
+                .WithOptional(u => u.Employee);
 
             modelBuilder.Entity<PriceModel>()
                 .HasRequired(p => p.Currency);
