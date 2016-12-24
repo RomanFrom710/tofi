@@ -1,5 +1,4 @@
-﻿using TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects;
-using TOFI.TransferObjects.Model.DataObjects;
+﻿using TOFI.TransferObjects.Model.DataObjects;
 
 namespace TOFI.TransferObjects.Credits.BankCredits.CreditRequirements.DataObjects
 {
@@ -8,7 +7,5 @@ namespace TOFI.TransferObjects.Credits.BankCredits.CreditRequirements.DataObject
         public string Description { get; set; }
 
         public string ExpectedValue { get; set; }
-
-        public CreditTypeDto CreditType { get; set; }
     }
 }
