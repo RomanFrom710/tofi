@@ -1,5 +1,5 @@
 ﻿using DAL.Repositories.Model;
-using TOFI.TransferObjects.Common.DataObjects;
+using TOFI.TransferObjects.Common.Currency.DataObjects;
 
 namespace DAL.Repositories.Common.Currency
 {
