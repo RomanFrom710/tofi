@@ -46,15 +46,15 @@
   <ItemGroup>
     <Compile Include="Admin\DataObjects\AdminDto.cs" />
     <Compile Include="Auth\DataObjects\AuthDto.cs" />
-    <Compile Include="Credits\BankCredits\BankCredit\DataObjects\BankCreditDTO.cs" />
+    <Compile Include="Credits\BankCredits\BankCredit\DataObjects\BankCreditDto.cs" />
     <Compile Include="Client\DataObjects\ClientDto.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="Common\DataObjects\CurrencyDTO.cs" />
-    <Compile Include="Common\DataObjects\PriceDTO.cs" />
-    <Compile Include="Credits\BankCredits\CreditConditions\DataObjects\CreditConditionDTO.cs" />
-    <Compile Include="Credits\BankCredits\CreditRequirements\DataObjects\CreditRequirementDTO.cs" />
-    <Compile Include="Credits\BankCredits\CreditTypes\DataObjects\CreditTypeDTO.cs" />
-    <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDTO.cs" />
+    <Compile Include="Common\DataObjects\CurrencyDto.cs" />
+    <Compile Include="Common\DataObjects\PriceDto.cs" />
+    <Compile Include="Credits\BankCredits\CreditConditions\DataObjects\CreditConditionDto.cs" />
+    <Compile Include="Credits\BankCredits\CreditRequirements\DataObjects\CreditRequirementDto.cs" />
+    <Compile Include="Credits\BankCredits\CreditTypes\DataObjects\CreditTypeDto.cs" />
+    <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDto.cs" />
     <Compile Include="Dto.cs" />
     <Compile Include="Employee\DataObjects\EmployeeDto.cs" />
     <Compile Include="Model\Commands\CreateModelCommand.cs" />

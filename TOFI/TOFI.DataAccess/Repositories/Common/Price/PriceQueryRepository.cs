@@ -5,7 +5,7 @@ using DAL.Contexts;
 
 namespace DAL.Repositories.Common.Price
 {
-    public class PriceQueryRepository : ModelQueryRepository<PriceModel, PriceDTO>, IPriceQueryRepository
+    public class PriceQueryRepository : ModelQueryRepository<PriceModel, PriceDto>, IPriceQueryRepository
     {
         public PriceQueryRepository(TofiContext context) : base(context)
         {

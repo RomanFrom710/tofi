@@ -5,7 +5,7 @@ using DAL.Contexts;
 
 namespace DAL.Repositories.Common.Currency
 {
-    public class CurrencyQueryRepository : ModelQueryRepository<CurrencyModel, CurrencyDTO>, ICurrencyQueryRepository
+    public class CurrencyQueryRepository : ModelQueryRepository<CurrencyModel, CurrencyDto>, ICurrencyQueryRepository
     {
         public CurrencyQueryRepository(TofiContext context) : base(context)
         {
