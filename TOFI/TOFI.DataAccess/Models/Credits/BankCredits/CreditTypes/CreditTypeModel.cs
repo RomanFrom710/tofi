@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Models.Credits.BankCredits.CreditCondition;
-using DAL.Models.Credits.BankCredits.CreditRequirements;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models.Credits.BankCredits.BankCredit;
+using DAL.Models.Credits.BankCredits.CreditConditions;
+using DAL.Models.Credits.BankCredits.CreditRequirements;
 
-namespace DAL.Models.Credits.BankCredits.CreditType
+namespace DAL.Models.Credits.BankCredits.CreditTypes
 {
     [Table("CreditTypes")]
     public class CreditTypeModel : Model
     {
-        
         public string Description { get; set; }
 
         public double InterestRate { get; set; }

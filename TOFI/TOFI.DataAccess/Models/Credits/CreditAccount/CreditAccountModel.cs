@@ -1,14 +1,9 @@
-﻿using DAL.Models.Common;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models.Common;
+using DAL.Models.Credits.BankCredits.BankCredit;
 using DAL.Models.User;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Models.Credits.BankCredits;
 
-namespace DAL.Models.Credits
+namespace DAL.Models.Credits.CreditAccount
 {
     [Table("CreditAccounts")]
     public class CreditAccountModel : Model
@@ -30,7 +25,5 @@ namespace DAL.Models.Credits
         public virtual BankCreditModel BankCredit { get; set; }
 
         #endregion
-
-
     }
 }

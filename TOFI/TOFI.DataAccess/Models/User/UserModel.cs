@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Models.Auth;
-using DAL.Models.Credits;
 using System.Collections.Generic;
+using DAL.Models.Credits.CreditAccount;
 
 namespace DAL.Models.User
 {
@@ -27,10 +27,5 @@ namespace DAL.Models.User
         public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 
         #endregion
-
-        public UserModel()
-        {
-            EmailConfirmed = false;
-        }
     }
 }

@@ -99,9 +99,7 @@
     <Compile Include="Models\Admin\AdminModel.cs" />
     <Compile Include="Models\Client\ClientModel.cs" />
     <Compile Include="Models\Employee\EmployeeModel.cs" />
-    <Compile Include="Models\User\IUserModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
-    <Compile Include="Models\IModel.cs" />
     <Compile Include="Repositories\Admin\AdminCommandRepository.cs" />
     <Compile Include="Repositories\Admin\AdminQueryRepository.cs" />
     <Compile Include="Repositories\Admin\IAdminCommandRepository.cs" />
