@@ -57,12 +57,15 @@ namespace DAL.Contexts
                 .WithOptional(u => u.Employee);
 
             modelBuilder.Entity<PriceModel>()
-                .HasRequired(p => p.Currency);
+                .HasRequired(p => p.Currency)
+                .WithRequiredPrincipal();
             
             modelBuilder.Entity<CreditConditionModel>()
-                .HasRequired(c => c.MinCreditSum);
+                .HasRequired(c => c.MinCreditSum)
+                .WithRequiredPrincipal();
             modelBuilder.Entity<CreditConditionModel>()
-                .HasRequired(c => c.MaxCreditSum);
+                .HasRequired(c => c.MaxCreditSum)
+                .WithRequiredPrincipal();
 
             modelBuilder.Entity<CreditTypeModel>()
                 .HasMany(t => t.CreditConditions)
@@ -75,11 +78,14 @@ namespace DAL.Contexts
                 .WithRequired(a => a.CreditType);
 
             modelBuilder.Entity<CreditAccountModel>()
-                .HasRequired(a => a.TotalDebt);
+                .HasRequired(a => a.TotalDebt)
+                .WithRequiredPrincipal();
             modelBuilder.Entity<CreditAccountModel>()
-                .HasRequired(a => a.FinesForOverdue);
+                .HasRequired(a => a.FinesForOverdue)
+                .WithRequiredPrincipal();
             modelBuilder.Entity<CreditAccountModel>()
-                .HasRequired(a => a.RemainDebt);
+                .HasRequired(a => a.RemainDebt)
+                .WithRequiredPrincipal();
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.User)
                 .WithMany(u => u.CreditAccounts);
