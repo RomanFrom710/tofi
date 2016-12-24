@@ -57,7 +57,6 @@
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\Common\CurrencyModel.cs" />
     <Compile Include="Models\Common\PriceModel.cs" />
-    <Compile Include="Models\Credits\BankCredits\BankCredit\BankCreditModel.cs" />
     <Compile Include="Models\Credits\BankCredits\CreditConditions\CreditConditionModel.cs" />
     <Compile Include="Models\Credits\BankCredits\CreditRequirements\CreditRequirementModel.cs" />
     <Compile Include="Models\Credits\BankCredits\CreditTypes\CreditTypeModel.cs" />
@@ -74,10 +73,6 @@
     <Compile Include="Repositories\Common\Price\IPriceQueryRepository.cs" />
     <Compile Include="Repositories\Common\Price\PriceCommandRepository.cs" />
     <Compile Include="Repositories\Common\Price\PriceQueryRepository.cs" />
-    <Compile Include="Repositories\Credits\BankCredits\BankCredit\BankCreditCommandRepository.cs" />
-    <Compile Include="Repositories\Credits\BankCredits\BankCredit\BankCreditQueryRepository.cs" />
-    <Compile Include="Repositories\Credits\BankCredits\BankCredit\IBankCreditCommandRepository.cs" />
-    <Compile Include="Repositories\Credits\BankCredits\BankCredit\IBankCreditQueryRepository.cs" />
     <Compile Include="Repositories\Credits\BankCredits\CreditConditions\CreditConditionCommandRepository.cs" />
     <Compile Include="Repositories\Credits\BankCredits\CreditConditions\CreditConditionQueryRepository.cs" />
     <Compile Include="Repositories\Credits\BankCredits\CreditConditions\ICreditConditionCommandRepository.cs" />

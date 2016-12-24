@@ -2,7 +2,6 @@
 using DAL.Models.Auth;
 using DAL.Models.User;
 using DAL.Models.Common;
-using DAL.Models.Credits.BankCredits.BankCredit;
 using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.BankCredits.CreditTypes;
@@ -26,8 +25,6 @@ namespace DAL.Contexts
 
         public DbSet<PriceModel> Prices { get; set; }
 
-        public DbSet<BankCreditModel> BankCredits { get; set; }
-
         public DbSet<CreditConditionModel> CreditConditions { get; set; }
 
         public DbSet<CreditRequirementModel> CreditRequirements { get; set; }
@@ -47,13 +44,6 @@ namespace DAL.Contexts
             modelBuilder.Entity<PriceModel>()
                 .HasRequired(p => p.Currency);
             
-            modelBuilder.Entity<BankCreditModel>()
-                .HasRequired(c => c.CreditType)
-                .WithMany(t => t.BankCredits);
-            modelBuilder.Entity<BankCreditModel>()
-                .HasRequired(c => c.CreditAccount)
-                .WithRequiredDependent(a => a.BankCredit);
-
             modelBuilder.Entity<CreditConditionModel>()
                 .HasRequired(c => c.MinCreditSum);
             modelBuilder.Entity<CreditConditionModel>()
@@ -65,6 +55,9 @@ namespace DAL.Contexts
             modelBuilder.Entity<CreditTypeModel>()
                 .HasMany(t => t.CreditRequirements)
                 .WithRequired(r => r.CreditType);
+            modelBuilder.Entity<CreditTypeModel>()
+                .HasMany(t => t.CreditAccounts)
+                .WithRequired(a => a.CreditType);
 
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.TotalDebt);
