@@ -40,7 +40,7 @@ namespace DAL.Repositories.Model
             var model = ModelsDao.Find(command.ModelDto.Id);
             if (model == null)
             {
-                throw new ArgumentException("Model with given Id not found");
+                throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
             }
             Mapper.Map(command.ModelDto, model);
             Context.Entry(model).State = EntityState.Modified;
@@ -52,7 +52,7 @@ namespace DAL.Repositories.Model
             var model = await ModelsDao.FindAsync(command.ModelDto.Id);
             if (model == null)
             {
-                throw new ArgumentException("Model with given Id not found");
+                throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
             }
             Mapper.Map(command.ModelDto, model);
             Context.Entry(model).State = EntityState.Modified;
@@ -61,14 +61,22 @@ namespace DAL.Repositories.Model
 
         public void Execute(DeleteModelCommand command)
         {
-            var model = new TModel {Id = command.Id};
+            var model = ModelsDao.Find(command.Id);
+            if (model == null)
+            {
+                throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
+            }
             ModelsDao.Remove(model);
             Save();
         }
 
         public async Task ExecuteAsync(DeleteModelCommand command)
         {
-            var model = new TModel { Id = command.Id };
+            var model = await ModelsDao.FindAsync(command.Id);
+            if (model == null)
+            {
+                throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
+            }
             ModelsDao.Remove(model);
             await SaveAsync();
         }
