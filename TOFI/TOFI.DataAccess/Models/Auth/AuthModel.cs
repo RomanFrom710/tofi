@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DAL.Models.User;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models.Auth
 {
     [Table("AuthData")]
-    public class AuthModel : Model, IAuthModel
+    public class AuthModel : Model
     {
         public string PasswordHash { get; set; }
 
@@ -25,5 +26,12 @@ namespace DAL.Models.Auth
         public int AccessFailedTotal { get; set; }
 
         public DateTimeOffset? LastAccessFailedDateUtc { get; set; }
+
+        #region Virtual Properties
+
+        public virtual UserModel User { get; set; }
+
+        #endregion
+
     }
 }

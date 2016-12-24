@@ -11,20 +11,26 @@ using DAL.Models.Credits.BankCredits;
 namespace DAL.Models.Credits
 {
     [Table("CreditAccounts")]
-    public class CreditAccountModel : Model, ICreditAccountModel
+    public class CreditAccountModel : Model
     {
         public string CreditAgreementNumber { get; set; }
+
+        public double Percent { get; set; }
+
+        #region Virtual Properties
 
         public virtual PriceModel TotalDebt { get; set; }
 
         public virtual PriceModel FinesForOverdue { get; set; }
 
-        public double Persent { get; set; }
-
         public virtual PriceModel RemainDebt { get; set; }
 
-        public virtual IUserModel User { get; set; }
+        public virtual UserModel User { get; set; }
 
-        public virtual IBankCreditModel BankCredit { get; set; }
+        public virtual BankCreditModel BankCredit { get; set; }
+
+        #endregion
+
+
     }
 }

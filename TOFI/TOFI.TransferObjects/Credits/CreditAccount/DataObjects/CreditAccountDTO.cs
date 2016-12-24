@@ -18,7 +18,7 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
 
         public PriceDTO FinesForOverdue { get; set; }
 
-        public double Persent { get; set; }
+        public double Percent { get; set; }
 
         public PriceDTO RemainDebt { get; set; }
 
