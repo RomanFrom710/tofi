@@ -1,11 +1,11 @@
 ﻿using DAL.Contexts;
 using DAL.Models.Employee;
-using DAL.Repositories.User;
+using DAL.Repositories.Model;
 using TOFI.TransferObjects.Employee.DataObjects;
 
 namespace DAL.Repositories.Employee
 {
-    public class EmployeeQueryRepository : UserQueryRepository<EmployeeModel, EmployeeDto>, IEmployeeQueryRepository
+    public class EmployeeQueryRepository : ModelQueryRepository<EmployeeModel, EmployeeDto>, IEmployeeQueryRepository
     {
         public EmployeeQueryRepository(TofiContext context) : base(context)
         {

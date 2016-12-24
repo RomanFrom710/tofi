@@ -52,9 +52,6 @@
     <Compile Include="Result\QueryResult.cs" />
     <Compile Include="Result\ServiceResult.cs" />
     <Compile Include="Result\ValueResult.cs" />
-    <Compile Include="Services\Admin\AdminService.cs" />
-    <Compile Include="Services\Admin\IAdminService.cs" />
-    <Compile Include="Services\Admin\ViewModels\AdminViewModel.cs" />
     <Compile Include="Services\Auth\AuthService.cs" />
     <Compile Include="Services\Auth\IAuthService.cs" />
     <Compile Include="Services\Auth\ViewModels\AuthViewModel.cs" />

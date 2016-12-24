@@ -1,4 +1,6 @@
 ﻿using BLL.Services.Auth.ViewModels;
+using BLL.Services.Client.ViewModels;
+using BLL.Services.Employee.ViewModels;
 using BLL.Services.Model.ViewModels;
 
 namespace BLL.Services.User.ViewModels
@@ -18,5 +20,9 @@ namespace BLL.Services.User.ViewModels
         public string LastName { get; set; }
 
         public AuthViewModel Auth { get; set; }
+
+        public ClientViewModel Client { get; set; }
+
+        public EmployeeViewModel Employee { get; set; }
     }
 }

@@ -44,11 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin\DataObjects\AdminDto.cs" />
     <Compile Include="Auth\DataObjects\AuthDto.cs" />
     <Compile Include="Common\Currency\DataObjects\CurrencyDto.cs" />
     <Compile Include="Common\Price\DataObjects\PriceDto.cs" />
-    <Compile Include="Credits\BankCredits\BankCredit\DataObjects\BankCreditDto.cs" />
     <Compile Include="Client\DataObjects\ClientDto.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Credits\BankCredits\CreditConditions\DataObjects\CreditConditionDto.cs" />
@@ -69,8 +67,6 @@
     <Compile Include="User\Queries\UserQuery.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Admin\Commands\" />
-    <Folder Include="Admin\Queries\" />
     <Folder Include="Auth\Commands\" />
     <Folder Include="Auth\Queries\" />
     <Folder Include="Client\Commands\" />
@@ -79,8 +75,6 @@
     <Folder Include="Common\Currency\Queries\" />
     <Folder Include="Common\Price\Commands\" />
     <Folder Include="Common\Price\Queries\" />
-    <Folder Include="Credits\BankCredits\BankCredit\Commands\" />
-    <Folder Include="Credits\BankCredits\BankCredit\Queries\" />
     <Folder Include="Credits\BankCredits\CreditConditions\Commands\" />
     <Folder Include="Credits\BankCredits\CreditConditions\Queries\" />
     <Folder Include="Credits\BankCredits\CreditRequirements\Commands\" />

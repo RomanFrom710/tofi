@@ -10,17 +10,16 @@ using TOFI.TransferObjects.User.Queries;
 
 namespace DAL.Repositories.User
 {
-    public abstract class UserQueryRepository<TUser, TUserDto> : ModelQueryRepository<TUser, TUserDto>, IUserQueryRepository<TUserDto>
-        where TUser : UserModel where TUserDto : UserDto
+    public class UserQueryRepository : ModelQueryRepository<UserModel, UserDto>, IUserQueryRepository
     {
-        protected UserQueryRepository(TofiContext context) : base(context)
+        public UserQueryRepository(TofiContext context) : base(context)
         {
         }
 
 
-        public TUserDto Handle(UserQuery query)
+        public UserDto Handle(UserQuery query)
         {
-            TUser model = null;
+            UserModel model = null;
             if (query.Id.HasValue)
             {
                 model = ModelsDao.Find(query.Id.Value);
@@ -33,12 +32,12 @@ namespace DAL.Repositories.User
             {
                 model = ModelsDao.FirstOrDefault(u => u.Username == query.Username);
             }
-            return model == null ? null : Mapper.Map<TUserDto>(model);
+            return model == null ? null : Mapper.Map<UserDto>(model);
         }
 
-        public async Task<TUserDto> HandleAsync(UserQuery query)
+        public async Task<UserDto> HandleAsync(UserQuery query)
         {
-            TUser model = null;
+            UserModel model = null;
             if (query.Id.HasValue)
             {
                 model = await ModelsDao.FindAsync(query.Id.Value);
@@ -51,15 +50,7 @@ namespace DAL.Repositories.User
             {
                 model = await ModelsDao.FirstOrDefaultAsync(u => u.Username == query.Username);
             }
-            return model == null ? null : Mapper.Map<TUserDto>(model);
-        }
-    }
-
-
-    public class UserQueryRepository : UserQueryRepository<UserModel, UserDto>, IUserQueryRepository
-    {
-        public UserQueryRepository(TofiContext context) : base(context)
-        {
+            return model == null ? null : Mapper.Map<UserDto>(model);
         }
     }
 }

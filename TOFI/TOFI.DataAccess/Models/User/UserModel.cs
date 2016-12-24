@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Models.Auth;
 using System.Collections.Generic;
+using DAL.Models.Client;
 using DAL.Models.Credits.CreditAccount;
+using DAL.Models.Employee;
 
 namespace DAL.Models.User
 {
@@ -23,6 +25,10 @@ namespace DAL.Models.User
         #region Virtual Properties
 
         public virtual AuthModel Auth { get; set; }
+
+        public virtual ClientModel Client { get; set; }
+
+        public virtual EmployeeModel Employee { get; set; }
 
         public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 

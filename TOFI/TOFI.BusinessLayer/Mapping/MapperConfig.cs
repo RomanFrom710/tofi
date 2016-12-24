@@ -1,9 +1,6 @@
 ﻿using AutoMapper.Configuration;
 using AutoMapper.Mappers;
 using BLL.Services.User.ViewModels;
-using TOFI.TransferObjects.Admin.DataObjects;
-using TOFI.TransferObjects.Client.DataObjects;
-using TOFI.TransferObjects.Employee.DataObjects;
 using TOFI.TransferObjects.User.DataObjects;
 
 namespace BLL.Mapping
@@ -20,9 +17,6 @@ namespace BLL.Mapping
             config.AddConditionalObjectMapper().Where((s, d) => s.Name.Replace("Dto", "ViewModel") == d.Name);
 
             config.CreateMap<RegisterViewModel, UserDto>();
-            config.CreateMap<RegisterViewModel, ClientDto>();
-            config.CreateMap<RegisterViewModel, EmployeeDto>();
-            config.CreateMap<RegisterViewModel, AdminDto>();
         }
     }
 }

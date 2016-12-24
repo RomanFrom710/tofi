@@ -7,20 +7,14 @@ using TOFI.TransferObjects.User.Queries;
 
 namespace BLL.Services.User
 {
-    public interface IUserService<TUserDto, TUserView> : IModelService<TUserDto, TUserView>
-        where TUserDto : UserDto where TUserView : UserViewModel
+    public interface IUserService : IModelService<UserDto, UserViewModel>
     {
-        QueryResult<TUserDto> GetUserDto(UserQuery query);
+        QueryResult<UserDto> GetUserDto(UserQuery query);
 
-        Task<QueryResult<TUserDto>> GetUserDtoAsync(UserQuery query);
+        Task<QueryResult<UserDto>> GetUserDtoAsync(UserQuery query);
 
-        QueryResult<TUserView> GetUser(UserQuery query);
+        QueryResult<UserViewModel> GetUser(UserQuery query);
 
-        Task<QueryResult<TUserView>> GetUserAsync(UserQuery query);
-    }
-
-
-    public interface IUserService : IUserService<UserDto, UserViewModel>
-    {
+        Task<QueryResult<UserViewModel>> GetUserAsync(UserQuery query);
     }
 }
