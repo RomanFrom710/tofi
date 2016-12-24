@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Models.Common;
-using DAL.Models.Credits.BankCredits.BankCredit;
 using DAL.Models.User;
+using DAL.Models.Credits.BankCredits.CreditTypes;
 
 namespace DAL.Models.Credits.CreditAccount
 {
@@ -10,7 +10,9 @@ namespace DAL.Models.Credits.CreditAccount
     {
         public string CreditAgreementNumber { get; set; }
 
-        public double Percent { get; set; }
+        public string Description { get; set; }
+
+        public double InterestRate { get; set; }
 
         #region Virtual Properties
 
@@ -22,7 +24,7 @@ namespace DAL.Models.Credits.CreditAccount
 
         public virtual UserModel User { get; set; }
 
-        public virtual BankCreditModel BankCredit { get; set; }
+        public virtual CreditTypeModel CreditType { get; set; }
 
         #endregion
     }

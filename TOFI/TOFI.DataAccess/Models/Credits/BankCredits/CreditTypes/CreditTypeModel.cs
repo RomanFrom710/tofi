@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Models.Credits.BankCredits.BankCredit;
 using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
+using DAL.Models.Credits.CreditAccount;
 
 namespace DAL.Models.Credits.BankCredits.CreditTypes
 {
@@ -19,7 +19,7 @@ namespace DAL.Models.Credits.BankCredits.CreditTypes
 
         public virtual ICollection<CreditRequirementModel> CreditRequirements { get; set; }
 
-        public virtual ICollection<BankCreditModel> BankCredits { get; set; }
+        public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 
         #endregion
     }
