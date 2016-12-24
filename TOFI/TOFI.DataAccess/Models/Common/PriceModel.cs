@@ -10,6 +10,6 @@ namespace DAL.Models.Common
     {
         public decimal Value { get; set; }
 
-        public CurrencyModel Currency { get; set; }
+        public virtual CurrencyModel Currency { get; set; }
     }
 }

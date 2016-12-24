@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Models.Auth;
+using DAL.Models.Credits;
+using System.Collections.Generic;
 
 namespace DAL.Models.User
 {
     [Table("Users")]
-    public class UserModel : Model, IUserModel
+    public class UserModel : Model
     {
         public string Username { get; set; }
 
@@ -18,10 +20,13 @@ namespace DAL.Models.User
 
         public string LastName { get; set; }
 
-        public int AuthId { get; set; }
+        #region Virtual Properties
 
         public virtual AuthModel Auth { get; set; }
 
+        public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
+
+        #endregion
 
         public UserModel()
         {

@@ -10,14 +10,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DAL.Models.Credits.BankCredits.CreditType
 {
     [Table("CreditTypes")]
-    public class CreditTypeModel : Model, ICreditTypeModel
+    public class CreditTypeModel : Model
     {
-        public virtual IEnumerable<ICreditConditionModel> CreditConditions { get; set; }
-
-        public virtual IEnumerable<ICreditRequirementModel> CreditRequirement { get; set; }
-
+        
         public string Description { get; set; }
 
         public double InterestRate { get; set; }
+
+        #region Virtual Properties
+
+        public virtual ICollection<CreditConditionModel> CreditConditions { get; set; }
+
+        public virtual ICollection<CreditRequirementModel> CreditRequirements { get; set; }
+
+        public virtual ICollection<BankCreditModel> BankCredits { get; set; }
+
+        #endregion
     }
 }

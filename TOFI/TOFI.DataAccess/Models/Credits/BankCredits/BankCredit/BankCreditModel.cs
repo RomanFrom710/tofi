@@ -12,17 +12,20 @@ using DAL.Models.Credits.BankCredits.CreditType;
 namespace DAL.Models.Credits.BankCredits
 {
     [Table("BankCredits")]
-    public class BankCreditModel : Model, IBankCreditModel
+    public class BankCreditModel : Model
     {
-        public virtual ICreditConditionModel CreditConditions { get; set; }
-
-        public virtual ICreditRequirementModel CreditRequirement { get; set; }
-
-        public virtual ICreditTypeModel CreditType { get; set; }
-
+        
         public string Description { get; set; }
 
         public double InterestRate { get; set; }
+
+        #region Virtual Properties
         
+        public virtual CreditTypeModel CreditType { get; set; }
+
+        public virtual CreditAccountModel CreditAccount { get; set; }
+
+        #endregion
+
     }
 }

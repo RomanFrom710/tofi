@@ -1,5 +1,6 @@
 ﻿using System;
 using TOFI.TransferObjects.Model.DataObjects;
+using TOFI.TransferObjects.User.DataObjects;
 
 namespace TOFI.TransferObjects.Auth.DataObjects
 {
@@ -24,5 +25,7 @@ namespace TOFI.TransferObjects.Auth.DataObjects
         public int AccessFailedTotal { get; set; }
 
         public DateTimeOffset? LastAccessFailedDateUtc { get; set; }
+
+        public UserDto User { get; set; }
     }
 }

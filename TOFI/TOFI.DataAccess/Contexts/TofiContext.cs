@@ -12,6 +12,12 @@ namespace DAL.Contexts
 {
     public class TofiContext : DbContext
     {
+
+        public TofiContext() : base("TofiContext")
+        {
+            Database.Initialize(false);
+        }
+
         public DbSet<AuthModel> AuthData { get; set; }
 
         public DbSet<UserModel> Users { get; set; }
@@ -30,9 +36,46 @@ namespace DAL.Contexts
 
         public DbSet<CreditAccountModel> CreditAccounts { get; set; }
 
-        public TofiContext() : base("TofiContext")
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.Initialize(false);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AuthModel>()
+                .HasRequired(a => a.User)
+                .WithRequiredPrincipal(u => u.Auth);
+
+            modelBuilder.Entity<PriceModel>()
+                .HasRequired(p => p.Currency);
+            
+            modelBuilder.Entity<BankCreditModel>()
+                .HasRequired(c => c.CreditType)
+                .WithMany(t => t.BankCredits);
+            modelBuilder.Entity<BankCreditModel>()
+                .HasRequired(c => c.CreditAccount)
+                .WithRequiredDependent(a => a.BankCredit);
+
+            modelBuilder.Entity<CreditConditionModel>()
+                .HasRequired(c => c.MinCreditSum);
+            modelBuilder.Entity<CreditConditionModel>()
+                .HasRequired(c => c.MaxCreditSum);
+
+            modelBuilder.Entity<CreditTypeModel>()
+                .HasMany(t => t.CreditConditions)
+                .WithRequired(c => c.CreditType);
+            modelBuilder.Entity<CreditTypeModel>()
+                .HasMany(t => t.CreditRequirements)
+                .WithRequired(r => r.CreditType);
+
+            modelBuilder.Entity<CreditAccountModel>()
+                .HasRequired(a => a.TotalDebt);
+            modelBuilder.Entity<CreditAccountModel>()
+                .HasRequired(a => a.FinesForOverdue);
+            modelBuilder.Entity<CreditAccountModel>()
+                .HasRequired(a => a.RemainDebt);
+            modelBuilder.Entity<CreditAccountModel>()
+                .HasRequired(a => a.User)
+                .WithMany(u => u.CreditAccounts);
+
         }
     }
 }
