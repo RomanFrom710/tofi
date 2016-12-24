@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -16,7 +17,8 @@ namespace TOFI.Web.Auth
         IUserEmailStore<AuthUser>,
         IUserLockoutStore<AuthUser, string>,
         IUserTwoFactorStore<AuthUser, string>,
-        IUserSecurityStampStore<AuthUser>
+        IUserSecurityStampStore<AuthUser>,
+        IUserRoleStore<AuthUser>
     {
         private readonly IUserService _userService;
 
@@ -182,6 +184,32 @@ namespace TOFI.Web.Auth
         public Task<bool> GetTwoFactorEnabledAsync(AuthUser user)
         {
             return Task.FromResult(false);
+        }
+
+        #endregion
+
+        #region user role
+
+        public async Task AddToRoleAsync(AuthUser user, string roleName)
+        {
+            UserRoles.AddToRole(user, roleName);
+            await _userService.UpdateModelAsync(user.Dto);
+        }
+
+        public async Task RemoveFromRoleAsync(AuthUser user, string roleName)
+        {
+            UserRoles.RemoveFromRole(user, roleName);
+            await _userService.UpdateModelAsync(user.Dto);
+        }
+
+        public Task<IList<string>> GetRolesAsync(AuthUser user)
+        {
+            return Task.FromResult(UserRoles.GetRoles(user));
+        }
+
+        public Task<bool> IsInRoleAsync(AuthUser user, string roleName)
+        {
+            return Task.FromResult(UserRoles.IsInRole(user, roleName));
         }
 
         #endregion

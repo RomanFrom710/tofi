@@ -71,6 +71,7 @@ namespace TOFI.Web
         }
     }
 
+
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<AuthUser, string>
     {
@@ -82,6 +83,21 @@ namespace TOFI.Web
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+        }
+    }
+
+
+    public class ApplicationRoleManager : RoleManager<UserRole>
+    {
+        public ApplicationRoleManager(IRoleStore<UserRole, string> store) : base(store)
+        {
+        }
+
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options,
+            IOwinContext context)
+        {
+            return new ApplicationRoleManager(new CustomRoleStore());
         }
     }
 }
