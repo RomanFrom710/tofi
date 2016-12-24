@@ -3,7 +3,7 @@ using TOFI.TransferObjects.Credits.BankCredits.CreditRequirements.DataObjects;
 
 namespace DAL.Repositories.Credits.BankCredits.CreditRequirements
 {
-    public interface ICreditRequirementCommandRepository : IModelCommandRepository<CreditRequirementDTO>
+    public interface ICreditRequirementCommandRepository : IModelCommandRepository<CreditRequirementDto>
     {
     }
 }

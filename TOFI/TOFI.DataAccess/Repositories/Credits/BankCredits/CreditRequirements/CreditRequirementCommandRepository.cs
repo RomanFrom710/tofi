@@ -5,7 +5,7 @@ using TOFI.TransferObjects.Credits.BankCredits.CreditRequirements.DataObjects;
 
 namespace DAL.Repositories.Credits.BankCredits.CreditRequirements
 {
-    public class CreditRequirementCommandRepository : ModelCommandRepository<CreditRequirementModel, CreditRequirementDTO>, ICreditRequirementCommandRepository
+    public class CreditRequirementCommandRepository : ModelCommandRepository<CreditRequirementModel, CreditRequirementDto>, ICreditRequirementCommandRepository
     {
         public CreditRequirementCommandRepository(TofiContext context) : base(context)
         {

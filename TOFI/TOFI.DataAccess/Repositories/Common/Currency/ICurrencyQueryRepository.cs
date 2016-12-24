@@ -3,7 +3,7 @@ using TOFI.TransferObjects.Common.DataObjects;
 
 namespace DAL.Repositories.Common.Currency
 {
-    public interface ICurrencyQueryRepository: IModelQueryRepository<CurrencyDTO>
+    public interface ICurrencyQueryRepository: IModelQueryRepository<CurrencyDto>
     {
     }
 }

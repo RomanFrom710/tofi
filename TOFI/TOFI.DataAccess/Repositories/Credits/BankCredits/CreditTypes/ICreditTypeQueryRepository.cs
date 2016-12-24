@@ -3,7 +3,7 @@ using TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects;
 
 namespace DAL.Repositories.Credits.BankCredits.CreditTypes
 {
-    public interface ICreditTypeQueryRepository : IModelQueryRepository<CreditTypeDTO>
+    public interface ICreditTypeQueryRepository : IModelQueryRepository<CreditTypeDto>
     {
     }
 }

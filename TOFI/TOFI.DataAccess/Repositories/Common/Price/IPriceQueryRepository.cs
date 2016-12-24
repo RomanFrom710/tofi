@@ -3,7 +3,7 @@ using TOFI.TransferObjects.Common.DataObjects;
 
 namespace DAL.Repositories.Common.Price
 {
-    public interface IPriceQueryRepository: IModelQueryRepository<PriceDTO>
+    public interface IPriceQueryRepository: IModelQueryRepository<PriceDto>
     {
     }
 }
