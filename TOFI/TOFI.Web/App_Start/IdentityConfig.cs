@@ -36,6 +36,8 @@ namespace TOFI.Web
             };
             manager.PasswordHasher = new CustomPasswordHasher();
 
+            //manager.EmailService = new EmailService();
+
             // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(30);
