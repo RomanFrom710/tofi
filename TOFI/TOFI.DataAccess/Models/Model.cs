@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class Model : IModel
+    public class Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

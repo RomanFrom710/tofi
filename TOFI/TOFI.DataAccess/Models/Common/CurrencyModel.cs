@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DAL.Models.Common
+﻿namespace DAL.Models.Common
 {
     public class CurrencyModel: Model
     {
         public string Name { get; set; }
+
 
         public override bool Equals(object obj)
         {
@@ -16,10 +11,7 @@ namespace DAL.Models.Common
             {
                 return ((CurrencyModel) obj).Name == Name;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public override int GetHashCode()

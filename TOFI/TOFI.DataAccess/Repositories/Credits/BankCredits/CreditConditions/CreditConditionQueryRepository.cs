@@ -1,12 +1,7 @@
 ﻿using DAL.Contexts;
-using DAL.Models.Credits.BankCredits;
-using DAL.Models.Credits.BankCredits.CreditCondition;
-using DAL.Models.Employee;
+using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Repositories.Model;
-using DAL.Repositories.User;
-using TOFI.TransferObjects.Credits.BankCredits.BankCredit.DataObjects;
 using TOFI.TransferObjects.Credits.BankCredits.CreditConditions.DataObjects;
-using TOFI.TransferObjects.Employee.DataObjects;
 
 namespace DAL.Repositories.Credits.BankCredits.CreditConditions
 {

@@ -2,11 +2,11 @@
 using DAL.Models.Auth;
 using DAL.Models.User;
 using DAL.Models.Common;
-using DAL.Models.Credits.BankCredits;
-using DAL.Models.Credits;
-using DAL.Models.Credits.BankCredits.CreditCondition;
+using DAL.Models.Credits.BankCredits.BankCredit;
+using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
-using DAL.Models.Credits.BankCredits.CreditType;
+using DAL.Models.Credits.BankCredits.CreditTypes;
+using DAL.Models.Credits.CreditAccount;
 
 namespace DAL.Contexts
 {
