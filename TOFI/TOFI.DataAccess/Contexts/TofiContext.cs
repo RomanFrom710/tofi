@@ -47,31 +47,30 @@ namespace DAL.Contexts
             modelBuilder.Entity<AuthModel>()
                 .HasRequired(a => a.User)
                 .WithRequiredPrincipal(u => u.Auth)
-                .Map(a => a.MapKey("AuthId"));
+                .Map(a => a.MapKey("Auth_Id"));
 
-            modelBuilder.Entity<ClientModel>()
-                .HasRequired(c => c.User)
-                .WithOptional(u => u.Client)
-                .Map(c => c.MapKey("ClientId"));
-
-            modelBuilder.Entity<EmployeeModel>()
-                .HasRequired(e => e.User)
-                .WithOptional(u => u.Employee)
-                .Map(e => e.MapKey("EmployeeId"));
-
+            modelBuilder.Entity<UserModel>()
+                .HasOptional(u => u.Client)
+                .WithRequired(c => c.User)
+                .Map(config => config.MapKey("User_Id"));
+            modelBuilder.Entity<UserModel>()
+                .HasOptional(u => u.Employee)
+                .WithRequired(e => e.User)
+                .Map(config => config.MapKey("User_Id"));
+            
             modelBuilder.Entity<PriceModel>()
                 .HasRequired(p => p.Currency)
                 .WithRequiredDependent()
-                .Map(p => p.MapKey("PriceId"));
+                .Map(p => p.MapKey("Currency_Id"));
             
             modelBuilder.Entity<CreditConditionModel>()
                 .HasRequired(c => c.MinCreditSum)
                 .WithRequiredDependent()
-                .Map(c => c.MapKey("CreditCondition_MinCreditSumId"));
+                .Map(c => c.MapKey("MinCreditSum_Id"));
             modelBuilder.Entity<CreditConditionModel>()
                 .HasRequired(c => c.MaxCreditSum)
                 .WithRequiredDependent()
-                .Map(c => c.MapKey("CreditCondition_MaxCreditSumId"));
+                .Map(c => c.MapKey("MaxCreditSum_Id"));
 
             modelBuilder.Entity<CreditTypeModel>()
                 .HasMany(t => t.CreditConditions)
@@ -86,15 +85,15 @@ namespace DAL.Contexts
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.TotalDebt)
                 .WithRequiredDependent()
-                .Map(a => a.MapKey("CreditAccount_TotalDebtId"));
+                .Map(a => a.MapKey("TotalDebt_Id"));
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.FinesForOverdue)
                 .WithRequiredDependent()
-                .Map(a => a.MapKey("CreditAccount_FinesForOverdueId"));
+                .Map(a => a.MapKey("FinesForOverdue_Id"));
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.RemainDebt)
                 .WithRequiredDependent()
-                .Map(a => a.MapKey("CreditAccount_RemainDebtId"));
+                .Map(a => a.MapKey("RemainDebt_Id"));
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.User)
                 .WithMany(u => u.CreditAccounts);
