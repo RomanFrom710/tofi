@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Models.User;
 using System;
+using TOFI.TransferObjects.Client.Enums;
 
 namespace DAL.Models.Client
 {
@@ -28,11 +29,5 @@ namespace DAL.Models.Client
         public virtual UserModel User { get; set; }
 
         #endregion
-    }
-
-    public enum Sex
-    {
-        Female,
-        Male
     }
 }

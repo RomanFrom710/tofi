@@ -286,11 +286,24 @@ __pycache__/
 
 
 # front-end libs from nuget
-TOFI/TOFI.Web/Scripts
+TOFI/TOFI.Web/Scripts/*
+!TOFI/TOFI.Web/Scripts/My/*
 TOFI/TOFI.Web/Content/bootstrap
 TOFI/TOFI.Web/Content/fonts
+TOFI/TOFI.Web/Content/_bootstrap-datetimepicker.less
+TOFI/TOFI.Web/Content/bootstrap-datetimepicker-build.less
 TOFI/AzureTest/App.config
 TOFI/AzureTest/AzureTest.csproj
 TOFI/AzureTest/Program.cs
 TOFI/AzureTest/Properties/AssemblyInfo.cs
 TOFI/AzureTest/packages.config
+TOFI/TOFI.Web/Content/bootstrap-theme.css
+TOFI/TOFI.Web/Content/bootstrap-theme.css.map
+TOFI/TOFI.Web/Content/bootstrap-theme.min.css
+TOFI/TOFI.Web/Content/bootstrap.css
+TOFI/TOFI.Web/Content/bootstrap.css.map
+TOFI/TOFI.Web/Content/bootstrap.min.css
+TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.eot
+TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.svg
+TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.ttf
+TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.woff
