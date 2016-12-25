@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth\DataObjects\AuthDto.cs" />
+    <Compile Include="Client\Enums\Sex.cs" />
     <Compile Include="Common\Currency\DataObjects\CurrencyDto.cs" />
     <Compile Include="Common\Price\DataObjects\PriceDto.cs" />
     <Compile Include="Client\DataObjects\ClientDto.cs" />
