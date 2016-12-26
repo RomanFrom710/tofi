@@ -39,6 +39,8 @@ namespace DAL.Contexts
 
         public DbSet<CreditAccountModel> CreditAccounts { get; set; }
 
+        public DbSet<UserAction> UserActions { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -57,6 +59,9 @@ namespace DAL.Contexts
                 .HasOptional(u => u.Employee)
                 .WithRequired(e => e.User)
                 .Map(config => config.MapKey("User_Id"));
+            modelBuilder.Entity<UserModel>()
+                .HasMany(u => u.Actions)
+                .WithRequired(a => a.User);
             
             modelBuilder.Entity<PriceModel>()
                 .HasRequired(p => p.Currency)
