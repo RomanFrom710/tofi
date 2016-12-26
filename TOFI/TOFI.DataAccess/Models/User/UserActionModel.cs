@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DAL.Models.User
 {
     [Table("UserActions")]
-    public class UserAction: Model
+    public class UserActionModel: Model
     {
         [JsonIgnore]
         public string Signature { get; set; }

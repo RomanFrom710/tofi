@@ -65,7 +65,8 @@
     <Compile Include="Models\Credits\BankCredits\CreditRequirements\CreditRequirementModel.cs" />
     <Compile Include="Models\Credits\BankCredits\CreditTypes\CreditTypeModel.cs" />
     <Compile Include="Models\Credits\CreditAccount\CreditAccountModel.cs" />
-    <Compile Include="Models\User\UserAction.cs" />
+    <Compile Include="Models\Credits\CreditRequest\CreditRequestModel.cs" />
+    <Compile Include="Models\User\UserActionModel.cs" />
     <Compile Include="Repositories\Auth\AuthCommandRepository.cs" />
     <Compile Include="Repositories\Auth\AuthQueryRepository.cs" />
     <Compile Include="Repositories\Auth\IAuthCommandRepository.cs" />
@@ -94,6 +95,10 @@
     <Compile Include="Repositories\Credits\CreditAccount\CreditAccountQueryRepository.cs" />
     <Compile Include="Repositories\Credits\CreditAccount\ICreditAccountCommandRepository.cs" />
     <Compile Include="Repositories\Credits\CreditAccount\ICreditAccountQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditRequest\CreditRequestCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditRequest\CreditRequestQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditRequest\ICreditRequestCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditRequest\ICreditRequestQueryRepository.cs" />
     <Compile Include="Repositories\IListQueryRepository.cs" />
     <Compile Include="Mapping\MapperConfig.cs" />
     <Compile Include="Models\Client\ClientModel.cs" />

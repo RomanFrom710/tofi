@@ -8,6 +8,7 @@ using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Credits.CreditAccount;
 using DAL.Models.Employee;
+using DAL.Models.Credits.CreditRequest;
 
 namespace DAL.Contexts
 {
@@ -39,7 +40,9 @@ namespace DAL.Contexts
 
         public DbSet<CreditAccountModel> CreditAccounts { get; set; }
 
-        public DbSet<UserAction> UserActions { get; set; }
+        public DbSet<UserActionModel> UserActions { get; set; }
+
+        public DbSet<CreditRequestModel> CreditRequests { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -103,6 +106,21 @@ namespace DAL.Contexts
                 .HasRequired(a => a.User)
                 .WithMany(u => u.CreditAccounts);
 
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasRequired(r => r.Client)
+                .WithMany(c => c.CreditRequests);
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasOptional(r => r.SecurityApproved)
+                .WithMany(s => s.CreditRequestsApprovedSecurity);
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasOptional(r => r.CreditCommitteeApproved)
+                .WithMany(c => c.CreditRequestsApprovedCommittee);
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasOptional(r => r.CreditDepartmentApproved)
+                .WithMany(d => d.CreditRequestsApprovedDepartment);
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasOptional(r => r.CashierApproved)
+                .WithMany(c => c.CreditRequestsApprovedCashier);
         }
     }
 }
