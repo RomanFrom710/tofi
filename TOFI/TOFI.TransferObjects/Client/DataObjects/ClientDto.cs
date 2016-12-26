@@ -25,5 +25,7 @@ namespace TOFI.TransferObjects.Client.DataObjects
         public DateTime ExpirationDate { get; set; }
 
         public Sex Sex { get; set; }
+
+        public int UserId { get; set; }
     }
 }
