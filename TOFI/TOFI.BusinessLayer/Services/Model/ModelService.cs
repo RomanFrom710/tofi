@@ -78,7 +78,7 @@ namespace BLL.Services.Model
         {
             var command = new CreateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)};
             var res = ExecuteCommand(_commandRepository, command);
-            viewModel.Id = command.ModelDto.Id;
+            Mapper.Map(command.ModelDto, viewModel);
             return res;
         }
 
@@ -86,7 +86,7 @@ namespace BLL.Services.Model
         {
             var command = new CreateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)};
             var res = await ExecuteCommandAsync(_commandRepository, command);
-            viewModel.Id = command.ModelDto.Id;
+            Mapper.Map(command.ModelDto, viewModel);
             return res;
         }
 
@@ -102,14 +102,18 @@ namespace BLL.Services.Model
 
         public CommandResult UpdateModel(TModelView viewModel)
         {
-            return ExecuteCommand(_commandRepository,
-                new UpdateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)});
+            var command = new UpdateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)};
+            var res = ExecuteCommand(_commandRepository, command);
+            Mapper.Map(command.ModelDto, viewModel);
+            return res;
         }
 
         public async Task<CommandResult> UpdateModelAsync(TModelView viewModel)
         {
-            return await ExecuteCommandAsync(_commandRepository,
-                new UpdateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)});
+            var command = new UpdateModelCommand<TModelDto> {ModelDto = Mapper.Map<TModelDto>(viewModel)};
+            var res = await ExecuteCommandAsync(_commandRepository, command);
+            Mapper.Map(command.ModelDto, viewModel);
+            return res;
         }
 
         public CommandResult DeleteModel(int id)
