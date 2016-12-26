@@ -21,7 +21,7 @@ namespace DAL.Repositories.Model
             var model = Mapper.Map<TModel>(command.ModelDto);
             ModelsDao.Add(model);
             Save();
-            command.ModelDto.Id = model.Id;
+            Mapper.Map(model, command.ModelDto);
         }
 
         public async Task ExecuteAsync(CreateModelCommand<TModelDto> command)
@@ -29,7 +29,7 @@ namespace DAL.Repositories.Model
             var model = Mapper.Map<TModel>(command.ModelDto);
             ModelsDao.Add(model);
             await SaveAsync();
-            command.ModelDto.Id = model.Id;
+            Mapper.Map(model, command.ModelDto);
         }
 
         public void Execute(UpdateModelCommand<TModelDto> command)
@@ -45,6 +45,7 @@ namespace DAL.Repositories.Model
             Mapper.Map(command.ModelDto, model);
             Context.Entry(model).State = EntityState.Modified;
             Save();
+            Mapper.Map(model, command.ModelDto);
         }
 
         public async Task ExecuteAsync(UpdateModelCommand<TModelDto> command)
@@ -57,6 +58,7 @@ namespace DAL.Repositories.Model
             Mapper.Map(command.ModelDto, model);
             Context.Entry(model).State = EntityState.Modified;
             await SaveAsync();
+            Mapper.Map(model, command.ModelDto);
         }
 
         public void Execute(DeleteModelCommand command)

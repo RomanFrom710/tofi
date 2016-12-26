@@ -6,10 +6,6 @@ namespace TOFI.TransferObjects.Client.DataObjects
 {
     public class ClientDto : ModelDto
     {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
         public string Address { get; set; }
 
         public string TelephoneNumber { get; set; }
@@ -25,7 +21,5 @@ namespace TOFI.TransferObjects.Client.DataObjects
         public DateTime ExpirationDate { get; set; }
 
         public Sex Sex { get; set; }
-
-        public int UserId { get; set; }
     }
 }
