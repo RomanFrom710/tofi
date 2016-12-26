@@ -287,7 +287,7 @@ __pycache__/
 
 # front-end libs from nuget
 TOFI/TOFI.Web/Scripts/*
-!TOFI/TOFI.Web/Scripts/My/*
+!TOFI/TOFI.Web/Scripts/My/
 TOFI/TOFI.Web/Content/bootstrap
 TOFI/TOFI.Web/Content/fonts
 TOFI/TOFI.Web/Content/_bootstrap-datetimepicker.less
