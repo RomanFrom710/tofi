@@ -32,7 +32,7 @@ namespace DAL.Models.User
 
         public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 
-        public virtual ICollection<UserAction> Actions { get; set; }
+        public virtual ICollection<UserActionModel> Actions { get; set; }
 
         #endregion
     }

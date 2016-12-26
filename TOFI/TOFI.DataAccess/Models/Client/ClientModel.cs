@@ -2,6 +2,8 @@
 using DAL.Models.User;
 using System;
 using TOFI.TransferObjects.Client.Enums;
+using DAL.Models.Credits.CreditRequest;
+using System.Collections.Generic;
 
 namespace DAL.Models.Client
 {
@@ -27,6 +29,8 @@ namespace DAL.Models.Client
         #region Virtual Properties
 
         public virtual UserModel User { get; set; }
+
+        public virtual ICollection<CreditRequestModel> CreditRequests { get; set; }
 
         #endregion
     }
