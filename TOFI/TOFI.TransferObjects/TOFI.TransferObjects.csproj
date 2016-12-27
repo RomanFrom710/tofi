@@ -86,6 +86,8 @@
     <Folder Include="Credits\BankCredits\CreditTypes\Queries\" />
     <Folder Include="Credits\CreditAccount\Commands\" />
     <Folder Include="Credits\CreditAccount\Queries\" />
+    <Folder Include="Credits\CreditRequest\Commands\" />
+    <Folder Include="Credits\CreditRequest\Queries\" />
     <Folder Include="Employee\Commands\" />
     <Folder Include="Employee\Queries\" />
     <Folder Include="User\Commands\" />
