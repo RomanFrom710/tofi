@@ -1,4 +1,7 @@
 ﻿using DAL.Models.Client;
+using DAL.Models.Common;
+using DAL.Models.Credits.BankCredits.CreditConditions;
+using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,6 +34,14 @@ namespace DAL.Models.Credits.CreditRequest
 
         #endregion
 
+        #region Condition
+
+        public int MonthDuration { get; set; }
+
+        public virtual PriceModel CreditSum { get; set; }
+
+        #endregion
+
         #region Virtual Properties 
 
         public virtual ClientModel Client { get; set; }
@@ -42,6 +53,8 @@ namespace DAL.Models.Credits.CreditRequest
         public virtual EmployeeModel CreditDepartmentApproved { get; set; }
 
         public virtual EmployeeModel CashierApproved { get; set; }
+
+        public virtual CreditTypeModel CreditType { get; set; }
 
         #endregion
     }

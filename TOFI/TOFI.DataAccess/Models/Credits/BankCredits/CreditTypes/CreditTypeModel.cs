@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.CreditAccount;
+using DAL.Models.Credits.CreditRequest;
 
 namespace DAL.Models.Credits.BankCredits.CreditTypes
 {
@@ -21,6 +22,7 @@ namespace DAL.Models.Credits.BankCredits.CreditTypes
 
         public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 
+        public virtual ICollection<CreditRequestModel> CreditRequests { get; set; }
         #endregion
     }
 }

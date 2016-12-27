@@ -121,6 +121,13 @@ namespace DAL.Contexts
             modelBuilder.Entity<CreditRequestModel>()
                 .HasOptional(r => r.CashierApproved)
                 .WithMany(c => c.CreditRequestsApprovedCashier);
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasRequired(r => r.CreditType)
+                .WithMany(t => t.CreditRequests);
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasRequired(r => r.CreditSum)
+                .WithRequiredDependent()
+                .Map(config => config.MapKey("CreditSum_Id"));
         }
     }
 }
