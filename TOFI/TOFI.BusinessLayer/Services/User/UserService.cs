@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Model;
+using BLL.Services.Signature;
 using BLL.Services.User.ViewModels;
 using DAL.Repositories.User;
 using TOFI.TransferObjects.User.DataObjects;
@@ -12,15 +13,41 @@ namespace BLL.Services.User
     {
         private readonly IUserQueryRepository _queryRepository;
         private readonly IUserCommandRepository _commandRepository;
+        private readonly ISignatureService _signatureService;
 
 
-        public UserService(IUserQueryRepository queryRepository, IUserCommandRepository commandRepository)
-            : base(queryRepository, commandRepository)
+        public UserService(IUserQueryRepository queryRepository, IUserCommandRepository commandRepository,
+            ISignatureService signatureService) : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
+            _signatureService = signatureService;
         }
 
+
+        public override CommandResult CreateModel(UserDto dto)
+        {
+            dto.Key = _signatureService.GenerateNewKey();
+            return base.CreateModel(dto);
+        }
+
+        public override Task<CommandResult> CreateModelAsync(UserDto dto)
+        {
+            dto.Key = _signatureService.GenerateNewKey();
+            return base.CreateModelAsync(dto);
+        }
+
+        public override CommandResult CreateModel(UserViewModel viewModel)
+        {
+            viewModel.Key = _signatureService.GenerateNewKey();
+            return base.CreateModel(viewModel);
+        }
+
+        public override Task<CommandResult> CreateModelAsync(UserViewModel viewModel)
+        {
+            viewModel.Key = _signatureService.GenerateNewKey();
+            return base.CreateModelAsync(viewModel);
+        }
 
         public QueryResult<UserDto> GetUserDto(UserQuery query)
         {

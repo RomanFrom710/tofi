@@ -22,6 +22,8 @@ namespace DAL.Models.User
 
         public string LastName { get; set; }
 
+        public string Key { get; set; }
+
         #region Virtual Properties
 
         public virtual AuthModel Auth { get; set; }

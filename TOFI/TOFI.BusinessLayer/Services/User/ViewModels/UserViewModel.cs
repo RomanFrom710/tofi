@@ -19,6 +19,8 @@ namespace BLL.Services.User.ViewModels
 
         public string LastName { get; set; }
 
+        public string Key { get; set; }
+
         public AuthViewModel Auth { get; set; }
 
         public ClientViewModel Client { get; set; }
