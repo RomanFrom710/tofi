@@ -19,6 +19,8 @@ namespace TOFI.TransferObjects.User.DataObjects
 
         public string LastName { get; set; }
 
+        public string Key { get; set; }
+
         public AuthDto Auth { get; set; }
 
         public ClientDto Client { get; set; }
