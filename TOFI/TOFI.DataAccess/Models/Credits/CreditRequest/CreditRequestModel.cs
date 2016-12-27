@@ -1,6 +1,5 @@
 ﻿using DAL.Models.Client;
 using DAL.Models.Common;
-using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
 using System.ComponentModel.DataAnnotations.Schema;
