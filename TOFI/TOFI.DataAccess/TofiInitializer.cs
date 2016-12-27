@@ -1,8 +1,10 @@
 ﻿using DAL.Contexts;
+using DAL.Models.Auth;
 using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.BankCredits.CreditTypes;
+using DAL.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -109,7 +111,39 @@ namespace DAL
                 }
             };
 
+            var testUser = new UserModel()
+            {
+                Username = "test@test.test",
+                Email = "test@test.test",
+                FirstName = "Test",
+                LastName = "Testovich",
+                Auth = new AuthModel()
+                {
+                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    LockoutEnabled = true
+                }
+            };
+
+            var adminUser = new UserModel()
+            {
+                Username = "admin@admin.admin",
+                Email = "admin@admin.admin",
+                FirstName = "Admin",
+                LastName = "Adminovich",
+                Auth = new AuthModel()
+                {
+                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    LockoutEnabled = true
+                }
+            };
+
             context.CreditTypes.AddRange(creditTypes);
+            context.Users.Add(testUser);
+            context.Users.Add(adminUser);
             context.SaveChanges();
         }
     }
