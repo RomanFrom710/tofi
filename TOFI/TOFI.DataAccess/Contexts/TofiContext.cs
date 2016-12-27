@@ -15,9 +15,13 @@ namespace DAL.Contexts
     public class TofiContext : DbContext
     {
 
+        static TofiContext()
+        {
+            Database.SetInitializer<TofiContext>(new TofiInitializer());
+        }
+
         public TofiContext() : base("TofiContext")
         {
-            Database.Initialize(false);
         }
 
         public DbSet<AuthModel> AuthData { get; set; }
@@ -68,16 +72,16 @@ namespace DAL.Contexts
             
             modelBuilder.Entity<PriceModel>()
                 .HasRequired(p => p.Currency)
-                .WithRequiredDependent()
+                .WithMany()
                 .Map(p => p.MapKey("Currency_Id"));
             
             modelBuilder.Entity<CreditConditionModel>()
                 .HasRequired(c => c.MinCreditSum)
-                .WithRequiredDependent()
+                .WithOptional()
                 .Map(c => c.MapKey("MinCreditSum_Id"));
             modelBuilder.Entity<CreditConditionModel>()
                 .HasRequired(c => c.MaxCreditSum)
-                .WithRequiredDependent()
+                .WithOptional()
                 .Map(c => c.MapKey("MaxCreditSum_Id"));
 
             modelBuilder.Entity<CreditTypeModel>()
@@ -92,15 +96,15 @@ namespace DAL.Contexts
 
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.TotalDebt)
-                .WithRequiredDependent()
+                .WithOptional()
                 .Map(a => a.MapKey("TotalDebt_Id"));
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.FinesForOverdue)
-                .WithRequiredDependent()
+                .WithOptional()
                 .Map(a => a.MapKey("FinesForOverdue_Id"));
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.RemainDebt)
-                .WithRequiredDependent()
+                .WithOptional()
                 .Map(a => a.MapKey("RemainDebt_Id"));
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.User)
@@ -126,7 +130,7 @@ namespace DAL.Contexts
                 .WithMany(t => t.CreditRequests);
             modelBuilder.Entity<CreditRequestModel>()
                 .HasRequired(r => r.CreditSum)
-                .WithRequiredDependent()
+                .WithOptional()
                 .Map(config => config.MapKey("CreditSum_Id"));
         }
     }
