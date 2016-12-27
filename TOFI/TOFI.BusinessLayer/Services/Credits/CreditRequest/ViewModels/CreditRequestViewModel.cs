@@ -1,11 +1,10 @@
-﻿using DAL.Models.Client;
-using DAL.Models.Employee;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using BLL.Services.Client.ViewModels;
+using BLL.Services.Employee.ViewModels;
+using BLL.Services.Model.ViewModels;
 
-namespace DAL.Models.Credits.CreditRequest
+namespace BLL.Services.Credits.CreditRequest.ViewModels
 {
-    [Table("CreditRequests")]
-    public class CreditRequestModel: Model
+    public class CreditRequestViewModel : ModelViewModel
     {
         #region Approved
 
@@ -33,15 +32,15 @@ namespace DAL.Models.Credits.CreditRequest
 
         #region Virtual Properties 
 
-        public virtual ClientModel Client { get; set; }
+        public ClientViewModel Client { get; set; }
 
-        public virtual EmployeeModel SecurityApproved { get; set; }
+        public EmployeeViewModel SecurityApproved { get; set; }
 
-        public virtual EmployeeModel CreditCommitteeApproved { get; set; }
+        public EmployeeViewModel CreditCommitteeApproved { get; set; }
 
-        public virtual EmployeeModel CreditDepartmentApproved { get; set; }
+        public EmployeeViewModel CreditDepartmentApproved { get; set; }
 
-        public virtual EmployeeModel CashierApproved { get; set; }
+        public EmployeeViewModel CashierApproved { get; set; }
 
         #endregion
     }

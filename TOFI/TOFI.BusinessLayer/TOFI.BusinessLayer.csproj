@@ -76,6 +76,9 @@
     <Compile Include="Services\Credits\CreditAccount\CreditAccountService.cs" />
     <Compile Include="Services\Credits\CreditAccount\ICreditAccountService.cs" />
     <Compile Include="Services\Credits\CreditAccount\ViewModels\CreditAccountViewModel.cs" />
+    <Compile Include="Services\Credits\CreditRequest\CreditRequestService.cs" />
+    <Compile Include="Services\Credits\CreditRequest\ICreditRequestService.cs" />
+    <Compile Include="Services\Credits\CreditRequest\ViewModels\CreditRequestViewModel.cs" />
     <Compile Include="Services\Employee\EmployeeService.cs" />
     <Compile Include="Services\Employee\IEmployeeService.cs" />
     <Compile Include="Services\Employee\ViewModels\EmployeeViewModel.cs" />
