@@ -90,6 +90,8 @@
     <Compile Include="Services\Security\ISecurityService.cs" />
     <Compile Include="Services\Security\SecurityService.cs" />
     <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\Signature\ISignatureService.cs" />
+    <Compile Include="Services\Signature\SignatureService.cs" />
     <Compile Include="Services\User\IUserService.cs" />
     <Compile Include="Services\User\UserService.cs" />
     <Compile Include="Services\User\ViewModels\RegisterViewModel.cs" />

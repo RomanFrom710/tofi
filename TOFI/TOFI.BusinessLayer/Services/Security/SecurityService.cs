@@ -10,6 +10,7 @@ namespace BLL.Services.Security
     {
         private readonly byte[] _pepper;
 
+
         public SecurityService()
         {
             _pepper = Guid.Parse(ConfigurationManager.AppSettings["pepper"]).ToByteArray();

@@ -1,4 +1,6 @@
 ﻿using TOFI.TransferObjects.Client.DataObjects;
+using TOFI.TransferObjects.Common.Price.DataObjects;
+using TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects;
 using TOFI.TransferObjects.Employee.DataObjects;
 using TOFI.TransferObjects.Model.DataObjects;
 
@@ -30,6 +32,14 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
 
         #endregion
 
+        #region Condition
+
+        public int MonthDuration { get; set; }
+
+        public virtual PriceDto CreditSum { get; set; }
+
+        #endregion
+
         #region Virtual Properties 
 
         public ClientDto Client { get; set; }
@@ -41,6 +51,8 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
         public EmployeeDto CreditDepartmentApproved { get; set; }
 
         public EmployeeDto CashierApproved { get; set; }
+
+        public CreditTypeDto CreditType { get; set; }
 
         #endregion
     }

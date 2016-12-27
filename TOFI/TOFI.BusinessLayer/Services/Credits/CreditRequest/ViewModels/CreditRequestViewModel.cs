@@ -1,4 +1,6 @@
 ﻿using BLL.Services.Client.ViewModels;
+using BLL.Services.Common.Price.ViewModels;
+using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Employee.ViewModels;
 using BLL.Services.Model.ViewModels;
 
@@ -30,6 +32,14 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
 
         #endregion
 
+        #region Condition
+
+        public int MonthDuration { get; set; }
+
+        public virtual PriceViewModel CreditSum { get; set; }
+
+        #endregion
+
         #region Virtual Properties 
 
         public ClientViewModel Client { get; set; }
@@ -41,6 +51,8 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
         public EmployeeViewModel CreditDepartmentApproved { get; set; }
 
         public EmployeeViewModel CashierApproved { get; set; }
+
+        public CreditTypeViewModel CreditType { get; set; }
 
         #endregion
     }
