@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BLL.Services.Client.ViewModels;
 using BLL.Services.Common.Currency;
 using BLL.Services.Common.Currency.ViewModels;
@@ -14,7 +13,6 @@ using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.User;
 using Microsoft.AspNet.Identity;
-using Ninject.Infrastructure.Language;
 using TOFI.TransferObjects.Model.Queries;
 using TOFI.TransferObjects.User.Queries;
 
@@ -82,7 +80,7 @@ namespace TOFI.Web.Controllers
                 CreditType = new CreditTypeViewModel
                 {
                     CreditConditions = new List<CreditConditionViewModel>(),
-                    CreditRequirement = new List<CreditRequirementViewModel>()
+                    CreditRequirements = new List<CreditRequirementViewModel>()
                 },
                 CreditSum = new PriceViewModel
                 {
