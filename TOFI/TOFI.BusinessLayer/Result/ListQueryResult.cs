@@ -26,7 +26,7 @@ namespace BLL.Result
 
         public ListQueryResult<TNew> MapTo<TNew>()
         {
-            return new ListQueryResult<TNew>(Query, Value.ProjectTo<TNew>(), ExecutionComleted)
+            return new ListQueryResult<TNew>(Query, Value?.ProjectTo<TNew>(), ExecutionComleted)
             {
                 Message = Message,
                 Exception = Exception,
