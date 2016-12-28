@@ -3,12 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL.Result;
 using DAL.Repositories;
+using NLog;
 using TOFI.TransferObjects;
 
 namespace BLL.Services
 {
     public class Service : IService
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         protected bool Disposed { get; private set; }
 
 
@@ -66,6 +68,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"Unhandled exception: {ex.Message}");
                 return new QueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
@@ -84,6 +87,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"Unhandled exception: {ex.Message}");
                 return new QueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
@@ -101,6 +105,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"Unhandled exception: {ex.Message}");
                 return new ListQueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
@@ -119,6 +124,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"Unhandled exception: {ex.Message}");
                 return new ListQueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
@@ -135,6 +141,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"Unhandled exception: {ex.Message}");
                 return new CommandResult(command, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return new CommandResult(command);
@@ -150,6 +157,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
+                logger.Error(ex, $"Unhandled exception: {ex.Message}");
                 return new CommandResult(command, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return new CommandResult(command);
