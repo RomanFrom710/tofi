@@ -3,8 +3,11 @@
         <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
             @Html.ActionLink("Изменить данные", "Index", "Client")
         </li>
-        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Credit" ? "active" : "")">
-            @Html.ActionLink("Кредит", "Credit", "Client")
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AddCredit" ? "active" : "")">
+            @Html.ActionLink("Новый кредит", "AddCredit", "Client")
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CreditRequests" ? "active" : "")">
+            @Html.ActionLink("Заявки", "CreditRequests", "Client")
         </li>
     </ul>
 </nav>

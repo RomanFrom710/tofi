@@ -1,8 +1,21 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BLL.Services.Client.ViewModels;
+using BLL.Services.Common.Currency;
+using BLL.Services.Common.Currency.ViewModels;
+using BLL.Services.Common.Price.ViewModels;
+using BLL.Services.Credits.BankCredits.CreditConditions.ViewModels;
+using BLL.Services.Credits.BankCredits.CreditRequirements.ViewModels;
+using BLL.Services.Credits.BankCredits.CreditTypes;
+using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
+using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.User;
 using Microsoft.AspNet.Identity;
+using Ninject.Infrastructure.Language;
+using TOFI.TransferObjects.Model.Queries;
 using TOFI.TransferObjects.User.Queries;
 
 namespace TOFI.Web.Controllers
@@ -11,9 +24,16 @@ namespace TOFI.Web.Controllers
     {
         private readonly IUserService _userService;
 
-        public ClientController(IUserService userService)
+        private readonly IEnumerable<CreditTypeViewModel> _creditTypes;
+        private readonly IEnumerable<CurrencyViewModel> _currencies;
+
+        public ClientController(IUserService userService,
+            ICurrencyService currencyService, ICreditTypeService creditTypeService)
         {
             _userService = userService;
+
+            _currencies = currencyService.GetAllModels(new AllModelsQuery()).Value.ToArray();
+            _creditTypes = creditTypeService.GetAllModels(new AllModelsQuery()).Value.ToArray();
         }
 
         [HttpGet]
@@ -48,7 +68,39 @@ namespace TOFI.Web.Controllers
             return View(client);
         }
 
-        public ActionResult Credit()
+        [HttpGet]
+        public ActionResult AddCredit()
+        {
+            ViewBag.Currency = 
+                _currencies.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
+            ViewBag.CreditTypes =
+                _creditTypes.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Description});
+            ViewBag.CreditTypesInfo = _creditTypes;
+
+            var newSuperPuperModel = new CreditRequestViewModel // I want to sleep...
+            {
+                CreditType = new CreditTypeViewModel
+                {
+                    CreditConditions = new List<CreditConditionViewModel>(),
+                    CreditRequirement = new List<CreditRequirementViewModel>()
+                },
+                CreditSum = new PriceViewModel
+                {
+                    Currency = new CurrencyViewModel()
+                }
+            };
+
+            return View("AddCredit", newSuperPuperModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddCredit(CreditRequestViewModel credit)
+        {
+            return View();
+        }
+
+
+        public ActionResult CreditRequests()
         {
             return View();
         }
