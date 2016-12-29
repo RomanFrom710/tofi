@@ -22,6 +22,7 @@ namespace DAL.Contexts
 
         public TofiContext() : base("TofiContext")
         {
+            Database.Initialize(false);
         }
 
         public DbSet<AuthModel> AuthData { get; set; }
