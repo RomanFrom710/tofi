@@ -14,15 +14,9 @@ namespace DAL.Contexts
 {
     public class TofiContext : DbContext
     {
-
-        static TofiContext()
+        
+        public TofiContext() : base("TofiContext")
         {
-            Database.SetInitializer<TofiContext>(new TofiInitializer());
-        }
-
-        public TofiContext() : base("name=TofiContext")
-        {
-            Database.Initialize(false);
         }
 
         public DbSet<AuthModel> AuthData { get; set; }
