@@ -140,6 +140,7 @@ namespace DAL
                 }
             };
 
+            context.Currency.AddRange(currencies);
             context.CreditTypes.AddRange(creditTypes);
             context.Users.Add(testUser);
             context.Users.Add(adminUser);
