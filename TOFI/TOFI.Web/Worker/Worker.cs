@@ -6,7 +6,7 @@ namespace TOFI.Web.Worker
 {
     public class Worker
     {
-        internal static void Run()
+        public static void Run()
         {
             BackgroundJob.Enqueue(() => Console.WriteLine("hello"));
             var recurringJobManager = new RecurringJobManager();
@@ -14,7 +14,7 @@ namespace TOFI.Web.Worker
             //recurringJobManager.AddOrUpdate("credit-update", Job.FromExpression(() => UpdateRemains()), Cron.Minutely, new RecurringJobOptions());
         }
 
-        private static void UpdateRemains()
+        public static void UpdateRemains()
         {
             using (var stream = new FileStream("file.txt", FileMode.OpenOrCreate))
             {
