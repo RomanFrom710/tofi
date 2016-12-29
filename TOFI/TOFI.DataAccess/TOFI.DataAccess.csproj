@@ -58,6 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
+    <Compile Include="Migrations\201612291848283_initial.cs" />
+    <Compile Include="Migrations\201612291848283_initial.Designer.cs">
+      <DependentUpon>201612291848283_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\Common\CurrencyModel.cs" />
     <Compile Include="Models\Common\PriceModel.cs" />
@@ -139,7 +144,11 @@
       <Name>TOFI.TransferObjects</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612291848283_initial.resx">
+      <DependentUpon>201612291848283_initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
