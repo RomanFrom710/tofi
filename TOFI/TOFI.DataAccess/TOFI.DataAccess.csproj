@@ -133,7 +133,6 @@
     <Compile Include="Repositories\User\IUserQueryRepository.cs" />
     <Compile Include="Repositories\User\UserCommandRepository.cs" />
     <Compile Include="Repositories\User\UserQueryRepository.cs" />
-    <Compile Include="TofiInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
