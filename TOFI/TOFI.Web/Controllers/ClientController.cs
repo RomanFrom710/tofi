@@ -57,6 +57,7 @@ namespace TOFI.Web.Controllers
                     Id = int.Parse(User.Identity.GetUserId())
                 }).Value;
                 Mapper.Map(client, user);
+                client.Id = user.Client?.Id ?? 0;
                 user.Client = client;
                 user.Id = int.Parse(User.Identity.GetUserId());
                 _userService.UpdateModel(user);
