@@ -9,7 +9,9 @@ namespace TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects
     {
         public List<CreditConditionDto> CreditConditions { get; set; }
 
-        public List<CreditRequirementDto> CreditRequirement { get; set; }
+        public List<CreditRequirementDto> CreditRequirements { get; set; }
+
+        public string Name { get; set; }
 
         public string Description { get; set; }
 
