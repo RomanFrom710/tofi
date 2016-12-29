@@ -11,6 +11,8 @@ namespace TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects
 
         public List<CreditRequirementDto> CreditRequirements { get; set; }
 
+        public string Name { get; set; }
+
         public string Description { get; set; }
 
         public double InterestRate { get; set; }

@@ -10,6 +10,8 @@ namespace DAL.Models.Credits.BankCredits.CreditTypes
     [Table("CreditTypes")]
     public class CreditTypeModel : Model
     {
+        public string Name { get; set; }
+
         public string Description { get; set; }
 
         public double InterestRate { get; set; }
