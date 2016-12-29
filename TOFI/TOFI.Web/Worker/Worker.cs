@@ -16,7 +16,7 @@ namespace TOFI.Web.Worker
 
         public static void UpdateRemains()
         {
-            using (var stream = new FileStream("file.txt", FileMode.OpenOrCreate))
+            using (var stream = new FileStream(Environment.CurrentDirectory + "file.txt", FileMode.OpenOrCreate))
             {
                 using (var streamWriter = new StreamWriter(stream))
                 {
