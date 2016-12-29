@@ -20,7 +20,7 @@ namespace DAL.Contexts
             Database.SetInitializer<TofiContext>(new TofiInitializer());
         }
 
-        public TofiContext() : base("TofiContext")
+        public TofiContext() : base("name=TofiContext")
         {
             Database.Initialize(false);
         }
