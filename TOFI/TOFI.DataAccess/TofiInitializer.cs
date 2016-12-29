@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class TofiInitializer: DropCreateDatabaseIfModelChanges<TofiContext>
+    public class TofiInitializer: DropCreateDatabaseAlways<TofiContext>
     {
         protected override void Seed(TofiContext context)
         {
