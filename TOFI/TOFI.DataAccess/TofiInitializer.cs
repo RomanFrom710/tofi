@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class TofiInitializer: DropCreateDatabaseIfModelChanges<TofiContext>
+    public class TofiInitializer: DropCreateDatabaseAlways<TofiContext>
     {
         protected override void Seed(TofiContext context)
         {
@@ -28,6 +28,7 @@ namespace DAL
             {
                 new CreditTypeModel()
                 {
+                    Name = "На все про все",
                     Description = "Потребительский кредит наличными без поручителей от 100 руб. до 15 000 руб. на срок от 13 месяцев до 5 лет!",
                     InterestRate = 0.36,
                     CreditRequirements = new List<CreditRequirementModel>()
@@ -69,6 +70,7 @@ namespace DAL
                 },
                 new CreditTypeModel()
                 {
+                    Name = "Все серьезно",
                     Description = "Выгодные условия! Кредит до 50 000 руб. за один день!",
                     InterestRate = 0.3,
                     CreditRequirements = new List<CreditRequirementModel>()
