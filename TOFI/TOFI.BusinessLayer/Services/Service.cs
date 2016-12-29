@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLL.Result;
 using DAL.Repositories;
@@ -98,7 +98,7 @@ namespace BLL.Services
         protected ListQueryResult<TDto> RunListQuery<TQuery, TDto>(IListQueryRepository<TQuery, TDto> repository, TQuery query)
             where TQuery : Query where TDto : Dto
         {
-            IQueryable<TDto> queryRes;
+            IEnumerable<TDto> queryRes;
             try
             {
                 queryRes = repository.Handle(query);
@@ -117,7 +117,7 @@ namespace BLL.Services
             IListQueryRepository<TQuery, TDto> repository, TQuery query)
             where TQuery : Query where TDto : Dto
         {
-            IQueryable<TDto> queryRes;
+            IEnumerable<TDto> queryRes;
             try
             {
                 queryRes = await repository.HandleAsync(query);
