@@ -367,7 +367,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Client\Index.cshtml" />
     <Content Include="Views\Shared\_ClientMenuPartial.cshtml" />
-    <Content Include="Views\Client\Credit.cshtml" />
+    <Content Include="Views\Client\AddCredit.cshtml" />
+    <Content Include="Views\Shared\_CreditTypesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

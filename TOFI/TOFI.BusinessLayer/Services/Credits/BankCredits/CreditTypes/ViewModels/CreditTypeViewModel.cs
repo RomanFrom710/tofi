@@ -9,7 +9,7 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes.ViewModels
     {
         public List<CreditConditionViewModel> CreditConditions { get; set; }
 
-        public List<CreditRequirementViewModel> CreditRequirement { get; set; }
+        public List<CreditRequirementViewModel> CreditRequirements { get; set; }
 
         public string Description { get; set; }
 
