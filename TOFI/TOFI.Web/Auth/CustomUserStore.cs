@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BLL.Result;
 using BLL.Services.User;
 using Microsoft.AspNet.Identity;
+using NLog;
 using TOFI.TransferObjects.Model.Queries;
 using TOFI.TransferObjects.User.Queries;
 
@@ -20,6 +21,7 @@ namespace TOFI.Web.Auth
         IUserSecurityStampStore<AuthUser>,
         IUserRoleStore<AuthUser>
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IUserService _userService;
 
         public CustomUserStore()
@@ -219,7 +221,7 @@ namespace TOFI.Web.Auth
         {
             if (result.IsFailed)
             {
-                Debug.WriteLine(result.Message);
+                Logger.Error(result.Exception, result.Message);
             }
         }
 
@@ -227,7 +229,7 @@ namespace TOFI.Web.Auth
         {
             if (result.IsFailed)
             {
-                Debug.WriteLine(result.Message);
+                Logger.Error(result.Exception, result.Message);
             }
             return result.Value;
         }

@@ -307,3 +307,6 @@ TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.eot
 TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.svg
 TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.ttf
 TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.woff
+
+# logs
+TOFI/TOFI.Web/logs/*

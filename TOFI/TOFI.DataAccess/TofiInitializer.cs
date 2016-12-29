@@ -8,9 +8,6 @@ using DAL.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -20,8 +17,8 @@ namespace DAL
         {
             var currencies = new List<CurrencyModel>()
             {
-                new CurrencyModel() { Name = "USD" },
-                new CurrencyModel() { Name = "BYN" }
+                new CurrencyModel { Name = "USD" },
+                new CurrencyModel { Name = "BYN" }
             };
 
             var creditTypes = new List<CreditTypeModel>()
