@@ -1,23 +1,24 @@
-﻿using System.Linq;
-using AutoMapper.QueryableExtensions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using TOFI.TransferObjects;
 
 namespace BLL.Result
 {
-    public class ListQueryResult<T> : ValueResult<IQueryable<T>, ListQueryResult<T>>
+    public class ListQueryResult<T> : ValueResult<IEnumerable<T>, ListQueryResult<T>>
     {
         public Query Query { get; protected set; }
 
 
-        public ListQueryResult(Query query) : this(query, default(IQueryable<T>), true)
+        public ListQueryResult(Query query) : this(query, default(IEnumerable<T>), true)
         {
         }
 
-        public ListQueryResult(Query query, IQueryable<T> value) : this(query, value, true)
+        public ListQueryResult(Query query, IEnumerable<T> value) : this(query, value, true)
         {
         }
 
-        public ListQueryResult(Query query, IQueryable<T> value, bool executionCompleted)
+        public ListQueryResult(Query query, IEnumerable<T> value, bool executionCompleted)
             : base(value, executionCompleted)
         {
             Query = query;
@@ -26,12 +27,8 @@ namespace BLL.Result
 
         public ListQueryResult<TNew> MapTo<TNew>()
         {
-            return new ListQueryResult<TNew>(Query, Value?.ProjectTo<TNew>(), ExecutionComleted)
-            {
-                Message = Message,
-                Exception = Exception,
-                Severity = Severity
-            };
+            return new ListQueryResult<TNew>(Query, Value?.Select(arg => Mapper.Map<TNew>(arg)),
+                ExecutionComleted) {Message = Message, Exception = Exception, Severity = Severity};
         }
     }
 }

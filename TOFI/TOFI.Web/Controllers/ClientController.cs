@@ -14,6 +14,7 @@ using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.User;
 using Microsoft.AspNet.Identity;
+using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Model.Queries;
 using TOFI.TransferObjects.User.Queries;
 
@@ -113,7 +114,8 @@ namespace TOFI.Web.Controllers
         {
             var client = GetClient();
 
-            var requests = _creditRequestService.GetAllModels(new AllModelsQuery()).Value.ToArray(); // Todo: find by client or user id
+            var requests =
+                _creditRequestService.GetClientRequests(new ClientRequestsQuery {ClientId = client.Id}).Value.ToArray();
 
             return View(requests);
         }

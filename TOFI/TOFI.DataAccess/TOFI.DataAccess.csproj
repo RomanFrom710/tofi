@@ -128,6 +128,7 @@
     <Compile Include="Repositories\Model\ModelQueryRepository.cs" />
     <Compile Include="Repositories\Model\ModelRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\RepositoryExtensions.cs" />
     <Compile Include="Repositories\User\IUserCommandRepository.cs" />
     <Compile Include="Repositories\User\IUserQueryRepository.cs" />
     <Compile Include="Repositories\User\UserCommandRepository.cs" />
