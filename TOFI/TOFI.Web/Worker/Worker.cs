@@ -16,7 +16,18 @@ namespace TOFI.Web.Worker
 
         public static void UpdateRemains()
         {
-            using (var stream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "file.txt", FileMode.OpenOrCreate))
+            //using (var stream = new FileStream(Environment.CurrentDirectory + "file.txt", FileMode.OpenOrCreate))
+            var path = Environment.CurrentDirectory + "file.txt";
+            FileMode mode;
+            if (File.Exists(path))
+            {
+                mode = FileMode.Append;
+            }
+            else
+            {
+                mode = FileMode.OpenOrCreate;
+            }
+            using (var stream = new FileStream(path, mode))
             {
                 using (var streamWriter = new StreamWriter(stream))
                 {
