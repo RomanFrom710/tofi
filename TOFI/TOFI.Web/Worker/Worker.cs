@@ -1,5 +1,8 @@
-﻿using Hangfire;
+﻿using BLL.Services.Credits.BankCredits.CreditTypes;
+using DAL.Contexts;
+using Hangfire;
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace TOFI.Web.Worker
@@ -16,6 +19,7 @@ namespace TOFI.Web.Worker
 
         public static void UpdateRemains()
         {
+
             //using (var stream = new FileStream(Environment.CurrentDirectory + "file.txt", FileMode.OpenOrCreate))
             var path = Environment.CurrentDirectory + "file.txt";
             FileMode mode;
@@ -27,6 +31,7 @@ namespace TOFI.Web.Worker
             {
                 mode = FileMode.OpenOrCreate;
             }
+            Trace.TraceInformation(DateTime.Now.ToString());
             using (var stream = new FileStream(path, mode))
             {
                 using (var streamWriter = new StreamWriter(stream))
