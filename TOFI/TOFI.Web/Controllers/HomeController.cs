@@ -6,6 +6,7 @@ namespace TOFI.Web.Controllers
     {
         public ActionResult Index()
         {
+            Trace.TraceInformation("Main view");
             return View();
         }
 
