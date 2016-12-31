@@ -310,3 +310,4 @@ TOFI/TOFI.Web/fonts/glyphicons-halflings-regular.woff
 
 # logs
 TOFI/TOFI.Web/logs/*
+TOFI/TOFI.Web/worker.log

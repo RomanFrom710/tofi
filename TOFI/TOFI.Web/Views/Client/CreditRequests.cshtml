@@ -32,7 +32,7 @@
                     <td>@index</td>
                     <td>@request.CreditType.Name</td>
                     <td>@request.CreditSum.Value</td>
-                    <td>@request.CreditSum.Currency</td>
+                    <td>@request.CreditSum.Currency.Name</td>
                     <td>@request.MonthDuration</td>
                     <td>
                         <a href="@Url.Action("RemoveCreditRequest", new {id = request.Id})">

@@ -19,6 +19,7 @@ namespace DAL.Repositories.Model
         public void Execute(CreateModelCommand<TModelDto> command)
         {
             var model = Mapper.Map<TModel>(command.ModelDto);
+            RestoreFkModels(model);
             ModelsDao.Add(model);
             Save();
             Mapper.Map(model, command.ModelDto);
@@ -27,6 +28,7 @@ namespace DAL.Repositories.Model
         public async Task ExecuteAsync(CreateModelCommand<TModelDto> command)
         {
             var model = Mapper.Map<TModel>(command.ModelDto);
+            RestoreFkModels(model);
             ModelsDao.Add(model);
             await SaveAsync();
             Mapper.Map(model, command.ModelDto);
@@ -43,6 +45,7 @@ namespace DAL.Repositories.Model
                 throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
             }
             Mapper.Map(command.ModelDto, model);
+            RestoreFkModels(model);
             Context.Entry(model).State = EntityState.Modified;
             Save();
             Mapper.Map(model, command.ModelDto);
@@ -56,6 +59,7 @@ namespace DAL.Repositories.Model
                 throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
             }
             Mapper.Map(command.ModelDto, model);
+            RestoreFkModels(model);
             Context.Entry(model).State = EntityState.Modified;
             await SaveAsync();
             Mapper.Map(model, command.ModelDto);
@@ -81,6 +85,11 @@ namespace DAL.Repositories.Model
             }
             ModelsDao.Remove(model);
             await SaveAsync();
+        }
+
+
+        protected virtual void RestoreFkModels(TModel model)
+        {
         }
     }
 }
