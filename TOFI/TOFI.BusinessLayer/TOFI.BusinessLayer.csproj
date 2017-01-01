@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\CustomRequiredAttribute.cs" />
     <Compile Include="Mapping\MapperConfig.cs" />
     <Compile Include="Result\CommandResult.cs" />
     <Compile Include="Result\ListQueryResult.cs" />
