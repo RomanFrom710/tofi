@@ -19,11 +19,11 @@ namespace DAL.Repositories.User
             {
                 throw new ArgumentException("Auth Id change is not allowed");
             }
-            if (model.Client.Id != modelDto.Client.Id)
+            if (model.Client != null && modelDto.Client != null && model.Client.Id != modelDto.Client.Id)
             {
                 throw new ArgumentException("Client Id change is not allowed");
             }
-            if (model.Employee.Id != modelDto.Employee.Id)
+            if (model.Employee != null && modelDto.Employee != null && model.Employee.Id != modelDto.Employee.Id)
             {
                 throw new ArgumentException("Employee Id change is not allowed");
             }
