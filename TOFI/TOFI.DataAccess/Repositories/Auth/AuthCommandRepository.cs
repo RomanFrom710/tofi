@@ -10,5 +10,11 @@ namespace DAL.Repositories.Auth
         public AuthCommandRepository(TofiContext context) : base(context)
         {
         }
+
+
+        protected override void RestoreFkModels(AuthModel model, AuthDto modelDto)
+        {
+            model.User = GetUserModel(model.User?.Id);
+        }
     }
 }

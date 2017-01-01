@@ -10,5 +10,11 @@ namespace DAL.Repositories.Common.Price
         public PriceCommandRepository(TofiContext context) : base(context)
         {
         }
+
+
+        protected override void RestoreFkModels(PriceModel model, PriceDto modelDto)
+        {
+            model.Currency = GetCurrencyModel(modelDto.Currency?.Id);
+        }
     }
 }
