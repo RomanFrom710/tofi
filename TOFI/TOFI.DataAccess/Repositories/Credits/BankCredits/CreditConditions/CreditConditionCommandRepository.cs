@@ -10,5 +10,12 @@ namespace DAL.Repositories.Credits.BankCredits.CreditConditions
         public CreditConditionCommandRepository(TofiContext context) : base(context)
         {
         }
+
+
+        protected override void RestoreFkModels(CreditConditionModel model, CreditConditionDto modelDto)
+        {
+            model.MinCreditSum.Currency = GetCurrencyModel(modelDto.MinCreditSum.Currency?.Id);
+            model.MaxCreditSum.Currency = GetCurrencyModel(modelDto.MaxCreditSum.Currency?.Id);
+        }
     }
 }
