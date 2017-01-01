@@ -27,6 +27,7 @@ namespace DAL.Repositories.User
             {
                 throw new ArgumentException("Employee Id change is not allowed");
             }
+            base.UpdateDbModel(model, modelDto);
         }
     }
 }
