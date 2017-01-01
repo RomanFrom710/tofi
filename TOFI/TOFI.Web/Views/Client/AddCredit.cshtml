@@ -17,13 +17,13 @@
         {
             <div class="form-group">
                 @Html.LabelFor(model => model.MonthDuration)
-                @Html.TextBoxFor(model => model.MonthDuration, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.MonthDuration, new { @class = "form-control", type = "number" })
                 @Html.ValidationMessageFor(model => model.MonthDuration, string.Empty, new { @class = "text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.CreditSum.Value)
-                @Html.TextBoxFor(model => model.CreditSum.Value, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.CreditSum.Value, new { @class = "form-control", type = "number" })
                 @Html.ValidationMessageFor(model => model.CreditSum.Value, string.Empty, new { @class = "text-danger" })
             </div>
 

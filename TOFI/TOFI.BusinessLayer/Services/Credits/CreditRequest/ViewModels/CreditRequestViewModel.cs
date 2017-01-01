@@ -1,4 +1,7 @@
-﻿using BLL.Services.Client.ViewModels;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using BLL.Attributes;
+using BLL.Services.Client.ViewModels;
 using BLL.Services.Common.Price.ViewModels;
 using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Employee.ViewModels;
@@ -34,6 +37,8 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
 
         #region Condition
 
+        [CustomRequired]
+        [Range(1, int.MaxValue, ErrorMessage = "Количество месяцев должно быть положительным.")]
         public int MonthDuration { get; set; }
 
         public virtual PriceViewModel CreditSum { get; set; }
