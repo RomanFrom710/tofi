@@ -11,6 +11,7 @@ namespace TOFI.Web.Worker
     {
         public static void Run()
         {
+            Trace.TraceInformation("run new job");
             BackgroundJob.Enqueue(() => Console.WriteLine("hello"));
             var recurringJobManager = new RecurringJobManager();
             RecurringJob.AddOrUpdate("credit-update", () => UpdateRemains(), Cron.Minutely);
