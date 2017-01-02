@@ -4,6 +4,7 @@ using Hangfire;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Timers;
 
 namespace TOFI.Web.Worker
 {
@@ -11,10 +12,18 @@ namespace TOFI.Web.Worker
     {
         public static void Run()
         {
-            Trace.TraceInformation("run new job");
-            BackgroundJob.Enqueue(() => Console.WriteLine("hello"));
-            var recurringJobManager = new RecurringJobManager();
-            RecurringJob.AddOrUpdate("credit-update", () => UpdateRemains(), Cron.Minutely);
+            var timer = new Timer(5000);
+            timer.Elapsed += (e, args) =>
+            {
+                Trace.TraceInformation("from timer " + DateTime.Now.ToString());
+            };
+            timer.Start();
+            Trace.TraceInformation("timer started");
+
+            //Trace.TraceInformation("run new job");
+            //BackgroundJob.Enqueue(() => Console.WriteLine("hello"));
+            //var recurringJobManager = new RecurringJobManager();
+            //RecurringJob.AddOrUpdate("credit-update", () => UpdateRemains(), Cron.Minutely);
             //recurringJobManager.AddOrUpdate("credit-update", Job.FromExpression(() => UpdateRemains()), Cron.Minutely, new RecurringJobOptions());
         }
 
