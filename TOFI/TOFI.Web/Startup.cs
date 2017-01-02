@@ -12,9 +12,10 @@ namespace TOFI.Web
             ConfigureAuth(app);
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage("Worker");
-            Worker.Worker.Run();
             app.UseHangfireDashboard();
             app.UseHangfireServer();
+
+            Worker.Worker.Run();
         }
     }
 }
