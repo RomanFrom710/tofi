@@ -1,34 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BLL.Attributes;
 using BLL.Services.Model.ViewModels;
 
 namespace BLL.Services.User.ViewModels
 {
     public class RegisterViewModel : ModelViewModel
     {
-        [Required]
-        [EmailAddress]
+        [CustomRequired]
+        [EmailAddress(ErrorMessage = "Неправильный формат адреса электронной почты.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [CustomRequired]
+        [StringLength(100, ErrorMessage = "{0} должен содержать минимум {2} символов.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Подтверждение пароля")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        [Display(Name = "First Name")]
+        [CustomRequired]
+        [Display(Name = "Имя")]
         public string FirstName { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        [Display(Name = "Last Name")]
+        [CustomRequired]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
     }
 }

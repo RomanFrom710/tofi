@@ -25,6 +25,7 @@ namespace DAL.Models.Credits.BankCredits.CreditTypes
         public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 
         public virtual ICollection<CreditRequestModel> CreditRequests { get; set; }
+
         #endregion
     }
 }

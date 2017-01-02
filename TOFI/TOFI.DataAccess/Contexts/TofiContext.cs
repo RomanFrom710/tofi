@@ -9,6 +9,7 @@ using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Credits.CreditAccount;
 using DAL.Models.Employee;
 using DAL.Models.Credits.CreditRequest;
+using DAL.Models.Credits.CreditPayment;
 
 namespace DAL.Contexts
 {
@@ -38,6 +39,8 @@ namespace DAL.Contexts
         public DbSet<CreditTypeModel> CreditTypes { get; set; }
 
         public DbSet<CreditAccountModel> CreditAccounts { get; set; }
+
+        public DbSet<CreditPaymentModel> CreditPayments { get; set; }
 
         public DbSet<UserActionModel> UserActions { get; set; }
 
@@ -104,6 +107,9 @@ namespace DAL.Contexts
             modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.User)
                 .WithMany(u => u.CreditAccounts);
+            modelBuilder.Entity<CreditAccountModel>()
+                .HasMany(a => a.Payments)
+                .WithRequired(p => p.CreditAccount);
 
             modelBuilder.Entity<CreditRequestModel>()
                 .HasRequired(r => r.Client)
@@ -127,6 +133,11 @@ namespace DAL.Contexts
                 .HasRequired(r => r.CreditSum)
                 .WithOptional()
                 .Map(config => config.MapKey("CreditSum_Id"));
+
+            modelBuilder.Entity<CreditPaymentModel>()
+                .HasRequired(p => p.PaymentSum)
+                .WithOptional()
+                .Map(config => config.MapKey("PaymentSum_Id"));
         }
     }
 }
