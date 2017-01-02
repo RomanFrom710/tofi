@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TOFI.Web;
 
 namespace TOFI.AccountUpdater
 {
@@ -12,6 +9,10 @@ namespace TOFI.AccountUpdater
         static void Main(string[] args)
         {
             Trace.TraceInformation("from webjob " + DateTime.Now.ToString());
+
+            var accountUpdater = new AccountUpdaterService();
+            MapperConfig.Initialize();
+            accountUpdater.UpdateRemains();
         }
     }
 }
