@@ -6,6 +6,7 @@ using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
 using DAL.Models.User;
+using DAL.Models.Credits.CreditAccount;
 
 namespace DAL.Repositories.Model
 {
@@ -88,6 +89,20 @@ namespace DAL.Repositories.Model
                 throw new ArgumentException("User with given Id doesn't exists");
             }
             return user;
+        }
+
+        protected CreditAccountModel GetCreditAccountModel(int? id)
+        {
+            if (!id.HasValue)
+            {
+                throw new ArgumentException("Credit Account Id is invalid");
+            }
+            var creditAccount = Context.CreditAccounts.Find(id.Value);
+            if (creditAccount == null)
+            {
+                throw new ArgumentException("Credit account with given Id doesn't exist");
+            }
+            return creditAccount;
         }
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="Credits\BankCredits\CreditRequirements\DataObjects\CreditRequirementDto.cs" />
     <Compile Include="Credits\BankCredits\CreditTypes\DataObjects\CreditTypeDto.cs" />
     <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDto.cs" />
+    <Compile Include="Credits\CreditPayment\DataObjects\CreditPaymentDto.cs" />
     <Compile Include="Credits\CreditRequest\DataObjects\CreditRequestDto.cs" />
     <Compile Include="Credits\CreditRequest\Queries\ClientRequestsQuery.cs" />
     <Compile Include="Dto.cs" />
