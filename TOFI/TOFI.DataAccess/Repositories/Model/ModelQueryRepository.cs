@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using DAL.Contexts;
 using TOFI.TransferObjects.Model.DataObjects;
 using TOFI.TransferObjects.Model.Queries;
@@ -16,14 +15,14 @@ namespace DAL.Repositories.Model
         }
 
 
-        public IQueryable<TModelDto> Handle(AllModelsQuery query)
+        public IEnumerable<TModelDto> Handle(AllModelsQuery query)
         {
-            return ModelsDao.ProjectTo<TModelDto>();
+            return ModelsDao.MapTo<TModelDto>();
         }
 
-        public Task<IQueryable<TModelDto>> HandleAsync(AllModelsQuery query)
+        public Task<IEnumerable<TModelDto>> HandleAsync(AllModelsQuery query)
         {
-            return Task.FromResult(ModelsDao.ProjectTo<TModelDto>());
+            return ModelsDao.MapToAsync<TModelDto>();
         }
 
         public TModelDto Handle(ModelQuery query)

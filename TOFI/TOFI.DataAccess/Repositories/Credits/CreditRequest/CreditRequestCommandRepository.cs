@@ -10,5 +10,17 @@ namespace DAL.Repositories.Credits.CreditRequest
         public CreditRequestCommandRepository(TofiContext context) : base(context)
         {
         }
+
+
+        protected override void RestoreFkModels(CreditRequestModel model, CreditRequestDto modelDto)
+        {
+            model.CreditSum.Currency = GetCurrencyModel(modelDto.CreditSum.Currency?.Id);
+            model.Client = GetClientModel(modelDto.Client?.Id);
+            model.CreditType = GetCreditTypeModel(modelDto.CreditType?.Id);
+            model.SecurityApproved = GetEmployeeModelOptional(modelDto.SecurityApproved?.Id);
+            model.CreditCommitteeApproved = GetEmployeeModelOptional(modelDto.CreditCommitteeApproved?.Id);
+            model.CreditDepartmentApproved = GetEmployeeModelOptional(modelDto.CreditDepartmentApproved?.Id);
+            model.CashierApproved = GetEmployeeModelOptional(modelDto.CashierApproved?.Id);
+        }
     }
 }

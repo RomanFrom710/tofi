@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using BLL.Attributes;
 
 namespace TOFI.Web.Models
 {
@@ -48,17 +49,17 @@ namespace TOFI.Web.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [CustomRequired]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Неправильный формат адреса электронной почты.")]
         public string Email { get; set; }
 
-        [Required]
+        [CustomRequired]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запомнить меня")]
         public bool RememberMe { get; set; }
     }
 

@@ -55,7 +55,9 @@
     <Compile Include="Credits\BankCredits\CreditRequirements\DataObjects\CreditRequirementDto.cs" />
     <Compile Include="Credits\BankCredits\CreditTypes\DataObjects\CreditTypeDto.cs" />
     <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDto.cs" />
+    <Compile Include="Credits\CreditPayment\DataObjects\CreditPaymentDto.cs" />
     <Compile Include="Credits\CreditRequest\DataObjects\CreditRequestDto.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\ClientRequestsQuery.cs" />
     <Compile Include="Dto.cs" />
     <Compile Include="Employee\DataObjects\EmployeeDto.cs" />
     <Compile Include="Model\Commands\CreateModelCommand.cs" />
@@ -87,7 +89,6 @@
     <Folder Include="Credits\CreditAccount\Commands\" />
     <Folder Include="Credits\CreditAccount\Queries\" />
     <Folder Include="Credits\CreditRequest\Commands\" />
-    <Folder Include="Credits\CreditRequest\Queries\" />
     <Folder Include="Employee\Commands\" />
     <Folder Include="Employee\Queries\" />
     <Folder Include="User\Commands\" />

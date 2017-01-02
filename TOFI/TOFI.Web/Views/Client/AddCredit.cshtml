@@ -17,13 +17,13 @@
         {
             <div class="form-group">
                 @Html.LabelFor(model => model.MonthDuration)
-                @Html.TextBoxFor(model => model.MonthDuration, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.MonthDuration, new { @class = "form-control", type = "number" })
                 @Html.ValidationMessageFor(model => model.MonthDuration, string.Empty, new { @class = "text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.CreditSum.Value)
-                @Html.TextBoxFor(model => model.CreditSum.Value, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.CreditSum.Value, new { @class = "form-control", type = "number" })
                 @Html.ValidationMessageFor(model => model.CreditSum.Value, string.Empty, new { @class = "text-danger" })
             </div>
 
@@ -38,10 +38,15 @@
                 @Html.DropDownListFor(model => model.CreditType.Id, (IEnumerable<SelectListItem>)(ViewBag.CreditTypes), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CreditType, string.Empty, new { @class = "text-danger" })
             </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-lg" value="Создать" />
+            </div>
         }
     </div>
     <div class="col-md-4">
         <h3>Типы кредитов</h3>
+        <hr/>
         @Html.Partial("_CreditTypesPartial", (IEnumerable<CreditTypeViewModel>)ViewBag.CreditTypesInfo)
     </div>
 </div>

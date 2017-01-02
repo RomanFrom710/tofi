@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BLL.Services.Credits.CreditRequest.ViewModels.CreditRequestViewModel>
+
+@{
+    ViewBag.Title = "Текущие заявки на кредит";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_ClientMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Тип кредита</th>
+                <th>Сумма</th>
+                <th>Валюта</th>
+                <th>Кол-во месяцев</th>
+                <th>Удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+            @{ var index = 0; }
+            @foreach (var request in Model)
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td>@request.CreditType.Name</td>
+                    <td>@request.CreditSum.Value</td>
+                    <td>@request.CreditSum.Currency.Name</td>
+                    <td>@request.MonthDuration</td>
+                    <td>
+                        <a href="@Url.Action("RemoveCreditRequest", new {id = request.Id})">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
