@@ -19,7 +19,8 @@ namespace TOFI.Web.Worker
 
         public static void UpdateRemains()
         {
-
+            Trace.TraceInformation(DateTime.Now.ToString());
+            return;
             //using (var stream = new FileStream(Environment.CurrentDirectory + "file.txt", FileMode.OpenOrCreate))
             var path = Environment.CurrentDirectory + "file.txt";
             FileMode mode;
