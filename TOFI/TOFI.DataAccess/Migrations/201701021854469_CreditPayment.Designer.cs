@@ -13,12 +13,12 @@ namespace DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201701021823587_CreditPayment"; }
+            get { return "201701021854469_CreditPayment"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target

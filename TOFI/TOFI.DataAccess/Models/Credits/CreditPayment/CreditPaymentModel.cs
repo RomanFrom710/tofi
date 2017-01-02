@@ -2,9 +2,11 @@
 using DAL.Models.User;
 using System;
 using DAL.Models.Credits.CreditAccount;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models.Credits.CreditPayment
 {
+    [Table("CreditPayments")]
     public class CreditPaymentModel: Model
     {
         public DateTime Timestamp { get; set; }
