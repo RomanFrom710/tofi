@@ -62,9 +62,9 @@
     <Compile Include="Migrations\201612291848283_initial.Designer.cs">
       <DependentUpon>201612291848283_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701021823587_CreditPayment.cs" />
-    <Compile Include="Migrations\201701021823587_CreditPayment.Designer.cs">
-      <DependentUpon>201701021823587_CreditPayment.cs</DependentUpon>
+    <Compile Include="Migrations\201701021854469_CreditPayment.cs" />
+    <Compile Include="Migrations\201701021854469_CreditPayment.Designer.cs">
+      <DependentUpon>201701021854469_CreditPayment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
@@ -157,8 +157,8 @@
     <EmbeddedResource Include="Migrations\201612291848283_initial.resx">
       <DependentUpon>201612291848283_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701021823587_CreditPayment.resx">
-      <DependentUpon>201701021823587_CreditPayment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701021854469_CreditPayment.resx">
+      <DependentUpon>201701021854469_CreditPayment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
