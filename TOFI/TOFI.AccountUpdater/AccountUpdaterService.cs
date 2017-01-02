@@ -22,7 +22,7 @@ namespace TOFI.AccountUpdater
         
         public void UpdateRemains()
         {
-            Logger.Info(() => "UpdateRemains called");
+            Logger.Info("UpdateRemains called");
             var query = new AllModelsQuery();
             var value = _creditAccountService.GetAllModelDtos(query).Value;
             var accounts = value.ToArray();
