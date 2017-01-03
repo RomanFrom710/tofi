@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201701021854469_CreditPayment.Designer.cs">
       <DependentUpon>201701021854469_CreditPayment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701031910008_NullableApproved.cs" />
+    <Compile Include="Migrations\201701031910008_NullableApproved.Designer.cs">
+      <DependentUpon>201701031910008_NullableApproved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\Common\CurrencyModel.cs" />
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021854469_CreditPayment.resx">
       <DependentUpon>201701021854469_CreditPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031910008_NullableApproved.resx">
+      <DependentUpon>201701031910008_NullableApproved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

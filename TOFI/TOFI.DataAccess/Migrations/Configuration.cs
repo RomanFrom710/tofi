@@ -23,6 +23,10 @@ namespace DAL.Migrations
 
         protected override void Seed(DAL.Contexts.TofiContext context)
         {
+            if (context.Database.Exists())
+            {
+                return;
+            }
             var currencies = new List<CurrencyModel>()
             {
                 new CurrencyModel() { Name = "USD" },
