@@ -5,6 +5,7 @@ using AutoMapper;
 using DAL.Contexts;
 using TOFI.TransferObjects.Model.Commands;
 using TOFI.TransferObjects.Model.DataObjects;
+using System.Collections.Generic;
 
 namespace DAL.Repositories.Model
 {
@@ -63,6 +64,38 @@ namespace DAL.Repositories.Model
             Context.Entry(model).State = EntityState.Modified;
             await SaveAsync();
             Mapper.Map(model, command.ModelDto);
+        }
+
+        public void Execute(UpdateModelsCommand<TModelDto> command)
+        {
+            foreach(var modelDto in command.ModelsDto)
+            {
+                var model = ModelsDao.Find(modelDto.Id);
+                if (model == null)
+                {
+                    throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
+                }
+                UpdateDbModel(model, modelDto);
+                RestoreFkModels(model, modelDto);
+                Context.Entry(model).State = EntityState.Modified;
+            }
+            Save();
+        }
+
+        public async Task ExecuteAsync(UpdateModelsCommand<TModelDto> command)
+        {
+            foreach (var modelDto in command.ModelsDto)
+            {
+                var model = await ModelsDao.FindAsync(modelDto.Id);
+                if (model == null)
+                {
+                    throw new ArgumentException($"{typeof(TModel).Name} with given Id not found");
+                }
+                UpdateDbModel(model, modelDto);
+                RestoreFkModels(model, modelDto);
+                Context.Entry(model).State = EntityState.Modified;
+            }
+            await SaveAsync();
         }
 
         public void Execute(DeleteModelCommand command)
