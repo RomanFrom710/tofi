@@ -6,6 +6,7 @@ namespace DAL.Repositories.Model
     public interface IModelCommandRepository<TModelDto> : IRepository,
         ICommandRepository<CreateModelCommand<TModelDto>>,
         ICommandRepository<UpdateModelCommand<TModelDto>>,
+        ICommandRepository<UpdateModelsCommand<TModelDto>>,
         ICommandRepository<DeleteModelCommand>
         where TModelDto : ModelDto
     {
