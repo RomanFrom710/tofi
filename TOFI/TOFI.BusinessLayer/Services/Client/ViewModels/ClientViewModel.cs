@@ -47,6 +47,12 @@ namespace BLL.Services.Client.ViewModels
         public string Authority { get; set; }
 
         [CustomRequired]
+        [Display(Name = "Дата рождения")]
+        [DataType(DataType.Date, ErrorMessage = "Неверный формат даты")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? Birthday { get; set; }
+
+        [CustomRequired]
         [Display(Name = "Дата выдачи")]
         [DataType(DataType.Date, ErrorMessage = "Неверный формат даты")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]

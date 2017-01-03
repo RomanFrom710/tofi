@@ -16,6 +16,8 @@ namespace TOFI.TransferObjects.Client.DataObjects
 
         public string Authority { get; set; }
 
+        public DateTime Birthday { get; set; }
+
         public DateTime IssueDate { get; set; }
 
         public DateTime ExpirationDate { get; set; }

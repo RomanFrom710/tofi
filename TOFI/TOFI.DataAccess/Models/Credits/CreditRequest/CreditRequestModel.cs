@@ -39,6 +39,8 @@ namespace DAL.Models.Credits.CreditRequest
 
         public virtual PriceModel CreditSum { get; set; }
 
+        public string CreditPurpose { get; set; }
+
         #endregion
 
         #region Virtual Properties 

@@ -18,12 +18,14 @@ namespace DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(DAL.Contexts.TofiContext context)
         {
-            if (context.Database.Exists())
+            // TODO: if seed already called
+            if (context.Currency.FirstOrDefault() != null)
             {
                 return;
             }

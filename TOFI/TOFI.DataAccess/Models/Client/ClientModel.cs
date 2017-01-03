@@ -24,6 +24,8 @@ namespace DAL.Models.Client
 
         public DateTime ExpirationDate { get; set; }
 
+        public DateTime Birthday { get; set; }
+
         public Sex Sex { get; set; }
 
         #region Virtual Properties
