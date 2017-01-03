@@ -35,7 +35,7 @@
                     <td>@request.CreditSum.Currency.Name</td>
                     <td>@request.MonthDuration</td>
                     <td>
-                        <a href="@Url.Action("RemoveCreditRequest", new {id = request.Id})">
+                        <a href="@Url.Action("RemoveCreditRequest", new {id = request.Id})" onclick="return confirm('Вы уверены?');">
                             <i class="glyphicon glyphicon-trash"></i>
                         </a>
                     </td>

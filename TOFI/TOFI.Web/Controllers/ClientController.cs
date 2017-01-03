@@ -20,6 +20,7 @@ using TOFI.TransferObjects.User.Queries;
 
 namespace TOFI.Web.Controllers
 {
+    [Authorize]
     public class ClientController : Controller
     {
         private readonly IUserService _userService;

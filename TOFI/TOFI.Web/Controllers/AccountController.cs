@@ -89,6 +89,13 @@ namespace TOFI.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult> AdminLogin(LoginViewModel model, string returnUrl)
+        {
+            return await Login(model, returnUrl);
+        }
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]

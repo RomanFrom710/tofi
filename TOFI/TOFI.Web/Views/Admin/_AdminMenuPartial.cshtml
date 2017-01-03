@@ -1,0 +1,7 @@
+﻿<nav>
+    <ul class="nav nav-pills nav-stacked">
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Currencies" ? "active" : "")">
+            @Html.ActionLink("Валюты", "Currencies", "Admin")
+        </li>
+    </ul>
+</nav>
