@@ -13,13 +13,13 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
     {
         #region Approved
 
-        public bool IsSecurityApproved { get; set; }
+        public bool? IsSecurityApproved { get; set; }
 
-        public bool IsCreditCommitteeApproved { get; set; }
+        public bool? IsCreditCommitteeApproved { get; set; }
 
-        public bool IsCreditDepartmentApproved { get; set; }
+        public bool? IsCreditDepartmentApproved { get; set; }
 
-        public bool IsCashierApproved { get; set; }
+        public bool? IsCashierApproved { get; set; }
 
         #endregion
 
