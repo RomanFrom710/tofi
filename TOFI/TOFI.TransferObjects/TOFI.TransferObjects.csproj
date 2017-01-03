@@ -63,6 +63,7 @@
     <Compile Include="Model\Commands\CreateModelCommand.cs" />
     <Compile Include="Model\Commands\DeleteModelCommand.cs" />
     <Compile Include="Model\Commands\UpdateModelCommand.cs" />
+    <Compile Include="Model\Commands\UpdateModelsCommand.cs" />
     <Compile Include="Model\DataObjects\ModelDto.cs" />
     <Compile Include="Model\Queries\AllModelsQuery.cs" />
     <Compile Include="Model\Queries\ModelQuery.cs" />
