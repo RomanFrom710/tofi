@@ -6,8 +6,12 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        @if (!User.IsInRole("admin"))
+        {
+            <li>@Html.ActionLink("Одменка", "Index", "Admin")</li>
+        }
         <li>
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Client", null, new { title = "Manage" })
+            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Client", null, new { title = "Управление" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Выход</a></li>
     </ul>

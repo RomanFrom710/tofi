@@ -217,6 +217,7 @@
     <Compile Include="Auth\CustomUserStore.cs" />
     <Compile Include="Auth\UserRole.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -380,6 +381,10 @@
     <Content Include="Views\Client\AddCredit.cshtml" />
     <Content Include="Views\Shared\_CreditTypesPartial.cshtml" />
     <Content Include="Views\Client\CreditRequests.cshtml" />
+    <Content Include="Views\Account\AdminLogin.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\Admin\Currencies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

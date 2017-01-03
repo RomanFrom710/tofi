@@ -1,0 +1,52 @@
+﻿@using BLL.Services.Common.Currency.ViewModels
+@model IEnumerable<CurrencyViewModel>
+@{
+    ViewBag.Title = "Управление валютами";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_AdminMenuPartial")
+    </div>
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var index = 0;
+                    var newCurrency = new CurrencyViewModel();
+                }
+                @foreach (var currency in Model)
+                {
+                index++;
+                    <tr>
+                        <td>@index</td>
+                        <td>@currency.Name</td>
+                        <td>
+                            <a href="@Url.Action("RemoveCurrency", new { id = currency.Id })" onclick="return confirm('Вы уверены?');">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                @using (Html.BeginForm("AddCurrency", "Admin", FormMethod.Post))
+                {
+                    <tr>
+                        <td>@(++index)</td>
+                        <td>@Html.TextBox("Name", string.Empty, new { @class="form-control", required="required" })</td>
+                        <td><button class="btn btn-primary">Сохранить</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
