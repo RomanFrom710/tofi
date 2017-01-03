@@ -17,16 +17,37 @@ namespace TOFI.Web.Auth
     {
         public const string Client = "client";
         public const string Employee = "employee";
+        public const string Cashier = "cashier";
+        public const string Operator = "operator";
+        public const string SecurityOfficer = "security";
+        public const string CreditCommitteeMember = "committee member";
+        public const string CreditDepartmentChief = "department chief";
         public const string Admin = "admin";
 
 
         public static readonly string[] All = {Client, Employee, Admin};
 
         public static readonly Dictionary<EmployeeRights, string> RightsToRoles =
-            new Dictionary<EmployeeRights, string> {{EmployeeRights.Admin, Admin}};
+            new Dictionary<EmployeeRights, string>
+            {
+                {EmployeeRights.Cashier, Cashier},
+                {EmployeeRights.Operator, Operator},
+                {EmployeeRights.SecurityOfficer, SecurityOfficer},
+                {EmployeeRights.CreditCommitteeMember, CreditCommitteeMember},
+                {EmployeeRights.CreditDepartmentChief, CreditDepartmentChief},
+                {EmployeeRights.Admin, Admin}
+            };
 
         public static readonly Dictionary<string, EmployeeRights> RolesToRights =
-            new Dictionary<string, EmployeeRights> {{Admin, EmployeeRights.Admin}};
+            new Dictionary<string, EmployeeRights>
+            {
+                {Cashier, EmployeeRights.Cashier},
+                {Operator, EmployeeRights.Operator},
+                {SecurityOfficer, EmployeeRights.SecurityOfficer},
+                {CreditCommitteeMember, EmployeeRights.CreditCommitteeMember},
+                {CreditDepartmentChief, EmployeeRights.CreditDepartmentChief},
+                {Admin, EmployeeRights.Admin}
+            };
 
 
         public static IList<string> GetRoles(AuthUser user)
