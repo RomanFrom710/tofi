@@ -20,6 +20,10 @@
                 <th>Сумма</th>
                 <th>Валюта</th>
                 <th>Кол-во месяцев</th>
+                <th>Кассир</th>
+                <th title="Служба безопасности банка">Безопасность</th>
+                <th title="Отдел выдачи кредитов">Отдел</th>
+                <th title="Кредитный комитет">Комитет</th>
                 <th>Удалить</th>
             </tr>
             </thead>
@@ -34,6 +38,34 @@
                     <td>@request.CreditSum.Value</td>
                     <td>@request.CreditSum.Currency.Name</td>
                     <td>@request.MonthDuration</td>
+                    <td>
+                        @if (request.IsCashierApproved.HasValue)
+                            {
+                                if (request.IsCashierApproved.Value) { <span class="yes">+</span> }
+                                else { <span class="no">-</span> }
+                            }
+                    </td>
+                    <td>
+                        @if (request.IsSecurityApproved.HasValue)
+                        {
+                            if (request.IsSecurityApproved.Value) { <span class="yes">+</span> }
+                            else { <span class="no">-</span> }
+                        }
+                    </td>
+                    <td>
+                        @if (request.IsCreditDepartmentApproved.HasValue)
+                        {
+                            if (request.IsCreditDepartmentApproved.Value) { <span class="yes">+</span> }
+                            else { <span class="no">-</span> }
+                        }
+                    </td>
+                    <td>
+                        @if (request.IsCreditCommitteeApproved.HasValue)
+                        {
+                            if (request.IsCreditCommitteeApproved.Value) { <span class="yes">+</span> }
+                            else { <span class="no">-</span> }
+                        }
+                    </td>
                     <td>
                         <a href="@Url.Action("RemoveCreditRequest", new {id = request.Id})" onclick="return confirm('Вы уверены?');">
                             <i class="glyphicon glyphicon-trash"></i>
