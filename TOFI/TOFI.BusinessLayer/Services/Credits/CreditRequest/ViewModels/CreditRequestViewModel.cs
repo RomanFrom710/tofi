@@ -43,6 +43,8 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
 
         public virtual PriceViewModel CreditSum { get; set; }
 
+        public string CreditPurpose { get; set; }
+
         #endregion
 
         #region Virtual Properties 

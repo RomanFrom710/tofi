@@ -38,6 +38,8 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
 
         public virtual PriceDto CreditSum { get; set; }
 
+        public string CreditPurpose { get; set; }
+
         #endregion
 
         #region Virtual Properties 
