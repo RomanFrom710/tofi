@@ -1,5 +1,4 @@
 ﻿using DAL.Models.Common;
-using DAL.Models.User;
 using System;
 using DAL.Models.Credits.CreditAccount;
 using System.ComponentModel.DataAnnotations.Schema;
