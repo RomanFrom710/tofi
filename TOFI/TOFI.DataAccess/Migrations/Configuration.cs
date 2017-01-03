@@ -10,6 +10,7 @@ using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using System.Collections.Generic;
+using DAL.Models.Employee;
 
 namespace DAL.Migrations
 {
@@ -151,6 +152,10 @@ namespace DAL.Migrations
                     Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true
+                },
+                Employee = new EmployeeModel()
+                {
+                    Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Admin
                 }
             };
 
