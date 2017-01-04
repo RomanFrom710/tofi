@@ -1,4 +1,5 @@
-﻿using DAL.Models.Client;
+﻿using DAL.Models.Actions;
+using DAL.Models.Client;
 using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
@@ -56,6 +57,8 @@ namespace DAL.Models.Credits.CreditRequest
         public virtual EmployeeModel CreditDepartmentApproved { get; set; }
 
         public virtual CreditTypeModel CreditType { get; set; }
+
+        public virtual ActionModel Action { get; set; }
 
         #endregion
     }

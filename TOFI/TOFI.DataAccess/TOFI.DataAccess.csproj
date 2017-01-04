@@ -58,11 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
-    <Compile Include="Migrations\201701042048280_initial.cs" />
-    <Compile Include="Migrations\201701042048280_initial.Designer.cs">
-      <DependentUpon>201701042048280_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201701042119106_initial.cs" />
+    <Compile Include="Migrations\201701042119106_initial.Designer.cs">
+      <DependentUpon>201701042119106_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\Common\CurrencyModel.cs" />
     <Compile Include="Models\Common\PriceModel.cs" />
@@ -72,7 +73,6 @@
     <Compile Include="Models\Credits\CreditAccount\CreditAccountModel.cs" />
     <Compile Include="Models\Credits\CreditPayment\CreditPaymentModel.cs" />
     <Compile Include="Models\Credits\CreditRequest\CreditRequestModel.cs" />
-    <Compile Include="Models\User\UserActionModel.cs" />
     <Compile Include="Repositories\Auth\AuthCommandRepository.cs" />
     <Compile Include="Repositories\Auth\AuthQueryRepository.cs" />
     <Compile Include="Repositories\Auth\IAuthCommandRepository.cs" />
@@ -150,8 +150,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701042048280_initial.resx">
-      <DependentUpon>201701042048280_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701042119106_initial.resx">
+      <DependentUpon>201701042119106_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
