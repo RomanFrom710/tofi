@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Client.ViewModels;
 using BLL.Services.Model;
 using BLL.Services.User;
+using BLL.Services.User.ViewModels;
 using DAL.Repositories.Client;
 using TOFI.TransferObjects.Client.DataObjects;
-using TOFI.TransferObjects.User.DataObjects;
+using TOFI.TransferObjects.Client.Queries;
 using TOFI.TransferObjects.User.Queries;
 
 namespace BLL.Services.Client
@@ -26,16 +28,117 @@ namespace BLL.Services.Client
         }
 
 
-        public ValueResult<bool> CanAddCreditRequest(int userId)
+        public QueryResult<ClientViewModel> GetClient(ClientQuery query)
         {
-            var userRes = _userService.GetUserDto(new UserQuery {Id = userId});
+            QueryResult<UserViewModel> userRes = null;
+            if (query.Id.HasValue)
+            {
+                userRes = _userService.GetUser(new UserQuery {ClientId = query.Id});
+            }
+            if (query.UserId.HasValue)
+            {
+                userRes = _userService.GetUser(new UserQuery {Id = query.UserId});
+            }
+            if (userRes == null)
+            {
+                return new QueryResult<ClientViewModel>(query, null, false).Error("Invalid query");
+            }
             if (userRes.IsFailed)
             {
-                return new ValueResult<bool>(false, false).From(userRes);
+                return new QueryResult<ClientViewModel>(query, null, false).From(userRes);
             }
+            var client = userRes.Value?.Client ?? new ClientViewModel();
+            client.FirstName = userRes.Value?.FirstName;
+            client.LastName = userRes.Value?.LastName;
+            client.MiddleName = userRes.Value?.MiddleName;
+            return new QueryResult<ClientViewModel>(query, client, true);
+        }
+
+        public async Task<QueryResult<ClientViewModel>> GetClientAsync(ClientQuery query)
+        {
+            QueryResult<UserViewModel> userRes = null;
+            if (query.Id.HasValue)
+            {
+                userRes = await _userService.GetUserAsync(new UserQuery {ClientId = query.Id});
+            }
+            if (query.UserId.HasValue)
+            {
+                userRes = await _userService.GetUserAsync(new UserQuery {Id = query.UserId});
+            }
+            if (userRes == null)
+            {
+                return new QueryResult<ClientViewModel>(query, null, false).Error("Invalid query");
+            }
+            if (userRes.IsFailed)
+            {
+                return new QueryResult<ClientViewModel>(query, null, false).From(userRes);
+            }
+            if (userRes.Value == null)
+            {
+                return new QueryResult<ClientViewModel>(query, null, false).Error("Invalid user Id");
+            }
+            var client = userRes.Value?.Client ?? new ClientViewModel();
+            client.FirstName = userRes.Value?.FirstName;
+            client.LastName = userRes.Value?.LastName;
+            client.MiddleName = userRes.Value?.MiddleName;
+            return new QueryResult<ClientViewModel>(query, client, true);
+        }
+
+
+        public CommandResult UpdateClient(int userId, ClientViewModel client)
+        {
+            var userRes = _userService.GetUser(new UserQuery {Id = userId});
+            if (userRes.IsFailed)
+            {
+                return new CommandResult(null, false).From(userRes);
+            }
+            if (userRes.Value == null)
+            {
+                return new CommandResult(null, false).Error("Invalid user Id");
+            }
+            var user = userRes.Value;
+            user.FirstName = client?.FirstName ?? user.FirstName;
+            user.LastName = client?.LastName ?? user.LastName;
+            user.MiddleName = client?.MiddleName ?? user.MiddleName;
+            user.Client = client;
+            return _userService.UpdateModel(user);
+        }
+
+        public async Task<CommandResult> UpdateClientAsync(int userId, ClientViewModel client)
+        {
+            var userRes = await _userService.GetUserAsync(new UserQuery {Id = userId});
+            if (userRes.IsFailed)
+            {
+                return new CommandResult(null, false).From(userRes);
+            }
+            if (userRes.Value == null)
+            {
+                return new CommandResult(null, false).Error("Invalid user Id");
+            }
+            var user = userRes.Value;
+            user.FirstName = client?.FirstName ?? user.FirstName;
+            user.LastName = client?.LastName ?? user.LastName;
+            user.MiddleName = client?.MiddleName ?? user.MiddleName;
+            user.Client = client;
+            return await _userService.UpdateModelAsync(user);
+        }
+
+
+        public ValueResult<bool> CanAddCreditRequest(int userId)
+        {
+            var clientRes = GetClient(new ClientQuery {UserId = userId});
+            if (clientRes.IsFailed)
+            {
+                return new ValueResult<bool>(false, false).From(clientRes);
+            }
+            return ValidateClientInfo(clientRes.Value);
+        }
+
+        public ValueResult<bool> ValidateClientInfo(ClientViewModel client)
+        {
             try
             {
-                var msg = ValidateClient(userRes.Value);
+                var msg = ValidateClientInner(client);
                 if (!string.IsNullOrEmpty(msg))
                 {
                     return new ValueResult<bool>(false, true).Error(msg);
@@ -49,34 +152,40 @@ namespace BLL.Services.Client
         }
 
 
-        private string ValidateClient(UserDto user)
+        private string ValidateClientInner(ClientViewModel client)
         {
-            if (string.IsNullOrWhiteSpace(user.FirstName))
-                return "First Name not filled";
-            if (string.IsNullOrWhiteSpace(user.LastName))
-                return "Last Name not filled";
-            if (string.IsNullOrWhiteSpace(user.MiddleName))
-                return "Middle Name not filled";
-            if (user.Client == null)
+            if (client == null)
                 return "Client info not filled";
-            if (string.IsNullOrWhiteSpace(user.Client.Address))
+            if (string.IsNullOrWhiteSpace(client.FirstName))
+                return "First Name not filled";
+            if (string.IsNullOrWhiteSpace(client.LastName))
+                return "Last Name not filled";
+            if (string.IsNullOrWhiteSpace(client.MiddleName))
+                return "Middle Name not filled";
+            if (string.IsNullOrWhiteSpace(client.Address))
                 return "Address not filled";
-            if (string.IsNullOrWhiteSpace(user.Client.TelephoneNumber))
+            if (string.IsNullOrWhiteSpace(client.TelephoneNumber))
                 return "Telephone Number not filled";
-            if (string.IsNullOrWhiteSpace(user.Client.PassportNumber))
+            if (string.IsNullOrWhiteSpace(client.PassportNumber))
                 return "Passport Number not filled";
-            if (string.IsNullOrWhiteSpace(user.Client.PassportId))
+            if (string.IsNullOrWhiteSpace(client.PassportId))
                 return "Passport Id not filled";
-            if (string.IsNullOrWhiteSpace(user.Client.Authority))
+            if (string.IsNullOrWhiteSpace(client.Authority))
                 return "Authority not filled";
-            var age = (int) Math.Floor((DateTime.Now.Date - user.Client.Birthday.Date).TotalDays/365);
+            if (!client.Birthday.HasValue)
+                return "Birthday is not filled";
+            var age = (int) Math.Floor((DateTime.Now.Date - client.Birthday.Value.Date).TotalDays/365);
             if (age < 18)
                 return "You are too young to take credits.";
             if (age > 150)
                 return "People normally don't live that long.";
-            if (DateTime.Now.Date < user.Client.IssueDate)
+            if (!client.IssueDate.HasValue)
+                return "Issue Date is not filled";
+            if (DateTime.Now.Date < client.IssueDate)
                 return "Your passport is from future. Sorry, but we can't accept it.";
-            if (DateTime.Now.Date > user.Client.ExpirationDate)
+            if (!client.ExpirationDate.HasValue)
+                return "Expiration Date is not filled";
+            if (DateTime.Now.Date > client.ExpirationDate)
                 return "Your passport is outdated. Go get a new one.";
             return string.Empty;
         }

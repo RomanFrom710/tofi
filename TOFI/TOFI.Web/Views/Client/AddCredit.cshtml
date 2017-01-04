@@ -15,7 +15,7 @@
         
         @using (Html.BeginForm("AddCredit", "Client", FormMethod.Post))
         {
-            @Html.ValidationSummary()
+            @Html.ValidationSummary(true, "Увы, но запрос не заполнен корректно:", new {@class = "text-danger"})
 
             <div class="form-group">
                 @Html.LabelFor(model => model.MonthDuration)
