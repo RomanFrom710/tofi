@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using BLL.Attributes;
 using BLL.Services.Client.ViewModels;
 using BLL.Services.Common.Price.ViewModels;
@@ -13,17 +12,19 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
     {
         #region Approved
 
+        public bool? IsOperatorApproved { get; set; }
+
         public bool? IsSecurityApproved { get; set; }
 
         public bool? IsCreditCommitteeApproved { get; set; }
 
         public bool? IsCreditDepartmentApproved { get; set; }
 
-        public bool? IsCashierApproved { get; set; }
-
         #endregion
 
         #region Comments
+
+        public string OperatorComments { get; set; }
 
         public string SecurityComments { get; set; }
 
@@ -51,13 +52,13 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
 
         public ClientViewModel Client { get; set; }
 
+        public EmployeeViewModel OperatorApproved { get; set; }
+
         public EmployeeViewModel SecurityApproved { get; set; }
 
         public EmployeeViewModel CreditCommitteeApproved { get; set; }
 
         public EmployeeViewModel CreditDepartmentApproved { get; set; }
-
-        public EmployeeViewModel CashierApproved { get; set; }
 
         public CreditTypeViewModel CreditType { get; set; }
 

@@ -10,25 +10,25 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
     {
         #region Approved
 
+        public bool? IsOperatorApproved { get; set; }
+
         public bool? IsSecurityApproved { get; set; }
 
         public bool? IsCreditCommitteeApproved { get; set; }
 
         public bool? IsCreditDepartmentApproved { get; set; }
 
-        public bool? IsCashierApproved { get; set; }
-
         #endregion
 
         #region Comments
+
+        public string OperatorComments { get; set; }
 
         public string SecurityComments { get; set; }
 
         public string CreditCommitteeComments { get; set; }
 
         public string CreditDepartmentComments { get; set; }
-
-        public string CashierComments { get; set; }
 
         #endregion
 
@@ -46,13 +46,13 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
 
         public ClientDto Client { get; set; }
 
+        public EmployeeDto OperatorApproved { get; set; }
+
         public EmployeeDto SecurityApproved { get; set; }
 
         public EmployeeDto CreditCommitteeApproved { get; set; }
 
         public EmployeeDto CreditDepartmentApproved { get; set; }
-
-        public EmployeeDto CashierApproved { get; set; }
 
         public CreditTypeDto CreditType { get; set; }
 
