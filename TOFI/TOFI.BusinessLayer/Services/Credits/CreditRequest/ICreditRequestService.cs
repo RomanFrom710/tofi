@@ -48,5 +48,7 @@ namespace BLL.Services.Credits.CreditRequest
         ListQueryResult<CreditRequestViewModel> GetDepartmentRequests(DepartmentRequestsQuery query);
 
         Task<ListQueryResult<CreditRequestViewModel>> GetDepartmentRequestsAsync(DepartmentRequestsQuery query);
+
+        ValueResult<bool> ValidateCreditRequest(CreditRequestViewModel request);
     }
 }

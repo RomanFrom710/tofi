@@ -105,6 +105,18 @@ namespace TOFI.Web.Controllers
             credit.CreditSum.Currency = _currencies.First(cur => cur.Id == credit.CreditSum.Currency.Id);
             credit.CreditType = _creditTypes.First(typ => typ.Id == credit.CreditType.Id);
 
+            var validationRes = _creditRequestService.ValidateCreditRequest(credit);
+            if (!validationRes.Value)
+            {
+                ViewBag.Currency =
+                _currencies.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+                ViewBag.CreditTypes =
+                    _creditTypes.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+                ViewBag.CreditTypesInfo = _creditTypes;
+                ModelState.AddModelError("", validationRes.Message);
+                return View(credit);
+            }
+
             _creditRequestService.CreateModel(credit);
 
             return RedirectToAction("CreditRequests");
