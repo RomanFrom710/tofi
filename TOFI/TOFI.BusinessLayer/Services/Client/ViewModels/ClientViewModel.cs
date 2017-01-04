@@ -63,5 +63,22 @@ namespace BLL.Services.Client.ViewModels
         [DataType(DataType.Date, ErrorMessage = "Неверный формат даты")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? ExpirationDate { get; set; }
+
+        public string FullName => $"{LastName} {FirstName} {MiddleName}";
+
+        public int Age
+        {
+            get
+            {
+                var now = DateTime.Now;
+                if (!Birthday.HasValue)
+                {
+                    return 0;
+                }
+
+                var delta = now - Birthday.Value;
+                return (int)Math.Floor(delta.TotalDays/365);
+            }
+        }
     }
 }

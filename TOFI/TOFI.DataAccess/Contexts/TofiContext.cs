@@ -10,6 +10,7 @@ using DAL.Models.Credits.CreditAccount;
 using DAL.Models.Employee;
 using DAL.Models.Credits.CreditRequest;
 using DAL.Models.Credits.CreditPayment;
+using DAL.Models.Actions;
 
 namespace DAL.Contexts
 {
@@ -42,7 +43,9 @@ namespace DAL.Contexts
 
         public DbSet<CreditPaymentModel> CreditPayments { get; set; }
 
-        public DbSet<UserActionModel> UserActions { get; set; }
+        public DbSet<RequestActionModel> RequestActions { get; set; }
+
+        public DbSet<PaymentActionModel> PaymentActions { get; set; }
 
         public DbSet<CreditRequestModel> CreditRequests { get; set; }
 
@@ -64,9 +67,6 @@ namespace DAL.Contexts
                 .HasOptional(u => u.Employee)
                 .WithRequired(e => e.User)
                 .Map(config => config.MapKey("User_Id"));
-            modelBuilder.Entity<UserModel>()
-                .HasMany(u => u.Actions)
-                .WithRequired(a => a.User);
             
             modelBuilder.Entity<PriceModel>()
                 .HasRequired(p => p.Currency)
@@ -138,6 +138,27 @@ namespace DAL.Contexts
                 .HasRequired(p => p.PaymentSum)
                 .WithOptional()
                 .Map(config => config.MapKey("PaymentSum_Id"));
+
+            modelBuilder.Entity<RequestActionModel>()
+                .HasRequired(a => a.CreditRequest)
+                .WithMany();
+            modelBuilder.Entity<RequestActionModel>()
+                .HasRequired(a => a.Employee)
+                .WithMany(e => e.RequestActions)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PaymentActionModel>()
+                .HasRequired(a => a.CreditPayment)
+                .WithMany();
+            modelBuilder.Entity<PaymentActionModel>()
+                .HasRequired(a => a.Employee)
+                .WithMany(e => e.PaymentActions)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EmployeeModel>()
+                .HasMany(e => e.CreditPayments)
+                .WithRequired(p => p.Employee);
+
         }
     }
 }

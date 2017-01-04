@@ -377,10 +377,13 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Admin\Currencies.cshtml" />
+    <Content Include="Views\Shared\_EmployeeMenuPartial.cshtml" />
+    <Content Include="Views\Employee\Operator.cshtml" />
+    <Content Include="Views\Employee\RequestDetails.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
