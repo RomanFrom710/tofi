@@ -13,6 +13,11 @@ namespace DAL.Repositories
             return queryable.ToArray().Select(Mapper.Map<T>);
         }
 
+        public static IEnumerable<T> MapTo<T>(this IEnumerable<object> enumerable)
+        {
+            return enumerable.ToArray().Select(Mapper.Map<T>);
+        }
+
 
         public static async Task<IEnumerable<T>> MapToAsync<T>(this IQueryable<object> queryable)
         {

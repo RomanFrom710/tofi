@@ -25,5 +25,57 @@ namespace DAL.Repositories.Credits.CreditRequest
         {
             return ModelsDao.Where(m => m.Client.Id == query.ClientId).MapToAsync<CreditRequestDto>();
         }
+
+        public IEnumerable<CreditRequestDto> Handle(OperatorRequestsQuery query)
+        {
+            return ModelsDao.Where(m => m.IsOperatorApproved == null).MapTo<CreditRequestDto>();
+        }
+
+        public Task<IEnumerable<CreditRequestDto>> HandleAsync(OperatorRequestsQuery query)
+        {
+            return ModelsDao.Where(m => m.IsOperatorApproved == null).MapToAsync<CreditRequestDto>();
+        }
+
+        public IEnumerable<CreditRequestDto> Handle(SecurityRequestsQuery query)
+        {
+            return ModelsDao.Where(m => (m.IsOperatorApproved ?? false) && m.IsSecurityApproved == null)
+                .MapTo<CreditRequestDto>();
+        }
+
+        public Task<IEnumerable<CreditRequestDto>> HandleAsync(SecurityRequestsQuery query)
+        {
+            return ModelsDao.Where(m => (m.IsOperatorApproved ?? false) && m.IsSecurityApproved == null)
+                .MapToAsync<CreditRequestDto>();
+        }
+
+        public IEnumerable<CreditRequestDto> Handle(CommiteeRequestsQuery query)
+        {
+            return ModelsDao.Where(
+                m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
+                     m.IsCreditCommitteeApproved == null).MapTo<CreditRequestDto>();
+        }
+
+        public Task<IEnumerable<CreditRequestDto>> HandleAsync(CommiteeRequestsQuery query)
+        {
+            return ModelsDao.Where(
+                m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
+                     m.IsCreditCommitteeApproved == null).MapToAsync<CreditRequestDto>();
+        }
+
+        public IEnumerable<CreditRequestDto> Handle(DepartmentRequestsQuery query)
+        {
+            return ModelsDao.Where(
+                m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
+                     (m.IsCreditCommitteeApproved ?? false) && m.IsCreditDepartmentApproved == null)
+                .MapTo<CreditRequestDto>();
+        }
+
+        public Task<IEnumerable<CreditRequestDto>> HandleAsync(DepartmentRequestsQuery query)
+        {
+            return ModelsDao.Where(
+                m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
+                     (m.IsCreditCommitteeApproved ?? false) && m.IsCreditDepartmentApproved == null)
+                .MapToAsync<CreditRequestDto>();
+        }
     }
 }
