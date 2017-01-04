@@ -26,9 +26,9 @@ namespace BLL.Services.Client
         }
 
 
-        public ValueResult<bool> CanAddCreditRequest(int clientId)
+        public ValueResult<bool> CanAddCreditRequest(int userId)
         {
-            var userRes = _userService.GetUserDto(new UserQuery {ClientId = clientId});
+            var userRes = _userService.GetUserDto(new UserQuery {Id = userId});
             if (userRes.IsFailed)
             {
                 return new ValueResult<bool>(false, false).From(userRes);
