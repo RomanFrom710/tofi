@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using BLL.Services.Client;
 using BLL.Services.Client.ViewModels;
 using BLL.Services.Common.Currency;
 using BLL.Services.Common.Currency.ViewModels;
@@ -25,16 +26,19 @@ namespace TOFI.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly ICreditRequestService _creditRequestService;
+        private readonly IClientService _clientService;
 
         private readonly IEnumerable<CreditTypeViewModel> _creditTypes;
         private readonly IEnumerable<CurrencyViewModel> _currencies;
 
         public ClientController(IUserService userService,
                                 ICurrencyService currencyService,
+                                IClientService clientService,
                                 ICreditRequestService creditRequestService,
                                 ICreditTypeService creditTypeService)
         {
             _userService = userService;
+            _clientService = clientService;
             _creditRequestService = creditRequestService;
 
             _currencies = currencyService.GetAllModels(new AllModelsQuery()).Value.ToArray();
@@ -45,12 +49,25 @@ namespace TOFI.Web.Controllers
         public ActionResult Index()
         {
             var client = GetClient();
+            var validationResult = _clientService.CanAddCreditRequest(int.Parse(User.Identity.GetUserId()));
+            if (!validationResult.Value)
+            {
+                ViewBag.isValid = false;
+                ModelState.AddModelError(string.Empty, validationResult.Message);
+            }
             return View(client);
         }
 
         [HttpPost]
         public ActionResult Index(ClientViewModel client)
         {
+            var validationResult = _clientService.CanAddCreditRequest(int.Parse(User.Identity.GetUserId())); // todo: pass viewmodel
+            if (!validationResult.Value)
+            {
+                ViewBag.isValid = false;
+                ModelState.AddModelError(string.Empty, validationResult.Message);
+            }
+
             if (ModelState.IsValid)
             {
                 var user = _userService.GetUser(new UserQuery
