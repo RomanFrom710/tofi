@@ -5,16 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models.Actions
 {
-    [Table("Actions")]
-    public class ActionModel : Model
+    public abstract class ActionModel : Model
     {
         public string Signature { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public string Type { get; set; }
-
-        public string Data { get; set; }
+        public DateTime Timestamp { get; set; }
 
         #region Virtual Properties
 

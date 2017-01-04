@@ -18,8 +18,6 @@ namespace DAL.Models.Credits.CreditPayment
 
         public virtual CreditAccountModel CreditAccount { get; set; }
 
-        public virtual ActionModel Action { get; set; }
-
         public virtual EmployeeModel Employee { get; set; }
 
         #endregion

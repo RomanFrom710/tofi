@@ -43,7 +43,9 @@ namespace DAL.Contexts
 
         public DbSet<CreditPaymentModel> CreditPayments { get; set; }
 
-        public DbSet<ActionModel> Actions { get; set; }
+        public DbSet<RequestActionModel> RequestActions { get; set; }
+
+        public DbSet<PaymentActionModel> PaymentActions { get; set; }
 
         public DbSet<CreditRequestModel> CreditRequests { get; set; }
 
@@ -131,23 +133,27 @@ namespace DAL.Contexts
                 .HasRequired(r => r.CreditSum)
                 .WithOptional()
                 .Map(config => config.MapKey("CreditSum_Id"));
-            modelBuilder.Entity<CreditRequestModel>()
-                .HasRequired(r => r.Action)
-                .WithOptional()
-                .Map(config => config.MapKey("RequestAction_Id"));
 
             modelBuilder.Entity<CreditPaymentModel>()
                 .HasRequired(p => p.PaymentSum)
                 .WithOptional()
                 .Map(config => config.MapKey("PaymentSum_Id"));
-            modelBuilder.Entity<CreditPaymentModel>()
-                .HasRequired(p => p.Action)
-                .WithOptional()
-                .Map(config => config.MapKey("PaymentAction_Id"));
 
-            modelBuilder.Entity<ActionModel>()
+            modelBuilder.Entity<RequestActionModel>()
+                .HasRequired(a => a.CreditRequest)
+                .WithMany();
+            modelBuilder.Entity<RequestActionModel>()
                 .HasRequired(a => a.Employee)
-                .WithMany(e => e.Actions);
+                .WithMany(e => e.RequestActions)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PaymentActionModel>()
+                .HasRequired(a => a.CreditPayment)
+                .WithMany();
+            modelBuilder.Entity<PaymentActionModel>()
+                .HasRequired(a => a.Employee)
+                .WithMany(e => e.PaymentActions)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<EmployeeModel>()
                 .HasMany(e => e.CreditPayments)
