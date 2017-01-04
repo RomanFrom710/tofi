@@ -10,6 +10,10 @@
         {
             <li>@Html.ActionLink("Одменка", "Index", "Admin")</li>
         }
+        @if (User.IsInRole("employee"))
+        {
+            <li>@Html.ActionLink("Аппрувалка", "Index", "Employee")</li>
+        }
         <li>
             @Html.ActionLink(User.Identity.GetUserName(), "Index", "Client", null, new { title = "Управление" })
         </li>

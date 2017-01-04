@@ -1,0 +1,99 @@
+﻿@model BLL.Services.Credits.CreditRequest.ViewModels.CreditRequestViewModel
+
+@{
+    ViewBag.Title = "Заявка на имя " + Model.Client.FullName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_EmployeeMenuPartial")
+    </div>
+    <div class="col-md-5">
+        <h2>@ViewBag.Title</h2>
+
+        <dl>
+            <dt>Сумма кредита</dt>
+            <dd>@Model.CreditSum.Value @Model.CreditSum</dd>
+        </dl>
+        <dl>
+            <dt>Срок кредита (месяцев)</dt>
+            <dd>@Model.MonthDuration</dd>
+        </dl>
+        <dl>
+            <dt>Возраст заявителя</dt>
+            <dd>@Model.Client.Age</dd>
+        </dl>
+        <dl>
+            <dt>Номер паспорта</dt>
+            <dd>@Model.Client.PassportNumber</dd>
+        </dl>
+        <dl>
+            <dt>Идентификационный номер</dt>
+            <dd>@Model.Client.PassportId</dd>
+        </dl>
+        <dl>
+            <dt>Когда выдан</dt>
+            <dd>@Html.DisplayFor(model => model.Client.IssueDate)</dd>
+        </dl>
+        <dl>
+            <dt>Срок действия</dt>
+            <dd>@Html.DisplayFor(model => model.Client.ExpirationDate)</dd>
+        </dl>
+        <dl>
+            <dt>Пол</dt>
+            <dd>@Html.DisplayFor(model => model.Client.Sex)</dd>
+        </dl>
+        <dl>
+            <dt>Адрес</dt>
+            <dd>@Model.Client.Address</dd>
+        </dl>
+        <dl>
+            <dt>Номер телефона</dt>
+            <dd>@Model.Client.TelephoneNumber</dd>
+        </dl>
+
+        <hr />
+
+        <h3>Принятые решения</h3>
+
+        @if (Model.IsOperatorApproved.HasValue)
+        {
+            <h4>Оператор</h4>
+            <strong>@Model.IsOperatorApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <p>@Model.OperatorComments</p>
+        }
+        @if (Model.IsSecurityApproved.HasValue)
+        {
+            <h4>Служба безопасности</h4>
+            <strong>@Model.IsSecurityApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <p>@Model.SecurityComments</p>
+        }@if (Model.IsCreditCommitteeApproved.HasValue)
+        {
+            <h4>Кредитный комитет</h4>
+            <strong>@Model.IsCreditCommitteeApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <p>@Model.CreditCommitteeComments</p>
+        }@if (Model.IsCreditDepartmentApproved.HasValue)
+        {
+            <h4>Начальник отдела</h4>
+            <strong>@Model.IsCreditDepartmentApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <p>@Model.CreditDepartmentComments</p>
+        }
+
+        <hr />
+
+        @using (Html.BeginForm(ViewContext.RouteData.Values["Action"] + "Approve", "Employee", FormMethod.Post))
+        {
+            @Html.Hidden("CreditRequestId", Model.Id)
+            @Html.Label("Approved", "Решение")
+            @Html.RadioButton("Approved", "Кросафчег", true)
+            @Html.RadioButton("Approved", "Выпей йаду")
+            @Html.TextArea("Comments", new { @class = "form-control" })
+
+            <button type="submit" class="btn btn-primary">Утвердить</button>
+        }
+    </div>
+    <div class="col-md-4">
+        @Html.Partial("_CreditTypesPartial", new [] { Model.CreditType })
+    </div>
+</div>

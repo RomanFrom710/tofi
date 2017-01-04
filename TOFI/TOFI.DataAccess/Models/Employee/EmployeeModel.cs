@@ -3,6 +3,8 @@ using DAL.Models.User;
 using TOFI.TransferObjects.Employee.DataObjects;
 using DAL.Models.Credits.CreditRequest;
 using System.Collections.Generic;
+using DAL.Models.Credits.CreditPayment;
+using DAL.Models.Actions;
 
 namespace DAL.Models.Employee
 {
@@ -22,6 +24,12 @@ namespace DAL.Models.Employee
         public virtual ICollection<CreditRequestModel> CreditRequestsApprovedDepartment { get; set; }
 
         public virtual ICollection<CreditRequestModel> CreditRequestsApprovedCashier { get; set; }
+
+        public virtual ICollection<CreditPaymentModel> CreditPayments { get; set; }
+
+        public virtual ICollection<RequestActionModel> RequestActions { get; set; }
+
+        public virtual ICollection<PaymentActionModel> PaymentActions { get; set; }
 
         #endregion
     }

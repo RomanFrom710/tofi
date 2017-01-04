@@ -37,6 +37,13 @@
 
 
             <div class="form-group">
+                @Html.LabelFor(model => model.Birthday)
+                @Html.TextBoxFor(model => model.Birthday, new { @class = "form-control enable-datepicker", placeholder = "22/11/1990" })
+                @Html.ValidationMessageFor(model => model.Birthday, string.Empty, new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
                 @Html.LabelFor(model => model.Sex)
                 @Html.EnumDropDownListFor(model => model.Sex, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Sex, string.Empty, new { @class = "text-danger" })

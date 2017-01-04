@@ -1,0 +1,38 @@
+﻿@model IEnumerable<BLL.Services.Credits.CreditRequest.ViewModels.CreditRequestViewModel>
+
+@{
+    ViewBag.Title = "Необработанные заявки на кредит";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_EmployeeMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+
+        @foreach (var request in Model)
+        {
+            <h3>@Html.ActionLink(request.Client.FullName, "RequestDetails", new { id = request.Id })</h3>
+            <dl>
+                <dd>Тип кредита</dd>
+                <dt></dt>
+            </dl>
+            <dl>
+                <dd>Цель кредита</dd>
+                <dt>@request.CreditPurpose</dt>
+            </dl>
+            <dl>
+                <dd>Сумма</dd>
+                <dt>@request.CreditSum.Value @request.CreditSum.Currency.Name</dt>
+            </dl>
+            <dl>
+                <dd>Период (месяцев)</dd>
+                <dt>@request.MonthDuration</dt>
+            </dl>
+
+            <hr/>
+        }
+    </div>
+</div>

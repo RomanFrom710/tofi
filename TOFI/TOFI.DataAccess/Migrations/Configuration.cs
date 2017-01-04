@@ -140,6 +140,29 @@ namespace DAL.Migrations
                 }
             };
 
+            var employeeUser = new UserModel()
+            {
+                Username = "empl@empl.empl",
+                Email = "empl@empl.empl",
+                FirstName = "Employee",
+                LastName = "Employevich",
+                Auth = new AuthModel()
+                {
+                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    LockoutEnabled = true
+                },
+                Employee = new EmployeeModel()
+                {
+                    Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Cashier
+                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.CreditCommitteeMember
+                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.CreditDepartmentChief
+                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Operator
+                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.SecurityOfficer
+                }
+            };
+
             var adminUser = new UserModel()
             {
                 Username = "admin@admin.admin",
@@ -162,6 +185,7 @@ namespace DAL.Migrations
             context.CreditTypes.AddRange(creditTypes);
             context.Users.Add(testUser);
             context.Users.Add(adminUser);
+            context.Users.Add(employeeUser);
             context.SaveChanges();
         }
     }

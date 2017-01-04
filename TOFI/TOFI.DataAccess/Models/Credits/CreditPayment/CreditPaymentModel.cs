@@ -2,6 +2,8 @@
 using System;
 using DAL.Models.Credits.CreditAccount;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models.Actions;
+using DAL.Models.Employee;
 
 namespace DAL.Models.Credits.CreditPayment
 {
@@ -15,6 +17,8 @@ namespace DAL.Models.Credits.CreditPayment
         public virtual PriceModel PaymentSum { get; set; }
 
         public virtual CreditAccountModel CreditAccount { get; set; }
+
+        public virtual EmployeeModel Employee { get; set; }
 
         #endregion
     }

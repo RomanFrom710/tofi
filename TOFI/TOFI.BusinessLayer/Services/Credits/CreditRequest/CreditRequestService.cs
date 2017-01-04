@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
 using BLL.Result;
+using BLL.Services.Credits.BankCredits.CreditTypes;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Model;
 using DAL.Repositories.Credits.CreditRequest;
 using TOFI.TransferObjects.Credits.CreditRequest.DataObjects;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
+using TOFI.TransferObjects.Model.Queries;
 
 namespace BLL.Services.Credits.CreditRequest
 {
@@ -12,13 +14,16 @@ namespace BLL.Services.Credits.CreditRequest
     {
         private readonly ICreditRequestQueryRepository _queryRepository;
         private readonly ICreditRequestCommandRepository _commandRepository;
+        private readonly ICreditTypeService _creditTypeQueryRepository;
 
 
         public CreditRequestService(ICreditRequestQueryRepository queryRepository,
-            ICreditRequestCommandRepository commandRepository) : base(queryRepository, commandRepository)
+            ICreditRequestCommandRepository commandRepository, ICreditTypeService creditTypeQueryRepository)
+            : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
+            _creditTypeQueryRepository = creditTypeQueryRepository;
         }
 
 
@@ -130,6 +135,33 @@ namespace BLL.Services.Credits.CreditRequest
         {
             return (await RunListQueryAsync<DepartmentRequestsQuery, CreditRequestDto>(_queryRepository, query))
                 .MapTo<CreditRequestViewModel>();
+        }
+
+
+        public ValueResult<bool> ValidateCreditRequest(CreditRequestViewModel request)
+        {
+            if (request?.CreditType?.Id == null)
+            {
+                return new ValueResult<bool>(false, false).Error("Credit Type not found");
+            }
+            var creditTypeRes = _creditTypeQueryRepository.GetModel(new ModelQuery {Id = request.CreditType.Id});
+            if (creditTypeRes.IsFailed)
+            {
+                return new ValueResult<bool>(false, false).From(creditTypeRes);
+            }
+            foreach (var condition in creditTypeRes.Value.CreditConditions)
+            {
+                if (condition.MonthDurationFrom > request.MonthDuration ||
+                    request.MonthDuration > condition.MonthDurationTo)
+                    continue;
+                if (condition.MinCreditSum.Currency.Id != request.CreditSum.Currency.Id)
+                    continue;
+                if (condition.MinCreditSum.Value > request.CreditSum.Value ||
+                    request.CreditSum.Value > condition.MaxCreditSum.Value)
+                    continue;
+                return new ValueResult<bool>(true, true);
+            }
+            return new ValueResult<bool>(false, true).Error("None of the Credit Conditions are satisfied");
         }
     }
 }
