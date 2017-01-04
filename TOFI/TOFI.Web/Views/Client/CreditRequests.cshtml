@@ -39,9 +39,9 @@
                     <td>@request.CreditSum.Currency.Name</td>
                     <td>@request.MonthDuration</td>
                     <td>
-                        @if (request.IsCashierApproved.HasValue)
+                        @if (request.IsOperatorApproved.HasValue)
                             {
-                                if (request.IsCashierApproved.Value) { <span class="yes">+</span> }
+                                if (request.IsOperatorApproved.Value) { <span class="yes">+</span> }
                                 else { <span class="no">-</span> }
                             }
                     </td>
