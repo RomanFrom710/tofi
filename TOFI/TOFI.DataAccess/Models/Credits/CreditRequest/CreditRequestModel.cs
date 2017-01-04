@@ -58,8 +58,6 @@ namespace DAL.Models.Credits.CreditRequest
 
         public virtual CreditTypeModel CreditType { get; set; }
 
-        public virtual ActionModel Action { get; set; }
-
         #endregion
     }
 }

@@ -27,7 +27,9 @@ namespace DAL.Models.Employee
 
         public virtual ICollection<CreditPaymentModel> CreditPayments { get; set; }
 
-        public virtual ICollection<ActionModel> Actions { get; set; }
+        public virtual ICollection<RequestActionModel> RequestActions { get; set; }
+
+        public virtual ICollection<PaymentActionModel> PaymentActions { get; set; }
 
         #endregion
     }

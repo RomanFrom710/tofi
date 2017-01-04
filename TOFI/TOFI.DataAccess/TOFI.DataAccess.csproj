@@ -58,12 +58,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
-    <Compile Include="Migrations\201701042119106_initial.cs" />
-    <Compile Include="Migrations\201701042119106_initial.Designer.cs">
-      <DependentUpon>201701042119106_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201701042224263_initial.cs" />
+    <Compile Include="Migrations\201701042224263_initial.Designer.cs">
+      <DependentUpon>201701042224263_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
+    <Compile Include="Models\Actions\PaymentActionModel.cs" />
+    <Compile Include="Models\Actions\RequestActionModel.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\Common\CurrencyModel.cs" />
     <Compile Include="Models\Common\PriceModel.cs" />
@@ -150,8 +152,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701042119106_initial.resx">
-      <DependentUpon>201701042119106_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701042224263_initial.resx">
+      <DependentUpon>201701042224263_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
