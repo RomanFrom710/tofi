@@ -59,6 +59,10 @@
     <Compile Include="Credits\CreditPayment\DataObjects\CreditPaymentDto.cs" />
     <Compile Include="Credits\CreditRequest\DataObjects\CreditRequestDto.cs" />
     <Compile Include="Credits\CreditRequest\Queries\ClientRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\CommiteeRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\DepartmentRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\OperatorRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\SecurityRequestsQuery.cs" />
     <Compile Include="Dto.cs" />
     <Compile Include="Employee\Commands\ApproveCommand.cs" />
     <Compile Include="Employee\Commands\CommiteeApproveCommand.cs" />

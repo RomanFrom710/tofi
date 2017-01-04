@@ -11,25 +11,25 @@ namespace DAL.Models.Credits.CreditRequest
     {
         #region Approved
 
+        public bool? IsOperatorApproved { get; set; }
+
         public bool? IsSecurityApproved { get; set; }
 
         public bool? IsCreditCommitteeApproved { get; set; }
 
         public bool? IsCreditDepartmentApproved { get; set; }
 
-        public bool? IsCashierApproved { get; set; }
-
         #endregion
 
         #region Comments
+
+        public string OperatorComments { get; set; }
 
         public string SecurityComments { get; set; }
 
         public string CreditCommitteeComments { get; set; }
 
         public string CreditDepartmentComments { get; set; }
-
-        public string CashierComments { get; set; }
 
         #endregion
 
@@ -47,13 +47,13 @@ namespace DAL.Models.Credits.CreditRequest
 
         public virtual ClientModel Client { get; set; }
 
+        public virtual EmployeeModel OperatorApproved { get; set; }
+
         public virtual EmployeeModel SecurityApproved { get; set; }
 
         public virtual EmployeeModel CreditCommitteeApproved { get; set; }
 
         public virtual EmployeeModel CreditDepartmentApproved { get; set; }
-
-        public virtual EmployeeModel CashierApproved { get; set; }
 
         public virtual CreditTypeModel CreditType { get; set; }
 
