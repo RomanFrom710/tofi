@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
 using BLL.Services.Client;
 using BLL.Services.Client.ViewModels;
 using BLL.Services.Common.Currency;
@@ -13,31 +12,27 @@ using BLL.Services.Credits.BankCredits.CreditTypes;
 using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
-using BLL.Services.User;
 using Microsoft.AspNet.Identity;
+using TOFI.TransferObjects.Client.Queries;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Model.Queries;
-using TOFI.TransferObjects.User.Queries;
 
 namespace TOFI.Web.Controllers
 {
     [Authorize]
     public class ClientController : Controller
     {
-        private readonly IUserService _userService;
         private readonly ICreditRequestService _creditRequestService;
         private readonly IClientService _clientService;
 
         private readonly IEnumerable<CreditTypeViewModel> _creditTypes;
         private readonly IEnumerable<CurrencyViewModel> _currencies;
 
-        public ClientController(IUserService userService,
-                                ICurrencyService currencyService,
+        public ClientController(ICurrencyService currencyService,
                                 IClientService clientService,
                                 ICreditRequestService creditRequestService,
                                 ICreditTypeService creditTypeService)
         {
-            _userService = userService;
             _clientService = clientService;
             _creditRequestService = creditRequestService;
 
@@ -61,7 +56,7 @@ namespace TOFI.Web.Controllers
         [HttpPost]
         public ActionResult Index(ClientViewModel client)
         {
-            var validationResult = _clientService.CanAddCreditRequest(int.Parse(User.Identity.GetUserId())); // todo: pass viewmodel
+            var validationResult = _clientService.ValidateClientInfo(client);
             if (!validationResult.Value)
             {
                 ViewBag.isValid = false;
@@ -70,15 +65,7 @@ namespace TOFI.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _userService.GetUser(new UserQuery
-                {
-                    Id = int.Parse(User.Identity.GetUserId())
-                }).Value;
-                Mapper.Map(client, user);
-                client.Id = user.Client?.Id ?? 0;
-                user.Client = client;
-                user.Id = int.Parse(User.Identity.GetUserId());
-                _userService.UpdateModel(user);
+                _clientService.UpdateClient(int.Parse(User.Identity.GetUserId()), client);
                 return RedirectToAction("Index");
             }
 
@@ -160,14 +147,8 @@ namespace TOFI.Web.Controllers
 
         private ClientViewModel GetClient()
         {
-            var user = _userService.GetUser(new UserQuery
-            {
-                Id = int.Parse(User.Identity.GetUserId())
-            }).Value;
-            var client = user.Client ?? new ClientViewModel();
-            Mapper.Map(user, client);
-            client.Id = user.Client?.Id ?? 0;
-            return client;
+            var res = _clientService.GetClient(new ClientQuery {UserId = int.Parse(User.Identity.GetUserId())});
+            return res.Value;
         }
     }
 }
