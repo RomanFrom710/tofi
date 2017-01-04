@@ -1,0 +1,16 @@
+﻿@model IEnumerable<BLL.Services.Credits.CreditRequest.ViewModels.CreditRequestViewModel>
+
+@{
+    ViewBag.Title = "Аппрувалка";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_EmployeeMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+
+    </div>
+</div>

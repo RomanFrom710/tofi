@@ -1,0 +1,10 @@
+﻿<nav>
+    <ul class="nav nav-pills nav-stacked">
+        @if (User.IsInRole("operator"))
+        {
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Operator" ? "active" : "")">
+                @Html.ActionLink("Оператор", "Operator", "Employee")
+            </li>
+        }
+    </ul>
+</nav>
