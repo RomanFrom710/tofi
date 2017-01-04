@@ -58,29 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\TofiContext.cs" />
-    <Compile Include="Migrations\201612291848283_initial.cs" />
-    <Compile Include="Migrations\201612291848283_initial.Designer.cs">
-      <DependentUpon>201612291848283_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701021854469_CreditPayment.cs" />
-    <Compile Include="Migrations\201701021854469_CreditPayment.Designer.cs">
-      <DependentUpon>201701021854469_CreditPayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701031910008_NullableApproved.cs" />
-    <Compile Include="Migrations\201701031910008_NullableApproved.Designer.cs">
-      <DependentUpon>201701031910008_NullableApproved.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701031935268_CreditPurpose.cs" />
-    <Compile Include="Migrations\201701031935268_CreditPurpose.Designer.cs">
-      <DependentUpon>201701031935268_CreditPurpose.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701032000395_ClientBirthday.cs" />
-    <Compile Include="Migrations\201701032000395_ClientBirthday.Designer.cs">
-      <DependentUpon>201701032000395_ClientBirthday.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701041019432_CreditRequest_Operator.cs" />
-    <Compile Include="Migrations\201701041019432_CreditRequest_Operator.Designer.cs">
-      <DependentUpon>201701041019432_CreditRequest_Operator.cs</DependentUpon>
+    <Compile Include="Migrations\201701042048280_initial.cs" />
+    <Compile Include="Migrations\201701042048280_initial.Designer.cs">
+      <DependentUpon>201701042048280_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
@@ -170,23 +150,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612291848283_initial.resx">
-      <DependentUpon>201612291848283_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701021854469_CreditPayment.resx">
-      <DependentUpon>201701021854469_CreditPayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701031910008_NullableApproved.resx">
-      <DependentUpon>201701031910008_NullableApproved.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701031935268_CreditPurpose.resx">
-      <DependentUpon>201701031935268_CreditPurpose.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701032000395_ClientBirthday.resx">
-      <DependentUpon>201701032000395_ClientBirthday.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701041019432_CreditRequest_Operator.resx">
-      <DependentUpon>201701041019432_CreditRequest_Operator.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701042048280_initial.resx">
+      <DependentUpon>201701042048280_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

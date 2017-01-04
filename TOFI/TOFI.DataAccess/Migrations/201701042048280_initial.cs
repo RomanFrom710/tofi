@@ -68,6 +68,7 @@ namespace DAL.Migrations
                         Authority = c.String(),
                         IssueDate = c.DateTime(nullable: false),
                         ExpirationDate = c.DateTime(nullable: false),
+                        Birthday = c.DateTime(nullable: false),
                         Sex = c.Int(nullable: false),
                         User_Id = c.Int(nullable: false),
                     })
@@ -80,37 +81,38 @@ namespace DAL.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        IsSecurityApproved = c.Boolean(nullable: false),
-                        IsCreditCommitteeApproved = c.Boolean(nullable: false),
-                        IsCreditDepartmentApproved = c.Boolean(nullable: false),
-                        IsCashierApproved = c.Boolean(nullable: false),
+                        IsOperatorApproved = c.Boolean(),
+                        IsSecurityApproved = c.Boolean(),
+                        IsCreditCommitteeApproved = c.Boolean(),
+                        IsCreditDepartmentApproved = c.Boolean(),
+                        OperatorComments = c.String(),
                         SecurityComments = c.String(),
                         CreditCommitteeComments = c.String(),
                         CreditDepartmentComments = c.String(),
-                        CashierComments = c.String(),
                         MonthDuration = c.Int(nullable: false),
-                        CashierApproved_Id = c.Int(),
+                        CreditPurpose = c.String(),
                         Client_Id = c.Int(nullable: false),
                         CreditCommitteeApproved_Id = c.Int(),
                         CreditDepartmentApproved_Id = c.Int(),
                         CreditSum_Id = c.Int(nullable: false),
                         CreditType_Id = c.Int(nullable: false),
+                        OperatorApproved_Id = c.Int(),
                         SecurityApproved_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Employees", t => t.CashierApproved_Id)
                 .ForeignKey("dbo.Clients", t => t.Client_Id, cascadeDelete: true)
                 .ForeignKey("dbo.Employees", t => t.CreditCommitteeApproved_Id)
                 .ForeignKey("dbo.Employees", t => t.CreditDepartmentApproved_Id)
                 .ForeignKey("dbo.PriceModels", t => t.CreditSum_Id)
                 .ForeignKey("dbo.CreditTypes", t => t.CreditType_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Employees", t => t.OperatorApproved_Id)
                 .ForeignKey("dbo.Employees", t => t.SecurityApproved_Id)
-                .Index(t => t.CashierApproved_Id)
                 .Index(t => t.Client_Id)
                 .Index(t => t.CreditCommitteeApproved_Id)
                 .Index(t => t.CreditDepartmentApproved_Id)
                 .Index(t => t.CreditSum_Id)
                 .Index(t => t.CreditType_Id)
+                .Index(t => t.OperatorApproved_Id)
                 .Index(t => t.SecurityApproved_Id);
             
             CreateTable(
@@ -184,6 +186,21 @@ namespace DAL.Migrations
                 .Index(t => t.CreditType_Id);
             
             CreateTable(
+                "dbo.CreditPayments",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Timestamp = c.DateTime(nullable: false),
+                        PaymentSum_Id = c.Int(nullable: false),
+                        CreditAccount_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PriceModels", t => t.PaymentSum_Id)
+                .ForeignKey("dbo.CreditAccounts", t => t.CreditAccount_Id, cascadeDelete: true)
+                .Index(t => t.PaymentSum_Id)
+                .Index(t => t.CreditAccount_Id);
+            
+            CreateTable(
                 "dbo.CreditConditions",
                 c => new
                     {
@@ -223,6 +240,7 @@ namespace DAL.Migrations
             DropForeignKey("dbo.Employees", "User_Id", "dbo.Users");
             DropForeignKey("dbo.Clients", "User_Id", "dbo.Users");
             DropForeignKey("dbo.CreditRequests", "SecurityApproved_Id", "dbo.Employees");
+            DropForeignKey("dbo.CreditRequests", "OperatorApproved_Id", "dbo.Employees");
             DropForeignKey("dbo.CreditRequests", "CreditType_Id", "dbo.CreditTypes");
             DropForeignKey("dbo.CreditRequirements", "CreditType_Id", "dbo.CreditTypes");
             DropForeignKey("dbo.CreditConditions", "CreditType_Id", "dbo.CreditTypes");
@@ -232,18 +250,21 @@ namespace DAL.Migrations
             DropForeignKey("dbo.CreditAccounts", "User_Id", "dbo.Users");
             DropForeignKey("dbo.CreditAccounts", "TotalDebt_Id", "dbo.PriceModels");
             DropForeignKey("dbo.CreditAccounts", "RemainDebt_Id", "dbo.PriceModels");
+            DropForeignKey("dbo.CreditPayments", "CreditAccount_Id", "dbo.CreditAccounts");
+            DropForeignKey("dbo.CreditPayments", "PaymentSum_Id", "dbo.PriceModels");
             DropForeignKey("dbo.CreditAccounts", "FinesForOverdue_Id", "dbo.PriceModels");
             DropForeignKey("dbo.CreditRequests", "CreditSum_Id", "dbo.PriceModels");
             DropForeignKey("dbo.PriceModels", "Currency_Id", "dbo.CurrencyModels");
             DropForeignKey("dbo.CreditRequests", "CreditDepartmentApproved_Id", "dbo.Employees");
             DropForeignKey("dbo.CreditRequests", "CreditCommitteeApproved_Id", "dbo.Employees");
             DropForeignKey("dbo.CreditRequests", "Client_Id", "dbo.Clients");
-            DropForeignKey("dbo.CreditRequests", "CashierApproved_Id", "dbo.Employees");
             DropForeignKey("dbo.UserActions", "User_Id", "dbo.Users");
             DropIndex("dbo.CreditRequirements", new[] { "CreditType_Id" });
             DropIndex("dbo.CreditConditions", new[] { "CreditType_Id" });
             DropIndex("dbo.CreditConditions", new[] { "MinCreditSum_Id" });
             DropIndex("dbo.CreditConditions", new[] { "MaxCreditSum_Id" });
+            DropIndex("dbo.CreditPayments", new[] { "CreditAccount_Id" });
+            DropIndex("dbo.CreditPayments", new[] { "PaymentSum_Id" });
             DropIndex("dbo.CreditAccounts", new[] { "CreditType_Id" });
             DropIndex("dbo.CreditAccounts", new[] { "User_Id" });
             DropIndex("dbo.CreditAccounts", new[] { "TotalDebt_Id" });
@@ -252,17 +273,18 @@ namespace DAL.Migrations
             DropIndex("dbo.PriceModels", new[] { "Currency_Id" });
             DropIndex("dbo.Employees", new[] { "User_Id" });
             DropIndex("dbo.CreditRequests", new[] { "SecurityApproved_Id" });
+            DropIndex("dbo.CreditRequests", new[] { "OperatorApproved_Id" });
             DropIndex("dbo.CreditRequests", new[] { "CreditType_Id" });
             DropIndex("dbo.CreditRequests", new[] { "CreditSum_Id" });
             DropIndex("dbo.CreditRequests", new[] { "CreditDepartmentApproved_Id" });
             DropIndex("dbo.CreditRequests", new[] { "CreditCommitteeApproved_Id" });
             DropIndex("dbo.CreditRequests", new[] { "Client_Id" });
-            DropIndex("dbo.CreditRequests", new[] { "CashierApproved_Id" });
             DropIndex("dbo.Clients", new[] { "User_Id" });
             DropIndex("dbo.UserActions", new[] { "User_Id" });
             DropIndex("dbo.Users", new[] { "Auth_Id" });
             DropTable("dbo.CreditRequirements");
             DropTable("dbo.CreditConditions");
+            DropTable("dbo.CreditPayments");
             DropTable("dbo.CreditAccounts");
             DropTable("dbo.CreditTypes");
             DropTable("dbo.CurrencyModels");
