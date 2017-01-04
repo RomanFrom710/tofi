@@ -124,7 +124,7 @@ namespace DAL.Contexts
                 .HasOptional(r => r.CreditDepartmentApproved)
                 .WithMany(d => d.CreditRequestsApprovedDepartment);
             modelBuilder.Entity<CreditRequestModel>()
-                .HasOptional(r => r.CashierApproved)
+                .HasOptional(r => r.OperatorApproved)
                 .WithMany(c => c.CreditRequestsApprovedCashier);
             modelBuilder.Entity<CreditRequestModel>()
                 .HasRequired(r => r.CreditType)

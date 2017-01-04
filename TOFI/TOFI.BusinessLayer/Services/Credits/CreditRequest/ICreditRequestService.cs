@@ -16,5 +16,37 @@ namespace BLL.Services.Credits.CreditRequest
         ListQueryResult<CreditRequestViewModel> GetClientRequests(ClientRequestsQuery query);
 
         Task<ListQueryResult<CreditRequestViewModel>> GetClientRequestsAsync(ClientRequestsQuery query);
+
+        ListQueryResult<CreditRequestDto> GetOperatorRequestsDtos(OperatorRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestDto>> GetOperatorRequestsDtosAsync(OperatorRequestsQuery query);
+
+        ListQueryResult<CreditRequestViewModel> GetOperatorRequests(OperatorRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestViewModel>> GetOperatorRequestsAsync(OperatorRequestsQuery query);
+
+        ListQueryResult<CreditRequestDto> GetSecurityRequestsDtos(SecurityRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestDto>> GetSecurityRequestsDtosAsync(SecurityRequestsQuery query);
+
+        ListQueryResult<CreditRequestViewModel> GetSecurityRequests(SecurityRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestViewModel>> GetSecurityRequestsAsync(SecurityRequestsQuery query);
+
+        ListQueryResult<CreditRequestDto> GetCommiteeRequestsDtos(CommiteeRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestDto>> GetCommiteeRequestsDtosAsync(CommiteeRequestsQuery query);
+
+        ListQueryResult<CreditRequestViewModel> GetCommiteeRequests(CommiteeRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestViewModel>> GetCommiteeRequestsAsync(CommiteeRequestsQuery query);
+
+        ListQueryResult<CreditRequestDto> GetDepartmentRequestsDtos(DepartmentRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestDto>> GetDepartmentRequestsDtosAsync(DepartmentRequestsQuery query);
+
+        ListQueryResult<CreditRequestViewModel> GetDepartmentRequests(DepartmentRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestViewModel>> GetDepartmentRequestsAsync(DepartmentRequestsQuery query);
     }
 }

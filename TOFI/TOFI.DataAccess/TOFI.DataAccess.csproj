@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201701032000395_ClientBirthday.Designer.cs">
       <DependentUpon>201701032000395_ClientBirthday.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701041019432_CreditRequest_Operator.cs" />
+    <Compile Include="Migrations\201701041019432_CreditRequest_Operator.Designer.cs">
+      <DependentUpon>201701041019432_CreditRequest_Operator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\Common\CurrencyModel.cs" />
@@ -180,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701032000395_ClientBirthday.resx">
       <DependentUpon>201701032000395_ClientBirthday.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701041019432_CreditRequest_Operator.resx">
+      <DependentUpon>201701041019432_CreditRequest_Operator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -55,11 +55,26 @@
     <Compile Include="Credits\BankCredits\CreditRequirements\DataObjects\CreditRequirementDto.cs" />
     <Compile Include="Credits\BankCredits\CreditTypes\DataObjects\CreditTypeDto.cs" />
     <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDto.cs" />
+    <Compile Include="Credits\CreditAccount\Queries\CreditPaymentsQuery.cs" />
     <Compile Include="Credits\CreditPayment\DataObjects\CreditPaymentDto.cs" />
     <Compile Include="Credits\CreditRequest\DataObjects\CreditRequestDto.cs" />
     <Compile Include="Credits\CreditRequest\Queries\ClientRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\CommiteeRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\DepartmentRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\OperatorRequestsQuery.cs" />
+    <Compile Include="Credits\CreditRequest\Queries\SecurityRequestsQuery.cs" />
     <Compile Include="Dto.cs" />
+    <Compile Include="Employee\Commands\ApproveCommand.cs" />
+    <Compile Include="Employee\Commands\CommiteeApproveCommand.cs" />
+    <Compile Include="Employee\Commands\DepartmentApproveCommand.cs" />
+    <Compile Include="Employee\Commands\OperatorApproveCommand.cs" />
+    <Compile Include="Employee\Commands\SecurityApproveCommand.cs" />
     <Compile Include="Employee\DataObjects\EmployeeDto.cs" />
+    <Compile Include="Employee\Queries\CommiteeCreditRequestsQuery.cs" />
+    <Compile Include="Employee\Queries\CreditRequestsQuery.cs" />
+    <Compile Include="Employee\Queries\DepartmentCreditRequestsQuery.cs" />
+    <Compile Include="Employee\Queries\OperatorCreditRequestsQuery.cs" />
+    <Compile Include="Employee\Queries\SecurityCreditRequestsQuery.cs" />
     <Compile Include="Model\Commands\CreateModelCommand.cs" />
     <Compile Include="Model\Commands\DeleteModelCommand.cs" />
     <Compile Include="Model\Commands\UpdateModelCommand.cs" />
@@ -88,10 +103,9 @@
     <Folder Include="Credits\BankCredits\CreditTypes\Commands\" />
     <Folder Include="Credits\BankCredits\CreditTypes\Queries\" />
     <Folder Include="Credits\CreditAccount\Commands\" />
-    <Folder Include="Credits\CreditAccount\Queries\" />
+    <Folder Include="Credits\CreditPayment\Commands\" />
+    <Folder Include="Credits\CreditPayment\Queries\" />
     <Folder Include="Credits\CreditRequest\Commands\" />
-    <Folder Include="Employee\Commands\" />
-    <Folder Include="Employee\Queries\" />
     <Folder Include="User\Commands\" />
   </ItemGroup>
   <ItemGroup>
