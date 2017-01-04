@@ -10,6 +10,7 @@ using DAL.Models.Credits.CreditAccount;
 using DAL.Models.Employee;
 using DAL.Models.Credits.CreditRequest;
 using DAL.Models.Credits.CreditPayment;
+using DAL.Models.Actions;
 
 namespace DAL.Contexts
 {
@@ -42,7 +43,7 @@ namespace DAL.Contexts
 
         public DbSet<CreditPaymentModel> CreditPayments { get; set; }
 
-        public DbSet<UserActionModel> UserActions { get; set; }
+        public DbSet<ActionModel> Actions { get; set; }
 
         public DbSet<CreditRequestModel> CreditRequests { get; set; }
 
@@ -64,9 +65,6 @@ namespace DAL.Contexts
                 .HasOptional(u => u.Employee)
                 .WithRequired(e => e.User)
                 .Map(config => config.MapKey("User_Id"));
-            modelBuilder.Entity<UserModel>()
-                .HasMany(u => u.Actions)
-                .WithRequired(a => a.User);
             
             modelBuilder.Entity<PriceModel>()
                 .HasRequired(p => p.Currency)
@@ -133,11 +131,28 @@ namespace DAL.Contexts
                 .HasRequired(r => r.CreditSum)
                 .WithOptional()
                 .Map(config => config.MapKey("CreditSum_Id"));
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasRequired(r => r.Action)
+                .WithOptional()
+                .Map(config => config.MapKey("RequestAction_Id"));
 
             modelBuilder.Entity<CreditPaymentModel>()
                 .HasRequired(p => p.PaymentSum)
                 .WithOptional()
                 .Map(config => config.MapKey("PaymentSum_Id"));
+            modelBuilder.Entity<CreditPaymentModel>()
+                .HasRequired(p => p.Action)
+                .WithOptional()
+                .Map(config => config.MapKey("PaymentAction_Id"));
+
+            modelBuilder.Entity<ActionModel>()
+                .HasRequired(a => a.Employee)
+                .WithMany(e => e.Actions);
+
+            modelBuilder.Entity<EmployeeModel>()
+                .HasMany(e => e.CreditPayments)
+                .WithRequired(p => p.Employee);
+
         }
     }
 }
