@@ -1,9 +1,7 @@
 using System;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using DAL.Models.Auth;
-using DAL.Models.Client;
 using DAL.Models.User;
 using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditConditions;
@@ -14,8 +12,8 @@ using DAL.Models.Employee;
 
 namespace DAL.Migrations
 {
-    
-    internal sealed class Configuration : DbMigrationsConfiguration<DAL.Contexts.TofiContext>
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Contexts.TofiContext>
     {
         public Configuration()
         {
@@ -23,17 +21,17 @@ namespace DAL.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(DAL.Contexts.TofiContext context)
+        protected override void Seed(Contexts.TofiContext context)
         {
             // TODO: if seed already called
             if (context.Currency.FirstOrDefault() != null)
             {
                 return;
             }
-            var currencies = new List<CurrencyModel>()
+            var currencies = new List<CurrencyModel>
             {
-                new CurrencyModel() { Name = "USD" },
-                new CurrencyModel() { Name = "BYN" }
+                new CurrencyModel {Name = "USD"},
+                new CurrencyModel {Name = "BYN"}
             };
 
             var creditTypes = new List<CreditTypeModel>()
@@ -45,32 +43,32 @@ namespace DAL.Migrations
                     InterestRate = 0.36,
                     CreditRequirements = new List<CreditRequirementModel>()
                     {
-                        new CreditRequirementModel()
+                        new CreditRequirementModel
                         {
                             Description = "Возраст кредитополучателя",
                             ExpectedValue = "От 21 до 62 лет"
                         },
-                        new CreditRequirementModel()
+                        new CreditRequirementModel
                         {
                             Description = "Гражданство",
                             ExpectedValue = "Гражданин Республики Беларусь, либо вид на жительство на территории Республики Беларусь на срок действия кредита"
                         },
-                        new CreditRequirementModel()
+                        new CreditRequirementModel
                         {
                             Description = "Непрерывный стаж на текущем месте работы",
                             ExpectedValue = "Не менее 3 месяцев"
                         }
                     },
-                    CreditConditions = new List<CreditConditionModel>()
+                    CreditConditions = new List<CreditConditionModel>
                     {
-                        new CreditConditionModel()
+                        new CreditConditionModel
                         {
-                            MaxCreditSum = new PriceModel()
+                            MaxCreditSum = new PriceModel
                             {
                                 Currency = currencies[1],
                                 Value = 15000
                             },
-                            MinCreditSum = new PriceModel()
+                            MinCreditSum = new PriceModel
                             {
                                 Currency = currencies[1],
                                 Value = 100
@@ -80,42 +78,42 @@ namespace DAL.Migrations
                         }
                     }
                 },
-                new CreditTypeModel()
+                new CreditTypeModel
                 {
                     Name = "Все серьезно",
                     Description = "Выгодные условия! Кредит до 50 000 руб. за один день!",
                     InterestRate = 0.3,
-                    CreditRequirements = new List<CreditRequirementModel>()
+                    CreditRequirements = new List<CreditRequirementModel>
                     {
-                        new CreditRequirementModel()
+                        new CreditRequirementModel
                         {
                             Description = "Возраст кредитополучателя",
                             ExpectedValue = "От 27 до 62 лет"
                         },
-                        new CreditRequirementModel()
+                        new CreditRequirementModel
                         {
                             Description = "Гражданство",
                             ExpectedValue = "Гражданин Республики Беларусь, либо вид на жительство на территории Республики Беларусь на срок действия кредита"
                         },
-                        new CreditRequirementModel()
+                        new CreditRequirementModel
                         {
                             Description = "Обеспечение",
                             ExpectedValue = @"- неустойка
 - поручительство не менее 2-х  физических лиц"
                         }
                     },
-                    CreditConditions = new List<CreditConditionModel>()
+                    CreditConditions = new List<CreditConditionModel>
                     {
-                        new CreditConditionModel()
+                        new CreditConditionModel
                         {
                             MonthDurationFrom = 13,
                             MonthDurationTo = 120,
-                            MinCreditSum = new PriceModel()
+                            MinCreditSum = new PriceModel
                             {
                                 Currency = currencies[1],
                                 Value = 5000
                             },
-                            MaxCreditSum = new PriceModel()
+                            MaxCreditSum = new PriceModel
                             {
                                 Currency = currencies[1],
                                 Value = 50000
@@ -125,13 +123,13 @@ namespace DAL.Migrations
                 }
             };
 
-            var testUser = new UserModel()
+            var testUser = new UserModel
             {
                 Username = "test@test.test",
                 Email = "test@test.test",
                 FirstName = "Test",
                 LastName = "Testovich",
-                Auth = new AuthModel()
+                Auth = new AuthModel
                 {
                     PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
                     Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
@@ -140,45 +138,60 @@ namespace DAL.Migrations
                 }
             };
 
-            var employeeUser = new UserModel()
+            var employeeUser = new UserModel
             {
                 Username = "empl@empl.empl",
                 Email = "empl@empl.empl",
                 FirstName = "Employee",
                 LastName = "Employevich",
-                Auth = new AuthModel()
+                Auth = new AuthModel
                 {
                     PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
                     Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true
                 },
-                Employee = new EmployeeModel()
+                Employee = new EmployeeModel
                 {
-                    Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Cashier
-                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.CreditCommitteeMember
-                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.CreditDepartmentChief
-                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Operator
-                        | TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.SecurityOfficer
+                    Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Handyman
                 }
             };
 
-            var adminUser = new UserModel()
+            var adminUser = new UserModel
             {
                 Username = "admin@admin.admin",
                 Email = "admin@admin.admin",
                 FirstName = "Admin",
                 LastName = "Adminovich",
-                Auth = new AuthModel()
+                Auth = new AuthModel
                 {
                     PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
                     Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true
                 },
-                Employee = new EmployeeModel()
+                Employee = new EmployeeModel
                 {
                     Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Admin
+                }
+            };
+
+            var superUser = new UserModel
+            {
+                Username = "super@super.super",
+                Email = "super@super.super",
+                FirstName = "Super",
+                LastName = "Superovich",
+                Auth = new AuthModel
+                {
+                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    LockoutEnabled = true
+                },
+                Employee = new EmployeeModel
+                {
+                    Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Superuser
                 }
             };
 
@@ -186,6 +199,7 @@ namespace DAL.Migrations
             context.Users.Add(testUser);
             context.Users.Add(adminUser);
             context.Users.Add(employeeUser);
+            context.Users.Add(superUser);
             context.SaveChanges();
         }
     }
