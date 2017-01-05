@@ -7,7 +7,7 @@ using DAL.Models.Employee;
 namespace DAL.Models.Credits.CreditPayment
 {
     [Table("CreditPayments")]
-    public class CreditPaymentModel: Model
+    public class CreditPaymentModel : Model
     {
         public DateTime Timestamp { get; set; }
 
