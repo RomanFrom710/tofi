@@ -212,8 +212,7 @@ namespace TOFI.Web.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
-        //
-        // GET: /Manage/ChangePassword
+        [HttpGet]
         public ActionResult ChangePassword()
         {
             return View();
@@ -229,15 +228,22 @@ namespace TOFI.Web.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            var userId = User.Identity.GetUserId();
+            var result = await UserManager.ChangePasswordAsync(userId, model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                var user = await UserManager.FindByIdAsync(userId);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                if (User.IsInRole("employee"))
+                {
+                    var res = await UserManager.IsEmailConfirmedAsync(userId);
+                    if (!res) await UserManager.ConfirmEmailAsync(userId,
+                        await UserManager.GenerateEmailConfirmationTokenAsync(User.Identity.GetUserId()));
+                }
+                return View();
             }
             AddErrors(result);
             return View(model);

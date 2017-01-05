@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Web.Mvc;
+using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web.Controllers
 {
+    [EmployeePasswordChange]
     public class HomeController : Controller
     {
         public ActionResult Index()

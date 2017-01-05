@@ -7,11 +7,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TOFI.Web.Auth;
+using TOFI.Web.Infrastructure;
 using TOFI.Web.Models;
 using RegisterViewModel = BLL.Services.User.ViewModels.RegisterViewModel;
 
 namespace TOFI.Web.Controllers
 {
+    [EmployeePasswordChange]
     [Authorize]
     public class AccountController : Controller
     {

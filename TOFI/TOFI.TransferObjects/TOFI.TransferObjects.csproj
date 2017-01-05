@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Auth\DataObjects\AuthDto.cs" />
     <Compile Include="Client\Enums\Sex.cs" />
+    <Compile Include="Client\Queries\ClientQuery.cs" />
     <Compile Include="Common\Currency\DataObjects\CurrencyDto.cs" />
     <Compile Include="Common\Price\DataObjects\PriceDto.cs" />
     <Compile Include="Client\DataObjects\ClientDto.cs" />
@@ -91,7 +92,6 @@
     <Folder Include="Auth\Commands\" />
     <Folder Include="Auth\Queries\" />
     <Folder Include="Client\Commands\" />
-    <Folder Include="Client\Queries\" />
     <Folder Include="Common\Currency\Commands\" />
     <Folder Include="Common\Currency\Queries\" />
     <Folder Include="Common\Price\Commands\" />
