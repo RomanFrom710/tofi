@@ -15,7 +15,7 @@ namespace TOFI.Web
                       "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/my").Include(
+            bundles.Add(new ScriptBundle("~/scripts/custom").Include(
                 "~/Scripts/My/enable-datepicker.js",
                 "~/Scripts/My/fix-stupid-chrome-bug.js"));
 
