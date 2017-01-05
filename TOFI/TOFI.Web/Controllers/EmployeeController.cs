@@ -1,13 +1,16 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using BLL.Services.Employee;
 using BLL.Services.User;
 using Microsoft.AspNet.Identity;
 using TOFI.TransferObjects.Employee.Commands;
 using TOFI.TransferObjects.Employee.Queries;
 using TOFI.TransferObjects.User.Queries;
+using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web.Controllers
 {
+    [EmployeePasswordChange]
     [Authorize(Roles = "employee")]
     public class EmployeeController : Controller
     {
