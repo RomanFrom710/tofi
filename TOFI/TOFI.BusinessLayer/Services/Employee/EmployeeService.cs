@@ -377,7 +377,7 @@ namespace BLL.Services.Employee
             {
                 return new ValueResult<EmployeeDto>(null, false).From(res);
             }
-            if (res.Value != null)
+            if (res.Value == null)
             {
                 return new ValueResult<EmployeeDto>(null, false).Error("Employee not found");
             }

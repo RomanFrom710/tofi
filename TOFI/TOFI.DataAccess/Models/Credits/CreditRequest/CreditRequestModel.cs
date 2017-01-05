@@ -1,5 +1,4 @@
-﻿using DAL.Models.Actions;
-using DAL.Models.Client;
+﻿using DAL.Models.Client;
 using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
@@ -8,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DAL.Models.Credits.CreditRequest
 {
     [Table("CreditRequests")]
-    public class CreditRequestModel: Model
+    public class CreditRequestModel : Model
     {
         #region Approved
 
