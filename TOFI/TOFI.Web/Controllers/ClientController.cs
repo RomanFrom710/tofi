@@ -16,9 +16,11 @@ using Microsoft.AspNet.Identity;
 using TOFI.TransferObjects.Client.Queries;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Model.Queries;
+using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web.Controllers
 {
+    [EmployeePasswordChange]
     [Authorize]
     public class ClientController : Controller
     {
@@ -47,7 +49,6 @@ namespace TOFI.Web.Controllers
             var validationResult = _clientService.CanAddCreditRequest(int.Parse(User.Identity.GetUserId()));
             if (!validationResult.Value)
             {
-                ViewBag.isValid = false;
                 ModelState.AddModelError(string.Empty, validationResult.Message);
             }
             return View(client);

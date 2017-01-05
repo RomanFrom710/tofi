@@ -1,23 +1,33 @@
-﻿@{
-    if (ViewBag.isValid == null)
-    {
-        ViewBag.isValid = true;
-    }
-}
+﻿@using BLL.Services.Client
+@using Microsoft.AspNet.Identity
 
 <nav>
-    <ul class="nav nav-pills nav-stacked">
-        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
-            @Html.ActionLink("Изменить данные", "Index", "Client")
-        </li>
-        @if (ViewBag.isValid)
-        {
-            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AddCredit" ? "active" : "")">
-                @Html.ActionLink("Новый кредит", "AddCredit", "Client")
+    @if ((bool?)TempData["PassNotChanged"] != true)
+    {
+        <ul class="nav nav-pills nav-stacked">
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                @Html.ActionLink("Изменить данные", "Index", "Client")
             </li>
-            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CreditRequests" ? "active" : "")">
-                @Html.ActionLink("Заявки", "CreditRequests", "Client")
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ChangePassword" ? "active" : "")">
+                @Html.ActionLink("Смена пароля", "ChangePassword", "Manage")
             </li>
-        }
-    </ul>
+            @if (DependencyResolver.Current.GetService<ClientService>().CanAddCreditRequest(int.Parse(User.Identity.GetUserId())).Value)
+            {
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AddCredit" ? "active" : "")">
+                    @Html.ActionLink("Новый кредит", "AddCredit", "Client")
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CreditRequests" ? "active" : "")">
+                    @Html.ActionLink("Заявки", "CreditRequests", "Client")
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <ul class="nav nav-pills nav-stacked">
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ChangePassword" ? "active" : "")">
+                @Html.ActionLink("Смена пароля", "ChangePassword", "Manage")
+            </li>
+        </ul>
+    }
 </nav>
