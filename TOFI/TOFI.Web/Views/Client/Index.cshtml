@@ -13,6 +13,8 @@
         
         @using (Html.BeginForm("Index", "Client", FormMethod.Post))
         {
+            @Html.ValidationSummary(true, "Чтобы иметь возможность получать кредиты необходимо полностью заполнить данные о себе: ", new { @class = "text-danger" })
+
             @Html.HiddenFor(model => model.Id)
 
             <div class="form-group">

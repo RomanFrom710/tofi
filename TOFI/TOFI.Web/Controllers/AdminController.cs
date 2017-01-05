@@ -3,9 +3,11 @@ using BLL.Services.Common.Currency;
 using BLL.Services.Common.Currency.ViewModels;
 using Ninject.Infrastructure.Language;
 using TOFI.TransferObjects.Model.Queries;
+using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web.Controllers
 {
+    [EmployeePasswordChange]
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
