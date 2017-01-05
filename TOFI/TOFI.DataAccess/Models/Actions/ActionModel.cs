@@ -11,6 +11,8 @@ namespace DAL.Models.Actions
 
         public DateTime Timestamp { get; set; }
 
+        public string EmployeeRole { get; set; }
+
         #region Virtual Properties
 
         public virtual EmployeeModel Employee { get; set; }
