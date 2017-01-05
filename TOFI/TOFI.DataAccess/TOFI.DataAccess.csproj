@@ -62,9 +62,9 @@
     <Compile Include="Migrations\201701042224263_initial.Designer.cs">
       <DependentUpon>201701042224263_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701052023586_ActionEmployeeRole.cs" />
-    <Compile Include="Migrations\201701052023586_ActionEmployeeRole.Designer.cs">
-      <DependentUpon>201701052023586_ActionEmployeeRole.cs</DependentUpon>
+    <Compile Include="Migrations\201701052049211_ActionType.cs" />
+    <Compile Include="Migrations\201701052049211_ActionType.Designer.cs">
+      <DependentUpon>201701052049211_ActionType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
@@ -159,8 +159,8 @@
     <EmbeddedResource Include="Migrations\201701042224263_initial.resx">
       <DependentUpon>201701042224263_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701052023586_ActionEmployeeRole.resx">
-      <DependentUpon>201701052023586_ActionEmployeeRole.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701052049211_ActionType.resx">
+      <DependentUpon>201701052049211_ActionType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

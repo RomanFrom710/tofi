@@ -7,13 +7,13 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ActionEmployeeRole : IMigrationMetadata
+    public sealed partial class ActionType : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ActionEmployeeRole));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ActionType));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701052023586_ActionEmployeeRole"; }
+            get { return "201701052049211_ActionType"; }
         }
         
         string IMigrationMetadata.Source
