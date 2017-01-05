@@ -14,7 +14,7 @@
 
         <dl>
             <dt>Сумма кредита</dt>
-            <dd>@Model.CreditSum.Value @Model.CreditSum</dd>
+            <dd>@Model.CreditSum.Value @Model.CreditSum.Currency.Name</dd>
         </dl>
         <dl>
             <dt>Срок кредита (месяцев)</dt>
@@ -60,34 +60,44 @@
         @if (Model.IsOperatorApproved.HasValue)
         {
             <h4>Оператор</h4>
-            <strong>@Model.IsOperatorApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <strong>@(Model.IsOperatorApproved.Value ? "Одобрено" : "Отклонено")</strong>
             <p>@Model.OperatorComments</p>
         }
         @if (Model.IsSecurityApproved.HasValue)
         {
             <h4>Служба безопасности</h4>
-            <strong>@Model.IsSecurityApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <strong>@(Model.IsSecurityApproved.Value ? "Одобрено" : "Отклонено")</strong>
             <p>@Model.SecurityComments</p>
         }@if (Model.IsCreditCommitteeApproved.HasValue)
         {
             <h4>Кредитный комитет</h4>
-            <strong>@Model.IsCreditCommitteeApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <strong>@(Model.IsCreditCommitteeApproved.Value ? "Одобрено" : "Отклонено")</strong>
             <p>@Model.CreditCommitteeComments</p>
         }@if (Model.IsCreditDepartmentApproved.HasValue)
         {
             <h4>Начальник отдела</h4>
-            <strong>@Model.IsCreditDepartmentApproved.Value ? "Одобрено" : "Отклонено"</strong>
+            <strong>@(Model.IsCreditDepartmentApproved.Value ? "Одобрено" : "Отклонено")</strong>
             <p>@Model.CreditDepartmentComments</p>
         }
 
         <hr />
 
-        @using (Html.BeginForm(ViewContext.RouteData.Values["Action"] + "Approve", "Employee", FormMethod.Post))
+        @using (Html.BeginForm((string)ViewBag.ApproveActionName, "Employee", FormMethod.Post))
         {
             @Html.Hidden("CreditRequestId", Model.Id)
-            @Html.Label("Approved", "Решение")
-            @Html.RadioButton("Approved", "Кросафчег", true)
-            @Html.RadioButton("Approved", "Выпей йаду")
+            <label>Решение</label>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="Approved" value="true"/>
+                    Кросафчег
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="Approved" value="false" />
+                    Выпей йаду
+                </label>
+            </div>
             @Html.TextArea("Comments", new { @class = "form-control" })
 
             <button type="submit" class="btn btn-primary">Утвердить</button>
