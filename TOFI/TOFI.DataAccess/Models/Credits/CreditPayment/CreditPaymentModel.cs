@@ -2,7 +2,6 @@
 using System;
 using DAL.Models.Credits.CreditAccount;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Models.Actions;
 using DAL.Models.Employee;
 
 namespace DAL.Models.Credits.CreditPayment

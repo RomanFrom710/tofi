@@ -12,7 +12,9 @@ namespace TOFI.TransferObjects.Employee.DataObjects
         SecurityOfficer = 4,
         CreditCommitteeMember = 8,
         CreditDepartmentChief = 16,
-        Admin = int.MaxValue,
+        Handyman = 31,
+        Admin = 32,
+        Superuser = int.MaxValue,
     }
 
 

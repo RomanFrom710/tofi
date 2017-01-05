@@ -23,6 +23,7 @@ namespace TOFI.Web.Auth
         public const string CreditCommitteeMember = "committee member";
         public const string CreditDepartmentChief = "department chief";
         public const string Admin = "admin";
+        public const string Superuser = "superuser";
 
 
         public static readonly string[] All = {Client, Employee, Admin};
@@ -35,7 +36,8 @@ namespace TOFI.Web.Auth
                 {EmployeeRights.SecurityOfficer, SecurityOfficer},
                 {EmployeeRights.CreditCommitteeMember, CreditCommitteeMember},
                 {EmployeeRights.CreditDepartmentChief, CreditDepartmentChief},
-                {EmployeeRights.Admin, Admin}
+                {EmployeeRights.Admin, Admin},
+                {EmployeeRights.Superuser, Superuser}
             };
 
         public static readonly Dictionary<string, EmployeeRights> RolesToRights =
@@ -46,7 +48,8 @@ namespace TOFI.Web.Auth
                 {SecurityOfficer, EmployeeRights.SecurityOfficer},
                 {CreditCommitteeMember, EmployeeRights.CreditCommitteeMember},
                 {CreditDepartmentChief, EmployeeRights.CreditDepartmentChief},
-                {Admin, EmployeeRights.Admin}
+                {Admin, EmployeeRights.Admin},
+                {Superuser, EmployeeRights.Superuser}
             };
 
 
