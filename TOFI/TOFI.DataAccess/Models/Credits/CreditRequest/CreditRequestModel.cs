@@ -3,6 +3,7 @@ using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
 using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 
 namespace DAL.Models.Credits.CreditRequest
 {
@@ -45,16 +46,22 @@ namespace DAL.Models.Credits.CreditRequest
 
         #region Virtual Properties 
 
+        [IgnoreMap]
         public virtual ClientModel Client { get; set; }
 
+        [IgnoreMap]
         public virtual EmployeeModel OperatorApproved { get; set; }
 
+        [IgnoreMap]
         public virtual EmployeeModel SecurityApproved { get; set; }
 
+        [IgnoreMap]
         public virtual EmployeeModel CreditCommitteeApproved { get; set; }
 
+        [IgnoreMap]
         public virtual EmployeeModel CreditDepartmentApproved { get; set; }
 
+        [IgnoreMap]
         public virtual CreditTypeModel CreditType { get; set; }
 
         #endregion

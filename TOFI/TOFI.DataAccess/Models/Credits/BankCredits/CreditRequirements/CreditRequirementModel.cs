@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 
 namespace DAL.Models.Credits.BankCredits.CreditRequirements
@@ -12,6 +13,7 @@ namespace DAL.Models.Credits.BankCredits.CreditRequirements
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual CreditTypeModel CreditType { get; set; }
 
         #endregion
