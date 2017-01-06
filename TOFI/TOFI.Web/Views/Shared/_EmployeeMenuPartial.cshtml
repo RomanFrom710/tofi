@@ -6,5 +6,23 @@
                 @Html.ActionLink("Оператор", "Operator", "Employee")
             </li>
         }
+        @if (User.IsInRole("security"))
+        {
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Security" ? "active" : "")">
+                @Html.ActionLink("Служба безопасности", "Security", "Employee")
+            </li>
+        }
+        @if (User.IsInRole("committee member"))
+        {
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Committee" ? "active" : "")">
+                @Html.ActionLink("Кредитный комитет", "Committee", "Employee")
+            </li>
+        }
+        @if (User.IsInRole("department chief"))
+        {
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Department" ? "active" : "")">
+                @Html.ActionLink("Начальник отдела", "Department", "Employee")
+            </li>
+        }
     </ul>
 </nav>
