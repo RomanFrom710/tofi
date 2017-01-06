@@ -57,6 +57,7 @@ namespace TOFI.Web.Models
         [CustomRequired]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
+        [Unlike("Email", ErrorMessage = "Пароль не должен совпадать с адресом e-mail")]
         public string Password { get; set; }
 
         [Display(Name = "Запомнить меня")]
