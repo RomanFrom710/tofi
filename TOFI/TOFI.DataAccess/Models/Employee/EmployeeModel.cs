@@ -16,6 +16,7 @@ namespace DAL.Models.Employee
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual UserModel User { get; set; }
 
         [IgnoreMap]

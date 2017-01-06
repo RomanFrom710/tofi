@@ -1,25 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using BLL.Attributes;
 using BLL.Services.Model.ViewModels;
+using BLL.Services.User.ViewModels;
 using TOFI.TransferObjects.Client.Enums;
 
 namespace BLL.Services.Client.ViewModels
 {
     public class ClientViewModel : ModelViewModel
     {
-        [CustomRequired]
-        [Display(Name = "Имя")]
-        public string FirstName { get; set; }
-
-        [CustomRequired]
-        [Display(Name = "Отчество")]
-        public string MiddleName { get; set; }
-
-        [CustomRequired]
-        [Display(Name = "Фамилия")]
-        public string LastName { get; set; }
-
         [CustomRequired]
         [Display(Name = "Пол")]
         public Sex Sex { get; set; }
@@ -64,8 +54,40 @@ namespace BLL.Services.Client.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? ExpirationDate { get; set; }
 
-        public string FullName => $"{LastName} {FirstName} {MiddleName}";
+        public UserViewModel User { get; set; }
 
+        [IgnoreMap]
+        [CustomRequired]
+        [Display(Name = "Имя")]
+        public string FirstName
+        {
+            get { return User.FirstName; }
+            set { User.FirstName = value; }
+        }
+
+        [IgnoreMap]
+        [CustomRequired]
+        [Display(Name = "Отчество")]
+        public string MiddleName
+        {
+            get { return User.MiddleName; }
+            set { User.MiddleName = value; }
+        }
+
+        [IgnoreMap]
+        [CustomRequired]
+        [Display(Name = "Фамилия")]
+        public string LastName
+        {
+            get { return User.LastName; }
+            set { User.LastName = value; }
+        }
+
+        [IgnoreMap]
+        [Display(Name = "Полное имя")]
+        public string FullName => User.FullName;
+
+        [IgnoreMap]
         public int Age
         {
             get

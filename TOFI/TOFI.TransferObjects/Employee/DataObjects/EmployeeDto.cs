@@ -1,5 +1,6 @@
 ﻿using System;
 using TOFI.TransferObjects.Model.DataObjects;
+using TOFI.TransferObjects.User.DataObjects;
 
 namespace TOFI.TransferObjects.Employee.DataObjects
 {
@@ -21,5 +22,7 @@ namespace TOFI.TransferObjects.Employee.DataObjects
     public class EmployeeDto : ModelDto
     {
         public EmployeeRights Rights { get; set; }
+
+        public UserDto User { get; set; }
     }
 }

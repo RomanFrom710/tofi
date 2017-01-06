@@ -32,14 +32,6 @@ namespace DAL.Repositories.User
             {
                 model = ModelsDao.FirstOrDefault(u => u.Username == query.Username);
             }
-            if (query.EmployeeId.HasValue)
-            {
-                model = ModelsDao.FirstOrDefault(u => u.Employee.Id == query.EmployeeId);
-            }
-            if (query.ClientId.HasValue)
-            {
-                model = ModelsDao.FirstOrDefault(u => u.Client.Id == query.ClientId);
-            }
             return model == null ? null : Mapper.Map<UserDto>(model);
         }
 
@@ -57,14 +49,6 @@ namespace DAL.Repositories.User
             if (!string.IsNullOrEmpty(query.Username))
             {
                 model = await ModelsDao.FirstOrDefaultAsync(u => u.Username == query.Username);
-            }
-            if (query.EmployeeId.HasValue)
-            {
-                model = await ModelsDao.FirstOrDefaultAsync(u => u.Employee.Id == query.EmployeeId);
-            }
-            if (query.ClientId.HasValue)
-            {
-                model = await ModelsDao.FirstOrDefaultAsync(u => u.Client.Id == query.ClientId);
             }
             return model == null ? null : Mapper.Map<UserDto>(model);
         }

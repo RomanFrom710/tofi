@@ -14,7 +14,13 @@ namespace DAL.Repositories.Client
 
         protected override void RestoreFkModels(ClientModel model, ClientDto modelDto)
         {
-            model.User = GetUserModel(model.User?.Id);
+            model.User = GetUserModel(modelDto.User?.Id);
+            if (modelDto.User != null)
+            {
+                model.User.FirstName = modelDto.User.FirstName;
+                model.User.MiddleName = modelDto.User.MiddleName;
+                model.User.LastName = modelDto.User.LastName;
+            }
         }
     }
 }

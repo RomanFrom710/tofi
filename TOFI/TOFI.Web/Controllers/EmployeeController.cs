@@ -1,14 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Employee;
 using BLL.Services.Employee.ViewModels;
-using BLL.Services.User;
 using Microsoft.AspNet.Identity;
 using TOFI.TransferObjects.Employee.Commands;
 using TOFI.TransferObjects.Employee.Queries;
 using TOFI.TransferObjects.Model.Queries;
-using TOFI.TransferObjects.User.Queries;
 using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web.Controllers
@@ -17,15 +14,12 @@ namespace TOFI.Web.Controllers
     [Authorize(Roles = "employee")]
     public class EmployeeController : Controller
     {
-        private readonly IUserService _userService;
         private readonly IEmployeeService _employeeService;
         private readonly ICreditRequestService _creditRequestService;
 
-        public EmployeeController(IUserService userService,
-                                  IEmployeeService employeeService,
+        public EmployeeController(IEmployeeService employeeService,
                                   ICreditRequestService creditRequestService)
         {
-            _userService = userService;
             _employeeService = employeeService;
             _creditRequestService = creditRequestService;
         }
@@ -64,11 +58,9 @@ namespace TOFI.Web.Controllers
 
         private EmployeeViewModel GetEmployee()
         {
-            var employee = _userService.GetUser(new UserQuery
-            {
-                Id = int.Parse(User.Identity.GetUserId())
-            }).Value.Employee;
-            return employee;
+            var userId = int.Parse(User.Identity.GetUserId());
+            var res = _employeeService.GetEmployee(EmployeeQuery.WithUserId(userId));
+            return res.Value;
         }
     }
 }
