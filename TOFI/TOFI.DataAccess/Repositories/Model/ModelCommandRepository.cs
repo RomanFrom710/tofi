@@ -5,7 +5,6 @@ using AutoMapper;
 using DAL.Contexts;
 using TOFI.TransferObjects.Model.Commands;
 using TOFI.TransferObjects.Model.DataObjects;
-using System.Collections.Generic;
 
 namespace DAL.Repositories.Model
 {

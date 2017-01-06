@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 using DAL.Models.Credits.BankCredits.CreditConditions;
 using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.CreditAccount;
@@ -22,8 +23,10 @@ namespace DAL.Models.Credits.BankCredits.CreditTypes
 
         public virtual ICollection<CreditRequirementModel> CreditRequirements { get; set; }
 
+        [IgnoreMap]
         public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 
+        [IgnoreMap]
         public virtual ICollection<CreditRequestModel> CreditRequests { get; set; }
 
         #endregion

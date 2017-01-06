@@ -3,6 +3,7 @@ using DAL.Models.Common;
 using DAL.Models.User;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using System.Collections.Generic;
+using AutoMapper;
 using DAL.Models.Credits.CreditPayment;
 
 namespace DAL.Models.Credits.CreditAccount
@@ -24,10 +25,13 @@ namespace DAL.Models.Credits.CreditAccount
 
         public virtual PriceModel RemainDebt { get; set; }
 
+        [IgnoreMap]
         public virtual UserModel User { get; set; }
 
+        [IgnoreMap]
         public virtual CreditTypeModel CreditType { get; set; }
 
+        [IgnoreMap]
         public virtual ICollection<CreditPaymentModel> Payments { get; set; }
 
         #endregion
