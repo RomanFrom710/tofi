@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Необработанные заявки на кредит";
-    ViewBag.ApproveActionName = "OperatorApprove";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +14,7 @@
 
         @foreach (var request in Model)
         {
-            <h3>@Html.ActionLink(request.Client.FullName, "RequestDetails", new { id = request.Id, type = "Operator" })</h3>
+            <h3>@Html.ActionLink(request.Client.FullName, "RequestDetails", new { id = request.Id, type = ViewBag.EmployeeType })</h3>
             <dl>
                 <dd>Тип кредита</dd>
                 <dt></dt>
@@ -33,7 +32,7 @@
                 <dt>@request.MonthDuration</dt>
             </dl>
 
-            <hr/>
+            <hr />
         }
     </div>
 </div>
