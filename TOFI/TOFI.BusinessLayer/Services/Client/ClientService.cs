@@ -3,12 +3,9 @@ using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Client.ViewModels;
 using BLL.Services.Model;
-using BLL.Services.User;
-using BLL.Services.User.ViewModels;
 using DAL.Repositories.Client;
 using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Client.Queries;
-using TOFI.TransferObjects.User.Queries;
 
 namespace BLL.Services.Client
 {
@@ -16,117 +13,61 @@ namespace BLL.Services.Client
     {
         private readonly IClientQueryRepository _queryRepository;
         private readonly IClientCommandRepository _commandRepository;
-        private readonly IUserService _userService;
 
 
-        public ClientService(IClientQueryRepository queryRepository, IClientCommandRepository commandRepository,
-            IUserService userService) : base(queryRepository, commandRepository)
+        public ClientService(IClientQueryRepository queryRepository, IClientCommandRepository commandRepository)
+            : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
-            _userService = userService;
         }
 
 
+        public QueryResult<ClientDto> GetClientDto(ClientQuery query)
+        {
+            return RunQuery<ClientQuery, ClientDto>(_queryRepository, query);
+        }
+
+        public async Task<QueryResult<ClientDto>> GetClientDtoAsync(ClientQuery query)
+        {
+            return await RunQueryAsync<ClientQuery, ClientDto>(_queryRepository, query);
+        }
+
         public QueryResult<ClientViewModel> GetClient(ClientQuery query)
         {
-            QueryResult<UserViewModel> userRes = null;
-            if (query.Id.HasValue)
-            {
-                userRes = _userService.GetUser(new UserQuery {ClientId = query.Id});
-            }
-            if (query.UserId.HasValue)
-            {
-                userRes = _userService.GetUser(new UserQuery {Id = query.UserId});
-            }
-            if (userRes == null)
-            {
-                return new QueryResult<ClientViewModel>(query, null, false).Error("Invalid query");
-            }
-            if (userRes.IsFailed)
-            {
-                return new QueryResult<ClientViewModel>(query, null, false).From(userRes);
-            }
-            var client = userRes.Value?.Client ?? new ClientViewModel();
-            client.FirstName = userRes.Value?.FirstName;
-            client.LastName = userRes.Value?.LastName;
-            client.MiddleName = userRes.Value?.MiddleName;
-            return new QueryResult<ClientViewModel>(query, client, true);
+            return RunQuery<ClientQuery, ClientDto>(_queryRepository, query).MapTo<ClientViewModel>();
         }
 
         public async Task<QueryResult<ClientViewModel>> GetClientAsync(ClientQuery query)
         {
-            QueryResult<UserViewModel> userRes = null;
-            if (query.Id.HasValue)
-            {
-                userRes = await _userService.GetUserAsync(new UserQuery {ClientId = query.Id});
-            }
-            if (query.UserId.HasValue)
-            {
-                userRes = await _userService.GetUserAsync(new UserQuery {Id = query.UserId});
-            }
-            if (userRes == null)
-            {
-                return new QueryResult<ClientViewModel>(query, null, false).Error("Invalid query");
-            }
-            if (userRes.IsFailed)
-            {
-                return new QueryResult<ClientViewModel>(query, null, false).From(userRes);
-            }
-            if (userRes.Value == null)
-            {
-                return new QueryResult<ClientViewModel>(query, null, false).Error("Invalid user Id");
-            }
-            var client = userRes.Value?.Client ?? new ClientViewModel();
-            client.FirstName = userRes.Value?.FirstName;
-            client.LastName = userRes.Value?.LastName;
-            client.MiddleName = userRes.Value?.MiddleName;
-            return new QueryResult<ClientViewModel>(query, client, true);
+            return (await RunQueryAsync<ClientQuery, ClientDto>(_queryRepository, query)).MapTo<ClientViewModel>();
         }
 
 
-        public CommandResult UpdateClient(int userId, ClientViewModel client)
+        public CommandResult AddOrUpdateClient(ClientViewModel client)
         {
-            var userRes = _userService.GetUser(new UserQuery {Id = userId});
-            if (userRes.IsFailed)
+            var clientRes = GetClientDto(ClientQuery.WithUserId(client.User.Id));
+            if (clientRes.IsFailed)
             {
-                return new CommandResult(null, false).From(userRes);
+                return new CommandResult(null, false).From(clientRes);
             }
-            if (userRes.Value == null)
-            {
-                return new CommandResult(null, false).Error("Invalid user Id");
-            }
-            var user = userRes.Value;
-            user.FirstName = client?.FirstName ?? user.FirstName;
-            user.LastName = client?.LastName ?? user.LastName;
-            user.MiddleName = client?.MiddleName ?? user.MiddleName;
-            user.Client = client;
-            return _userService.UpdateModel(user);
+            return clientRes.Value == null ? CreateModel(client) : UpdateModel(client);
         }
 
-        public async Task<CommandResult> UpdateClientAsync(int userId, ClientViewModel client)
+        public async Task<CommandResult> AddOrUpdateClientAsync(ClientViewModel client)
         {
-            var userRes = await _userService.GetUserAsync(new UserQuery {Id = userId});
-            if (userRes.IsFailed)
+            var clientRes = await GetClientDtoAsync(ClientQuery.WithUserId(client.User.Id));
+            if (clientRes.IsFailed)
             {
-                return new CommandResult(null, false).From(userRes);
+                return new CommandResult(null, false).From(clientRes);
             }
-            if (userRes.Value == null)
-            {
-                return new CommandResult(null, false).Error("Invalid user Id");
-            }
-            var user = userRes.Value;
-            user.FirstName = client?.FirstName ?? user.FirstName;
-            user.LastName = client?.LastName ?? user.LastName;
-            user.MiddleName = client?.MiddleName ?? user.MiddleName;
-            user.Client = client;
-            return await _userService.UpdateModelAsync(user);
+            return await (clientRes.Value == null ? CreateModelAsync(client) : UpdateModelAsync(client));
         }
 
 
         public ValueResult<bool> CanAddCreditRequest(int userId)
         {
-            var clientRes = GetClient(new ClientQuery {UserId = userId});
+            var clientRes = GetClient(ClientQuery.WithUserId(userId));
             if (clientRes.IsFailed)
             {
                 return new ValueResult<bool>(false, false).From(clientRes);

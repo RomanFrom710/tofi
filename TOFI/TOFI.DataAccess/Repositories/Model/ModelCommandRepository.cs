@@ -18,7 +18,7 @@ namespace DAL.Repositories.Model
 
         public void Execute(CreateModelCommand<TModelDto> command)
         {
-            var model = Mapper.Map<TModel>(command.ModelDto);
+            var model = CreateDbModel(command.ModelDto);
             RestoreFkModels(model, command.ModelDto);
             ModelsDao.Add(model);
             Save();
@@ -27,7 +27,7 @@ namespace DAL.Repositories.Model
 
         public async Task ExecuteAsync(CreateModelCommand<TModelDto> command)
         {
-            var model = Mapper.Map<TModel>(command.ModelDto);
+            var model = CreateDbModel(command.ModelDto);
             RestoreFkModels(model, command.ModelDto);
             ModelsDao.Add(model);
             await SaveAsync();
@@ -119,6 +119,11 @@ namespace DAL.Repositories.Model
             await SaveAsync();
         }
 
+
+        protected virtual TModel CreateDbModel(TModelDto modelDto)
+        {
+            return Mapper.Map<TModel>(modelDto);
+        }
 
         protected virtual void UpdateDbModel(TModel model, TModelDto modelDto)
         {

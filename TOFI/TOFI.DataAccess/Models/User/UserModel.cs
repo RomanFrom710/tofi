@@ -27,10 +27,13 @@ namespace DAL.Models.User
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual AuthModel Auth { get; set; }
 
+        [IgnoreMap]
         public virtual ClientModel Client { get; set; }
 
+        [IgnoreMap]
         public virtual EmployeeModel Employee { get; set; }
 
         [IgnoreMap]

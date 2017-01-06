@@ -101,6 +101,8 @@
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\Signature\ISignatureService.cs" />
     <Compile Include="Services\Signature\SignatureService.cs" />
+    <Compile Include="Services\UserRole\IUserRoleService.cs" />
+    <Compile Include="Services\UserRole\UserRoleService.cs" />
     <Compile Include="Services\User\IUserService.cs" />
     <Compile Include="Services\User\UserService.cs" />
     <Compile Include="Services\User\ViewModels\RegisterViewModel.cs" />

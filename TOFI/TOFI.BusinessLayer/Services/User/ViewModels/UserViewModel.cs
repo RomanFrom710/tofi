@@ -1,6 +1,6 @@
-﻿using BLL.Services.Auth.ViewModels;
-using BLL.Services.Client.ViewModels;
-using BLL.Services.Employee.ViewModels;
+﻿using System.Linq;
+using AutoMapper;
+using BLL.Services.Auth.ViewModels;
 using BLL.Services.Model.ViewModels;
 
 namespace BLL.Services.User.ViewModels
@@ -23,8 +23,15 @@ namespace BLL.Services.User.ViewModels
 
         public AuthViewModel Auth { get; set; }
 
-        public ClientViewModel Client { get; set; }
-
-        public EmployeeViewModel Employee { get; set; }
+        [IgnoreMap]
+        public string FullName
+        {
+            get
+            {
+                var parts = new[] { LastName, FirstName, MiddleName };
+                var res = string.Join(" ", parts.Where(i => !string.IsNullOrWhiteSpace(i)));
+                return string.IsNullOrWhiteSpace(res) ? "<Имя не указано>" : res;
+            }
+        }
     }
 }
