@@ -17,7 +17,7 @@
             <h3>@Html.ActionLink(request.Client.FullName, "RequestDetails", new { id = request.Id, type = ViewBag.EmployeeType })</h3>
             <dl>
                 <dd>Тип кредита</dd>
-                <dt></dt>
+                <dt>@request.CreditType.Name</dt>
             </dl>
             <dl>
                 <dd>Цель кредита</dd>
