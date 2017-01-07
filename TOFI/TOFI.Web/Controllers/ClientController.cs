@@ -12,10 +12,12 @@ using BLL.Services.Credits.BankCredits.CreditTypes;
 using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
+using BLL.Services.User;
 using Microsoft.AspNet.Identity;
 using TOFI.TransferObjects.Client.Queries;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Model.Queries;
+using TOFI.TransferObjects.User.Queries;
 using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web.Controllers
@@ -26,6 +28,7 @@ namespace TOFI.Web.Controllers
     {
         private readonly ICreditRequestService _creditRequestService;
         private readonly IClientService _clientService;
+        private readonly IUserService _userService;
 
         private readonly IEnumerable<CreditTypeViewModel> _creditTypes;
         private readonly IEnumerable<CurrencyViewModel> _currencies;
@@ -33,10 +36,12 @@ namespace TOFI.Web.Controllers
         public ClientController(ICurrencyService currencyService,
                                 IClientService clientService,
                                 ICreditRequestService creditRequestService,
-                                ICreditTypeService creditTypeService)
+                                ICreditTypeService creditTypeService,
+                                IUserService userService)
         {
             _clientService = clientService;
             _creditRequestService = creditRequestService;
+            _userService = userService;
 
             _currencies = currencyService.GetAllModels(new AllModelsQuery()).Value.ToArray();
             _creditTypes = creditTypeService.GetAllModels(new AllModelsQuery()).Value.ToArray();
@@ -66,7 +71,7 @@ namespace TOFI.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                _clientService.UpdateClient(int.Parse(User.Identity.GetUserId()), client);
+                _clientService.AddOrUpdateClient(client);
                 return RedirectToAction("Index");
             }
 
@@ -103,6 +108,11 @@ namespace TOFI.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Currency =
+                    _currencies.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
+                ViewBag.CreditTypes =
+                    _creditTypes.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
+                ViewBag.CreditTypesInfo = _creditTypes;
                 return View(credit);
             }
 
@@ -114,9 +124,9 @@ namespace TOFI.Web.Controllers
             if (!validationRes.Value)
             {
                 ViewBag.Currency =
-                _currencies.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+                    _currencies.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
                 ViewBag.CreditTypes =
-                    _creditTypes.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+                    _creditTypes.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
                 ViewBag.CreditTypesInfo = _creditTypes;
                 ModelState.AddModelError("", validationRes.Message);
                 return View(credit);
@@ -148,7 +158,12 @@ namespace TOFI.Web.Controllers
 
         private ClientViewModel GetClient()
         {
-            var res = _clientService.GetClient(new ClientQuery {UserId = int.Parse(User.Identity.GetUserId())});
+            var userId = int.Parse(User.Identity.GetUserId());
+            var res = _clientService.GetClient(ClientQuery.WithUserId(userId));
+            if (res.Value == null)
+            {
+                return new ClientViewModel {User = _userService.GetUser(UserQuery.WithId(userId)).Value};
+            }
             return res.Value;
         }
     }

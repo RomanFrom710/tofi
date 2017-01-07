@@ -1,6 +1,7 @@
 ﻿using DAL.Models.User;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 
 namespace DAL.Models.Auth
 {
@@ -29,6 +30,7 @@ namespace DAL.Models.Auth
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual UserModel User { get; set; }
 
         #endregion

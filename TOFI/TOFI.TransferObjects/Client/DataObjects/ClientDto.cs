@@ -1,6 +1,7 @@
 ﻿using System;
 using TOFI.TransferObjects.Client.Enums;
 using TOFI.TransferObjects.Model.DataObjects;
+using TOFI.TransferObjects.User.DataObjects;
 
 namespace TOFI.TransferObjects.Client.DataObjects
 {
@@ -23,5 +24,7 @@ namespace TOFI.TransferObjects.Client.DataObjects
         public DateTime ExpirationDate { get; set; }
 
         public Sex Sex { get; set; }
+
+        public UserDto User { get; set; }
     }
 }

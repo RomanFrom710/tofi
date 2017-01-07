@@ -4,6 +4,7 @@ using System;
 using TOFI.TransferObjects.Client.Enums;
 using DAL.Models.Credits.CreditRequest;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace DAL.Models.Client
 {
@@ -30,8 +31,10 @@ namespace DAL.Models.Client
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual UserModel User { get; set; }
 
+        [IgnoreMap]
         public virtual ICollection<CreditRequestModel> CreditRequests { get; set; }
 
         #endregion

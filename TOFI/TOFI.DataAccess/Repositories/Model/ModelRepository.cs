@@ -35,6 +35,20 @@ namespace DAL.Repositories.Model
             return client;
         }
 
+        protected ClientModel GetClientModelOptional(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return null;
+            }
+            var client = Context.Clients.Find(id.Value);
+            if (client == null)
+            {
+                throw new ArgumentException("Client with given Id doesn't exists");
+            }
+            return client;
+        }
+
         protected CreditTypeModel GetCreditTypeModel(int? id)
         {
             if (!id.HasValue)
@@ -61,6 +75,20 @@ namespace DAL.Repositories.Model
                 throw new ArgumentException("Currency with given Id doesn't exists");
             }
             return currency;
+        }
+
+        protected EmployeeModel GetEmployeeModel(int? id)
+        {
+            if (!id.HasValue)
+            {
+                throw new ArgumentException("Employee Id is invalid");
+            }
+            var employee = Context.Employees.Find(id.Value);
+            if (employee == null)
+            {
+                throw new ArgumentException("Employee with given Id doesn't exists");
+            }
+            return employee;
         }
 
         protected EmployeeModel GetEmployeeModelOptional(int? id)

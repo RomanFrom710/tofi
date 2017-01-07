@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using BLL.Result;
 using BLL.Services.User;
+using BLL.Services.UserRole;
 using Microsoft.AspNet.Identity;
 using NLog;
 using TOFI.TransferObjects.Model.Queries;
@@ -22,10 +23,12 @@ namespace TOFI.Web.Auth
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IUserService _userService;
+        private readonly IUserRoleService _userRoleService;
 
         public CustomUserStore()
         { // There is complicated classes hierarchy with all that asp.net stuff. Too lazy to use DI here
             _userService = DependencyResolver.Current.GetService<IUserService>();
+            _userRoleService = DependencyResolver.Current.GetService<IUserRoleService>();
         }
 
         public async Task CreateAsync(AuthUser user)
@@ -191,26 +194,24 @@ namespace TOFI.Web.Auth
 
         #region user role
 
-        public async Task AddToRoleAsync(AuthUser user, string roleName)
+        public Task AddToRoleAsync(AuthUser user, string roleName)
         {
-            UserRoles.AddToRole(user, roleName);
-            await _userService.UpdateModelAsync(user.Dto);
+            return _userRoleService.AddToRole(user.Dto.Id, roleName);
         }
 
-        public async Task RemoveFromRoleAsync(AuthUser user, string roleName)
+        public Task RemoveFromRoleAsync(AuthUser user, string roleName)
         {
-            UserRoles.RemoveFromRole(user, roleName);
-            await _userService.UpdateModelAsync(user.Dto);
+            return _userRoleService.RemoveFromRole(user.Dto.Id, roleName);
         }
 
         public Task<IList<string>> GetRolesAsync(AuthUser user)
         {
-            return Task.FromResult(UserRoles.GetRoles(user));
+            return _userRoleService.GetRoles(user.Dto.Id);
         }
 
         public Task<bool> IsInRoleAsync(AuthUser user, string roleName)
         {
-            return Task.FromResult(UserRoles.IsInRole(user, roleName));
+            return _userRoleService.IsInRole(user.Dto.Id, roleName);
         }
 
         #endregion
