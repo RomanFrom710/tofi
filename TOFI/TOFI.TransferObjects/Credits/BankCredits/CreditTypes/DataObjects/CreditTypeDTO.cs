@@ -16,5 +16,7 @@ namespace TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects
         public string Description { get; set; }
 
         public double InterestRate { get; set; }
+
+        public bool IsArchived { get; set; }
     }
 }
