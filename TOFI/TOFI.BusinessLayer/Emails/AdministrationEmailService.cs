@@ -4,7 +4,7 @@ namespace BLL.Emails
 {
     public class AdministrationEmailService : EmailService
     {
-        public AdministrationEmailService(string apiKey) : 
+        public AdministrationEmailService() : 
             base(ConfigurationManager.AppSettings["SendGridApiKey"],
                 ConfigurationManager.AppSettings["BankEmail"])
         {

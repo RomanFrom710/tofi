@@ -69,6 +69,8 @@
   <ItemGroup>
     <Compile Include="Attributes\CustomRequiredAttribute.cs" />
     <Compile Include="Attributes\UnlikeAttribute.cs" />
+    <Compile Include="Emails\AdministrationEmailService.cs" />
+    <Compile Include="Emails\EmailService.cs" />
     <Compile Include="Mapping\MapperConfig.cs" />
     <Compile Include="Result\CommandResult.cs" />
     <Compile Include="Result\ListQueryResult.cs" />

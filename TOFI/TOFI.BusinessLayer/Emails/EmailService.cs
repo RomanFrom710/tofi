@@ -27,12 +27,12 @@ namespace BLL.Emails
 
         #endregion
 
-        public async Task<dynamic> SendEmailAsync(string to, string subject, string content)
+        public async Task<dynamic> SendTextEmailAsync(string to, string subject, string content)
         {
             var sg = new SendGridAPIClient(_apiKey);
             
             Email emailFrom = new Email(_from);
-            Email emailTo = new Email("test@example.com");
+            Email emailTo = new Email(to);
             Content emailContent = new Content("text/plain", content);
             Mail mail = new Mail(emailFrom, subject, emailTo, emailContent);
 
