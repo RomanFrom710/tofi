@@ -450,6 +450,32 @@ namespace BLL.Services.Employee
             return await UpdateCreditRequestAsync(command, request);
         }
 
+        public CommandResult OpenCreditAccount(OpenCreditAccountCommand command)
+        {
+            var rightsRes = CheckEmployeeRights(command.EmployeeId, EmployeeRights.Operator);
+            var employeeRes = GetEmployee(command.EmployeeId);
+            var requestRes = GetCreditRequest(command.CreditRequestId);
+            var res = CheckQueries(rightsRes, employeeRes, requestRes);
+            if (res.IsFailed)
+            {
+                return new CommandResult(command, false).From(res);
+            }
+            return null;
+        }
+
+        public async Task<CommandResult> OpenCreditAccountAsync(OpenCreditAccountCommand command)
+        {
+            var rightsRes = await CheckEmployeeRightsAsync(command.EmployeeId, EmployeeRights.Operator);
+            var employeeRes = await GetEmployeeAsync(command.EmployeeId);
+            var requestRes = await GetCreditRequestAsync(command.CreditRequestId);
+            var res = CheckQueries(rightsRes, employeeRes, requestRes);
+            if (res.IsFailed)
+            {
+                return new CommandResult(command, false).From(res);
+            }
+            return null;
+        }
+
 
         private ValueResult<bool> CheckEmployeeRights(int employeeId, EmployeeRights rights)
         {
