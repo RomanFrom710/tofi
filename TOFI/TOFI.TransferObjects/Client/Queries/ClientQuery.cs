@@ -6,6 +6,8 @@
 
         public int? UserId { get; set; }
 
+        public string PassportNumber { get; set; }
+
 
         public static ClientQuery WithId(int id)
         {
@@ -15,6 +17,11 @@
         public static ClientQuery WithUserId(int userId)
         {
             return new ClientQuery {UserId = userId};
+        }
+
+        public static ClientQuery WithPassportNumber(string passportNumber)
+        {
+            return new ClientQuery {PassportNumber = passportNumber};
         }
     }
 }
