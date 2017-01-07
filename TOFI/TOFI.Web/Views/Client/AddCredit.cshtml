@@ -24,21 +24,33 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CreditSum.Value)
-                @Html.TextBoxFor(model => model.CreditSum.Value, new { @class = "form-control", type = "number" })
-                @Html.ValidationMessageFor(model => model.CreditSum.Value, string.Empty, new { @class = "text-danger" })
+                @Html.LabelFor(model => model.CreditSum)
+                <div class="row">
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.CreditSum.Value, new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(model => model.CreditSum.Value, string.Empty, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(model => model.CreditSum.Currency.Id, (IEnumerable<SelectListItem>)(ViewBag.Currency), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CreditSum, string.Empty, new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CreditSum)
-                @Html.DropDownListFor(model => model.CreditSum.Currency.Id, (IEnumerable<SelectListItem>)(ViewBag.Currency), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreditSum, string.Empty, new { @class = "text-danger" })
+                
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.CreditType)
                 @Html.DropDownListFor(model => model.CreditType.Id, (IEnumerable<SelectListItem>)(ViewBag.CreditTypes), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CreditType, string.Empty, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreditPurpose)
+                @Html.TextBoxFor(model => model.CreditPurpose, new { @class = "form-control", placeholder = "На личные нужды" })
+                @Html.ValidationMessageFor(model => model.CreditPurpose, string.Empty, new { @class = "text-danger" })
             </div>
 
             <div class="form-group">
