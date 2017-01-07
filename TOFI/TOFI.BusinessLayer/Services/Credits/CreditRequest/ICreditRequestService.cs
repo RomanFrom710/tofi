@@ -49,6 +49,22 @@ namespace BLL.Services.Credits.CreditRequest
 
         Task<ListQueryResult<CreditRequestViewModel>> GetDepartmentRequestsAsync(DepartmentRequestsQuery query);
 
+        ListQueryResult<CreditRequestDto> GetApprovedRequestsDtos(ApprovedRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestDto>> GetApprovedRequestsDtosAsync(ApprovedRequestsQuery query);
+
+        ListQueryResult<CreditRequestViewModel> GetApprovedRequests(ApprovedRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestViewModel>> GetApprovedRequestsAsync(ApprovedRequestsQuery query);
+
+        ListQueryResult<CreditRequestDto> GetApprovedClientRequestsDtos(ApprovedClientRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestDto>> GetApprovedClientRequestsDtosAsync(ApprovedClientRequestsQuery query);
+
+        ListQueryResult<CreditRequestViewModel> GetApprovedClientRequests(ApprovedClientRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestViewModel>> GetApprovedClientRequestsAsync(ApprovedClientRequestsQuery query);
+
         ValueResult<bool> ValidateCreditRequest(CreditRequestViewModel request);
     }
 }

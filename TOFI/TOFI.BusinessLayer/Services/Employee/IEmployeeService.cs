@@ -52,6 +52,14 @@ namespace BLL.Services.Employee
 
         Task<ListQueryResult<CreditRequestViewModel>> GetDepartmentCreditRequestsAsync(DepartmentCreditRequestsQuery query);
 
+        ListQueryResult<CreditRequestDto> GetApprovedClientRequestDtos(ApprovedClientRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestDto>> GetApprovedClientRequestDtosAsync(ApprovedClientRequestsQuery query);
+
+        ListQueryResult<CreditRequestViewModel> GetApprovedClientRequests(ApprovedClientRequestsQuery query);
+
+        Task<ListQueryResult<CreditRequestViewModel>> GetApprovedClientRequestsAsync(ApprovedClientRequestsQuery query);
+
 
         CommandResult AddOrUpdateEmployee(EmployeeViewModel employee);
 

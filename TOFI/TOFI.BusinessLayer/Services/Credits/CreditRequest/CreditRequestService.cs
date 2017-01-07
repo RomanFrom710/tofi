@@ -137,6 +137,50 @@ namespace BLL.Services.Credits.CreditRequest
                 .MapTo<CreditRequestViewModel>();
         }
 
+        public ListQueryResult<CreditRequestDto> GetApprovedRequestsDtos(ApprovedRequestsQuery query)
+        {
+            return RunListQuery<ApprovedRequestsQuery, CreditRequestDto>(_queryRepository, query);
+        }
+
+        public async Task<ListQueryResult<CreditRequestDto>> GetApprovedRequestsDtosAsync(ApprovedRequestsQuery query)
+        {
+            return await RunListQueryAsync<ApprovedRequestsQuery, CreditRequestDto>(_queryRepository, query);
+        }
+
+        public ListQueryResult<CreditRequestViewModel> GetApprovedRequests(ApprovedRequestsQuery query)
+        {
+            return RunListQuery<ApprovedRequestsQuery, CreditRequestDto>(_queryRepository, query)
+                .MapTo<CreditRequestViewModel>();
+        }
+
+        public async Task<ListQueryResult<CreditRequestViewModel>> GetApprovedRequestsAsync(ApprovedRequestsQuery query)
+        {
+            return (await RunListQueryAsync<ApprovedRequestsQuery, CreditRequestDto>(_queryRepository, query))
+                .MapTo<CreditRequestViewModel>();
+        }
+
+        public ListQueryResult<CreditRequestDto> GetApprovedClientRequestsDtos(ApprovedClientRequestsQuery query)
+        {
+            return RunListQuery<ApprovedClientRequestsQuery, CreditRequestDto>(_queryRepository, query);
+        }
+
+        public async Task<ListQueryResult<CreditRequestDto>> GetApprovedClientRequestsDtosAsync(ApprovedClientRequestsQuery query)
+        {
+            return await RunListQueryAsync<ApprovedClientRequestsQuery, CreditRequestDto>(_queryRepository, query);
+        }
+
+        public ListQueryResult<CreditRequestViewModel> GetApprovedClientRequests(ApprovedClientRequestsQuery query)
+        {
+            return RunListQuery<ApprovedClientRequestsQuery, CreditRequestDto>(_queryRepository, query)
+                .MapTo<CreditRequestViewModel>();
+        }
+
+        public async Task<ListQueryResult<CreditRequestViewModel>> GetApprovedClientRequestsAsync(ApprovedClientRequestsQuery query)
+        {
+            return (await RunListQueryAsync<ApprovedClientRequestsQuery, CreditRequestDto>(_queryRepository, query))
+                .MapTo<CreditRequestViewModel>();
+        }
+
 
         public ValueResult<bool> ValidateCreditRequest(CreditRequestViewModel request)
         {
