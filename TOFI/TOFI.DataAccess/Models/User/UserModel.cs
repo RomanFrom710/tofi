@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Models.Auth;
 using System.Collections.Generic;
+using AutoMapper;
 using DAL.Models.Client;
 using DAL.Models.Credits.CreditAccount;
 using DAL.Models.Employee;
@@ -26,12 +27,16 @@ namespace DAL.Models.User
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual AuthModel Auth { get; set; }
 
+        [IgnoreMap]
         public virtual ClientModel Client { get; set; }
 
+        [IgnoreMap]
         public virtual EmployeeModel Employee { get; set; }
 
+        [IgnoreMap]
         public virtual ICollection<CreditAccountModel> CreditAccounts { get; set; }
 
         #endregion

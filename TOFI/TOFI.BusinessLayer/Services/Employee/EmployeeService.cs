@@ -30,6 +30,26 @@ namespace BLL.Services.Employee
         }
 
 
+        public QueryResult<EmployeeDto> GetEmployeeDto(EmployeeQuery query)
+        {
+            return RunQuery<EmployeeQuery, EmployeeDto>(_queryRepository, query);
+        }
+
+        public async Task<QueryResult<EmployeeDto>> GetEmployeeDtoAsync(EmployeeQuery query)
+        {
+            return await RunQueryAsync<EmployeeQuery, EmployeeDto>(_queryRepository, query);
+        }
+
+        public QueryResult<EmployeeViewModel> GetEmployee(EmployeeQuery query)
+        {
+            return RunQuery<EmployeeQuery, EmployeeDto>(_queryRepository, query).MapTo<EmployeeViewModel>();
+        }
+
+        public async Task<QueryResult<EmployeeViewModel>> GetEmployeeAsync(EmployeeQuery query)
+        {
+            return (await RunQueryAsync<EmployeeQuery, EmployeeDto>(_queryRepository, query)).MapTo<EmployeeViewModel>();
+        }
+
         public ListQueryResult<CreditRequestDto> GetOperatorCreditRequestDtos(OperatorCreditRequestsQuery query)
         {
             var rightsRes = CheckEmployeeRights(query.EmployeeId, EmployeeRights.Operator);
@@ -190,6 +210,26 @@ namespace BLL.Services.Employee
             return _creditRequestService.GetDepartmentRequests(new DepartmentRequestsQuery());
         }
 
+
+        public CommandResult AddOrUpdateEmployee(EmployeeViewModel employee)
+        {
+            var employeeRes = GetEmployeeDto(EmployeeQuery.WithUserId(employee.User.Id));
+            if (employeeRes.IsFailed)
+            {
+                return new CommandResult(null, false).From(employeeRes);
+            }
+            return employeeRes.Value == null ? CreateModel(employee) : UpdateModel(employee);
+        }
+
+        public async Task<CommandResult> AddOrUpdateEmployeeAsync(EmployeeViewModel employee)
+        {
+            var employeeRes = await GetEmployeeDtoAsync(EmployeeQuery.WithUserId(employee.User.Id));
+            if (employeeRes.IsFailed)
+            {
+                return new CommandResult(null, false).From(employeeRes);
+            }
+            return await (employeeRes.Value == null ? CreateModelAsync(employee) : UpdateModelAsync(employee));
+        }
 
         public CommandResult OperatorApproveCommand(OperatorApproveCommand command)
         {
@@ -363,7 +403,7 @@ namespace BLL.Services.Employee
             {
                 return new ValueResult<EmployeeDto>(null, false).From(res);
             }
-            if (res.Value != null)
+            if (res.Value == null)
             {
                 return new ValueResult<EmployeeDto>(null, false).Error("Employee not found");
             }
@@ -377,7 +417,7 @@ namespace BLL.Services.Employee
             {
                 return new ValueResult<EmployeeDto>(null, false).From(res);
             }
-            if (res.Value != null)
+            if (res.Value == null)
             {
                 return new ValueResult<EmployeeDto>(null, false).Error("Employee not found");
             }

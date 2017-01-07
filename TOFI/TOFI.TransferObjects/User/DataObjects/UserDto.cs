@@ -1,6 +1,4 @@
 ﻿using TOFI.TransferObjects.Auth.DataObjects;
-using TOFI.TransferObjects.Client.DataObjects;
-using TOFI.TransferObjects.Employee.DataObjects;
 using TOFI.TransferObjects.Model.DataObjects;
 
 namespace TOFI.TransferObjects.User.DataObjects
@@ -22,9 +20,5 @@ namespace TOFI.TransferObjects.User.DataObjects
         public string Key { get; set; }
 
         public AuthDto Auth { get; set; }
-
-        public ClientDto Client { get; set; }
-
-        public EmployeeDto Employee { get; set; }
     }
 }

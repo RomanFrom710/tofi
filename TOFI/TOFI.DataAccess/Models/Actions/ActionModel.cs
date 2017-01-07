@@ -1,7 +1,5 @@
 ﻿using DAL.Models.Employee;
-using DAL.Models.User;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models.Actions
 {

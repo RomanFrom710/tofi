@@ -14,6 +14,7 @@ namespace BLL.Services.User.ViewModels
         [CustomRequired]
         [StringLength(100, ErrorMessage = "{0} должен содержать минимум {2} символов.", MinimumLength = 6)]
         [DataType(DataType.Password)]
+        [Unlike("Email", ErrorMessage = "Пароль не должен совпадать с адресом e-mail")]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 

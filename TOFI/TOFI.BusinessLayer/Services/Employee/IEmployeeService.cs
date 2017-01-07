@@ -12,6 +12,14 @@ namespace BLL.Services.Employee
 {
     public interface IEmployeeService : IModelService<EmployeeDto, EmployeeViewModel>
     {
+        QueryResult<EmployeeDto> GetEmployeeDto(EmployeeQuery query);
+
+        Task<QueryResult<EmployeeDto>> GetEmployeeDtoAsync(EmployeeQuery query);
+
+        QueryResult<EmployeeViewModel> GetEmployee(EmployeeQuery query);
+
+        Task<QueryResult<EmployeeViewModel>> GetEmployeeAsync(EmployeeQuery query);
+
         ListQueryResult<CreditRequestDto> GetOperatorCreditRequestDtos(OperatorCreditRequestsQuery query);
 
         Task<ListQueryResult<CreditRequestDto>> GetOperatorCreditRequestDtosAsync(OperatorCreditRequestsQuery query);
@@ -44,6 +52,10 @@ namespace BLL.Services.Employee
 
         Task<ListQueryResult<CreditRequestViewModel>> GetDepartmentCreditRequestsAsync(DepartmentCreditRequestsQuery query);
 
+
+        CommandResult AddOrUpdateEmployee(EmployeeViewModel employee);
+
+        Task<CommandResult> AddOrUpdateEmployeeAsync(EmployeeViewModel employee);
 
         CommandResult OperatorApproveCommand(OperatorApproveCommand command);
 

@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Employee;
-using BLL.Services.User;
+using BLL.Services.Employee.ViewModels;
 using Microsoft.AspNet.Identity;
 using TOFI.TransferObjects.Employee.Commands;
 using TOFI.TransferObjects.Employee.Queries;
-using TOFI.TransferObjects.User.Queries;
+using TOFI.TransferObjects.Model.Queries;
 using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web.Controllers
@@ -14,13 +14,14 @@ namespace TOFI.Web.Controllers
     [Authorize(Roles = "employee")]
     public class EmployeeController : Controller
     {
-        private readonly IUserService _userService;
         private readonly IEmployeeService _employeeService;
+        private readonly ICreditRequestService _creditRequestService;
 
-        public EmployeeController(IUserService userService, IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService,
+                                  ICreditRequestService creditRequestService)
         {
-            _userService = userService;
             _employeeService = employeeService;
+            _creditRequestService = creditRequestService;
         }
 
         public ActionResult Index()
@@ -28,30 +29,106 @@ namespace TOFI.Web.Controllers
             return View();
         }
 
-        public ActionResult RequestDetails(int id)
+        public ActionResult RequestDetails(int id, string type)
         {
-            return View();
+            ViewBag.ApproveActionName = type + "Approve";
+            var request = _creditRequestService.GetModel(new ModelQuery {Id = id}).Value;
+            return View(request);
         }
 
         [Authorize(Roles = "operator")]
         [HttpGet]
         public ActionResult Operator()
         {
-            var employee = _userService.GetUser(new UserQuery
-            {
-                Id = int.Parse(User.Identity.GetUserId())
-            }).Value.Employee;
+            ViewBag.EmployeeType = "Operator";
+
+            var employee = GetEmployee();
             var requests =
                 _employeeService.GetOperatorCreditRequests(new OperatorCreditRequestsQuery {EmployeeId = employee.Id}).Value;
-            return View(requests);
+            return View("CurrentRequests", requests);
         }
 
         [Authorize(Roles = "operator")]
         [HttpPost]
         public ActionResult OperatorApprove(OperatorApproveCommand command)
         {
-            _employeeService.OperatorApproveCommand(new OperatorApproveCommand());
+            var employee = GetEmployee();
+            command.EmployeeId = employee.Id;
+            _employeeService.OperatorApproveCommand(command);
             return RedirectToAction("Operator");
+        }
+
+        [Authorize(Roles = "security")]
+        [HttpGet]
+        public ActionResult Security()
+        {
+            ViewBag.EmployeeType = "Security";
+
+            var employee = GetEmployee();
+            var requests =
+                _employeeService.GetSecurityCreditRequests(new SecurityCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+            return View("CurrentRequests", requests);
+        }
+
+        [Authorize(Roles = "security")]
+        [HttpPost]
+        public ActionResult SecurityApprove(SecurityApproveCommand command)
+        {
+            var employee = GetEmployee();
+            command.EmployeeId = employee.Id;
+            _employeeService.SecurityApproveCommand(command);
+            return RedirectToAction("Security");
+        }
+
+        [Authorize(Roles = "committee member")]
+        [HttpGet]
+        public ActionResult Committee()
+        {
+            ViewBag.EmployeeType = "Committee";
+
+            var employee = GetEmployee();
+            var requests =
+                _employeeService.GetCommiteeCreditRequests(new CommiteeCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+            return View("CurrentRequests", requests);
+        }
+
+        [Authorize(Roles = "committee member")]
+        [HttpPost]
+        public ActionResult CommitteeApprove(CommiteeApproveCommand command)
+        {
+            var employee = GetEmployee();
+            command.EmployeeId = employee.Id;
+            _employeeService.CommiteeApproveCommand(command);
+            return RedirectToAction("Committee");
+        }
+
+        [Authorize(Roles = "department chief")]
+        [HttpGet]
+        public ActionResult Department()
+        {
+            ViewBag.EmployeeType = "Department";
+
+            var employee = GetEmployee();
+            var requests =
+                _employeeService.GetDepartmentCreditRequests(new DepartmentCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+            return View("CurrentRequests", requests);
+        }
+
+        [Authorize(Roles = "department chief")]
+        [HttpPost]
+        public ActionResult DepartmentApprove(DepartmentApproveCommand command)
+        {
+            var employee = GetEmployee();
+            command.EmployeeId = employee.Id;
+            _employeeService.DepartmentApproveCommand(command);
+            return RedirectToAction("Department");
+        }
+
+        private EmployeeViewModel GetEmployee()
+        {
+            var userId = int.Parse(User.Identity.GetUserId());
+            var res = _employeeService.GetEmployee(EmployeeQuery.WithUserId(userId));
+            return res.Value;
         }
     }
 }

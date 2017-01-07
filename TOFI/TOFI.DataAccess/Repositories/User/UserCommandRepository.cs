@@ -1,5 +1,7 @@
 ﻿using System;
+using AutoMapper;
 using DAL.Contexts;
+using DAL.Models.Auth;
 using DAL.Models.User;
 using DAL.Repositories.Model;
 using TOFI.TransferObjects.User.DataObjects;
@@ -13,19 +15,18 @@ namespace DAL.Repositories.User
         }
 
 
+        protected override UserModel CreateDbModel(UserDto modelDto)
+        {
+            var model = base.CreateDbModel(modelDto);
+            model.Auth = Mapper.Map<AuthModel>(modelDto.Auth);
+            return model;
+        }
+
         protected override void UpdateDbModel(UserModel model, UserDto modelDto)
         {
             if (model.Auth.Id != modelDto.Auth.Id)
             {
                 throw new ArgumentException("Auth Id change is not allowed");
-            }
-            if (model.Client != null && modelDto.Client != null && model.Client.Id != modelDto.Client.Id)
-            {
-                throw new ArgumentException("Client Id change is not allowed");
-            }
-            if (model.Employee != null && modelDto.Employee != null && model.Employee.Id != modelDto.Employee.Id)
-            {
-                throw new ArgumentException("Employee Id change is not allowed");
             }
             base.UpdateDbModel(model, modelDto);
         }

@@ -9,14 +9,18 @@ namespace BLL.Services.Client
 {
     public interface IClientService : IModelService<ClientDto, ClientViewModel>
     {
+        QueryResult<ClientDto> GetClientDto(ClientQuery query);
+
+        Task<QueryResult<ClientDto>> GetClientDtoAsync(ClientQuery query);
+
         QueryResult<ClientViewModel> GetClient(ClientQuery query);
 
         Task<QueryResult<ClientViewModel>> GetClientAsync(ClientQuery query);
 
 
-        CommandResult UpdateClient(int userId, ClientViewModel client);
+        CommandResult AddOrUpdateClient(ClientViewModel client);
 
-        Task<CommandResult> UpdateClientAsync(int userId, ClientViewModel client);
+        Task<CommandResult> AddOrUpdateClientAsync(ClientViewModel client);
 
 
         ValueResult<bool> CanAddCreditRequest(int clientId);

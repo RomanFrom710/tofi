@@ -379,9 +379,9 @@
     <Content Include="Views\Admin\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Admin\Currencies.cshtml" />
     <Content Include="Views\Shared\_EmployeeMenuPartial.cshtml" />
-    <Content Include="Views\Employee\Operator.cshtml" />
     <Content Include="Views\Employee\RequestDetails.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employee\CurrentRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

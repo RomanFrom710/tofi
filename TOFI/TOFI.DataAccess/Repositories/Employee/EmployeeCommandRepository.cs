@@ -14,7 +14,13 @@ namespace DAL.Repositories.Employee
 
         protected override void RestoreFkModels(EmployeeModel model, EmployeeDto modelDto)
         {
-            model.User = GetUserModel(model.User?.Id);
+            model.User = GetUserModel(modelDto.User?.Id);
+            if (modelDto.User != null)
+            {
+                model.User.FirstName = modelDto.User.FirstName;
+                model.User.MiddleName = modelDto.User.MiddleName;
+                model.User.LastName = modelDto.User.LastName;
+            }
         }
     }
 }

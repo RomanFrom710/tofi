@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 using DAL.Models.Common;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 
@@ -13,6 +14,7 @@ namespace DAL.Models.Credits.BankCredits.CreditConditions
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual CreditTypeModel CreditType { get; set; }
 
         public virtual PriceModel MaxCreditSum { get; set; }
