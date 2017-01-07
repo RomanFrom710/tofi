@@ -137,26 +137,119 @@ namespace DAL.Migrations
                     LockoutEnabled = true
                 }
             };
-
-            var employeeUser = new UserModel
+            
+            var employees = new List<UserModel>()
             {
-                Username = "empl@empl.empl",
-                Email = "empl@empl.empl",
-                FirstName = "Employee",
-                LastName = "Employevich",
-                Auth = new AuthModel
+                new UserModel
                 {
-                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
-                    SecurityStamp = Guid.NewGuid().ToString(),
-                    LockoutEnabled = true
+                    Username = "empl@empl.empl",
+                    Email = "empl@empl.empl",
+                    FirstName = "Employee",
+                    LastName = "Employevich",
+                    Auth = new AuthModel
+                    {
+                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        LockoutEnabled = true
+                    },
+                    Employee = new EmployeeModel
+                    {
+                        Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Handyman
+                    }
                 },
-                Employee = new EmployeeModel
+                new UserModel
                 {
-                    Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Handyman
-                }
+                    Username = "cashier@gmail.com",
+                    Email = "cashier@gmail.com",
+                    FirstName = "Cashier",
+                    LastName = "Cashierovich",
+                    Auth = new AuthModel
+                    {
+                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        LockoutEnabled = true
+                    },
+                    Employee = new EmployeeModel
+                    {
+                        Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Cashier
+                    }
+                },
+                new UserModel
+                {
+                    Username = "operator@gmail.com",
+                    Email = "operator@gmail.com",
+                    FirstName = "Operator",
+                    LastName = "Operatorovich",
+                    Auth = new AuthModel
+                    {
+                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        LockoutEnabled = true
+                    },
+                    Employee = new EmployeeModel
+                    {
+                        Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.Operator
+                    }
+                },
+                new UserModel
+                {
+                    Username = "committee@gmail.com",
+                    Email = "committee@gmail.com",
+                    FirstName = "Committee",
+                    LastName = "committeevich",
+                    Auth = new AuthModel
+                    {
+                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        LockoutEnabled = true
+                    },
+                    Employee = new EmployeeModel
+                    {
+                        Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.CreditCommitteeMember
+                    }
+                },
+                new UserModel
+                {
+                    Username = "depchef@gmail.com",
+                    Email = "depchef@gmail.com",
+                    FirstName = "Depchef",
+                    LastName = "Depchefovich",
+                    Auth = new AuthModel
+                    {
+                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        LockoutEnabled = true
+                    },
+                    Employee = new EmployeeModel
+                    {
+                        Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.CreditDepartmentChief
+                    }
+                },
+                new UserModel
+                {
+                    Username = "security@gmail.com",
+                    Email = "security@gmail.com",
+                    FirstName = "Security",
+                    LastName = "Securitievich",
+                    Auth = new AuthModel
+                    {
+                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
+                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        LockoutEnabled = true
+                    },
+                    Employee = new EmployeeModel
+                    {
+                        Rights = TOFI.TransferObjects.Employee.DataObjects.EmployeeRights.SecurityOfficer
+                    }
+                },
             };
-
+            
             var adminUser = new UserModel
             {
                 Username = "admin@admin.admin",
@@ -198,7 +291,7 @@ namespace DAL.Migrations
             context.CreditTypes.AddRange(creditTypes);
             context.Users.Add(testUser);
             context.Users.Add(adminUser);
-            context.Users.Add(employeeUser);
+            context.Users.AddRange(employees);
             context.Users.Add(superUser);
             context.SaveChanges();
         }
