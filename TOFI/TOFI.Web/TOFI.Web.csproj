@@ -382,6 +382,7 @@
     <Content Include="Views\Employee\RequestDetails.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\CurrentRequests.cshtml" />
+    <Content Include="Views\Client\Credits.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
