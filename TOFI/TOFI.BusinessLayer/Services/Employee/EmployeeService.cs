@@ -1,16 +1,20 @@
 ﻿using System.Threading.Tasks;
 using BLL.Result;
+using BLL.Services.Client;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Employee.ViewModels;
 using BLL.Services.Model;
 using DAL.Repositories.Employee;
+using TOFI.TransferObjects.Client.DataObjects;
+using TOFI.TransferObjects.Client.Queries;
 using TOFI.TransferObjects.Credits.CreditRequest.DataObjects;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Employee.Commands;
 using TOFI.TransferObjects.Employee.DataObjects;
 using TOFI.TransferObjects.Employee.Queries;
 using TOFI.TransferObjects.Model.Queries;
+using ApprovedClientRequestsQuery = TOFI.TransferObjects.Employee.Queries.ApprovedClientRequestsQuery;
 
 namespace BLL.Services.Employee
 {
@@ -19,14 +23,17 @@ namespace BLL.Services.Employee
         private readonly IEmployeeQueryRepository _queryRepository;
         private readonly IEmployeeCommandRepository _commandRepository;
         private readonly ICreditRequestService _creditRequestService;
+        private readonly IClientService _clientService;
 
 
         public EmployeeService(IEmployeeQueryRepository queryRepository, IEmployeeCommandRepository commandRepository,
-            ICreditRequestService creditRequestService) : base(queryRepository, commandRepository)
+            ICreditRequestService creditRequestService, IClientService clientService)
+            : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
             _creditRequestService = creditRequestService;
+            _clientService = clientService;
         }
 
 
@@ -67,7 +74,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetOperatorRequestsDtos(new OperatorRequestsQuery());
+            return await _creditRequestService.GetOperatorRequestsDtosAsync(new OperatorRequestsQuery());
         }
 
         public ListQueryResult<CreditRequestViewModel> GetOperatorCreditRequests(OperatorCreditRequestsQuery query)
@@ -87,7 +94,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetOperatorRequests(new OperatorRequestsQuery());
+            return await _creditRequestService.GetOperatorRequestsAsync(new OperatorRequestsQuery());
         }
 
         public ListQueryResult<CreditRequestDto> GetSecurityCreditRequestDtos(SecurityCreditRequestsQuery query)
@@ -107,7 +114,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetSecurityRequestsDtos(new SecurityRequestsQuery());
+            return await _creditRequestService.GetSecurityRequestsDtosAsync(new SecurityRequestsQuery());
         }
 
         public ListQueryResult<CreditRequestViewModel> GetSecurityCreditRequests(SecurityCreditRequestsQuery query)
@@ -127,7 +134,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetSecurityRequests(new SecurityRequestsQuery());
+            return await _creditRequestService.GetSecurityRequestsAsync(new SecurityRequestsQuery());
         }
 
         public ListQueryResult<CreditRequestDto> GetCommiteeCreditRequestDtos(CommiteeCreditRequestsQuery query)
@@ -147,7 +154,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetCommiteeRequestsDtos(new CommiteeRequestsQuery());
+            return await _creditRequestService.GetCommiteeRequestsDtosAsync(new CommiteeRequestsQuery());
         }
 
         public ListQueryResult<CreditRequestViewModel> GetCommiteeCreditRequests(CommiteeCreditRequestsQuery query)
@@ -167,7 +174,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetCommiteeRequests(new CommiteeRequestsQuery());
+            return await _creditRequestService.GetCommiteeRequestsAsync(new CommiteeRequestsQuery());
         }
 
         public ListQueryResult<CreditRequestDto> GetDepartmentCreditRequestDtos(DepartmentCreditRequestsQuery query)
@@ -187,7 +194,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetDepartmentRequestsDtos(new DepartmentRequestsQuery());
+            return await _creditRequestService.GetDepartmentRequestsDtosAsync(new DepartmentRequestsQuery());
         }
 
         public ListQueryResult<CreditRequestViewModel> GetDepartmentCreditRequests(DepartmentCreditRequestsQuery query)
@@ -207,7 +214,83 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetDepartmentRequests(new DepartmentRequestsQuery());
+            return await _creditRequestService.GetDepartmentRequestsAsync(new DepartmentRequestsQuery());
+        }
+
+        public ListQueryResult<CreditRequestDto> GetApprovedClientRequestDtos(ApprovedClientRequestsQuery query)
+        {
+            var rightsRes = CheckEmployeeRights(query.EmployeeId, EmployeeRights.Operator);
+            if (rightsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
+            }
+            var clientRes = GetClient(query.ClientId, query.PassportNumber);
+            if (clientRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestDto>(query, null, false).From(clientRes);
+            }
+            return _creditRequestService.GetApprovedClientRequestsDtos(
+                new TOFI.TransferObjects.Credits.CreditRequest.Queries.ApprovedClientRequestsQuery
+                {
+                    ClientId = clientRes.Value.Id
+                });
+        }
+
+        public async Task<ListQueryResult<CreditRequestDto>> GetApprovedClientRequestDtosAsync(ApprovedClientRequestsQuery query)
+        {
+            var rightsRes = await CheckEmployeeRightsAsync(query.EmployeeId, EmployeeRights.Operator);
+            if (rightsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
+            }
+            var clientRes = await GetClientAsync(query.ClientId, query.PassportNumber);
+            if (clientRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestDto>(query, null, false).From(clientRes);
+            }
+            return await _creditRequestService.GetApprovedClientRequestsDtosAsync(
+                new TOFI.TransferObjects.Credits.CreditRequest.Queries.ApprovedClientRequestsQuery
+                {
+                    ClientId = clientRes.Value.Id
+                });
+        }
+
+        public ListQueryResult<CreditRequestViewModel> GetApprovedClientRequests(ApprovedClientRequestsQuery query)
+        {
+            var rightsRes = CheckEmployeeRights(query.EmployeeId, EmployeeRights.Operator);
+            if (rightsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
+            }
+            var clientRes = GetClient(query.ClientId, query.PassportNumber);
+            if (clientRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(clientRes);
+            }
+            return _creditRequestService.GetApprovedClientRequests(
+                new TOFI.TransferObjects.Credits.CreditRequest.Queries.ApprovedClientRequestsQuery
+                {
+                    ClientId = clientRes.Value.Id
+                });
+        }
+
+        public async Task<ListQueryResult<CreditRequestViewModel>> GetApprovedClientRequestsAsync(ApprovedClientRequestsQuery query)
+        {
+            var rightsRes = await CheckEmployeeRightsAsync(query.EmployeeId, EmployeeRights.Operator);
+            if (rightsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
+            }
+            var clientRes = GetClient(query.ClientId, query.PassportNumber);
+            if (clientRes.IsFailed)
+            {
+                return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(clientRes);
+            }
+            return _creditRequestService.GetApprovedClientRequests(
+                new TOFI.TransferObjects.Credits.CreditRequest.Queries.ApprovedClientRequestsQuery
+                {
+                    ClientId = clientRes.Value.Id
+                });
         }
 
 
@@ -394,6 +477,34 @@ namespace BLL.Services.Employee
                 return new ValueResult<bool>(true, true);
             }
             return new ValueResult<bool>(false, true).Error("Not enough rights");
+        }
+
+        private ValueResult<ClientDto> GetClient(int? clientId, string passportNumber)
+        {
+            var res = _clientService.GetClientDto(new ClientQuery {Id = clientId, PassportNumber = passportNumber});
+            if (res.IsFailed)
+            {
+                return new ValueResult<ClientDto>(null, false).From(res);
+            }
+            if (res.Value == null)
+            {
+                return new ValueResult<ClientDto>(null, false).Error("Employee not found");
+            }
+            return new ValueResult<ClientDto>(res.Value, true);
+        }
+
+        private async Task<ValueResult<ClientDto>> GetClientAsync(int? clientId, string passportNumber)
+        {
+            var res = await _clientService.GetClientDtoAsync(new ClientQuery {Id = clientId, PassportNumber = passportNumber});
+            if (res.IsFailed)
+            {
+                return new ValueResult<ClientDto>(null, false).From(res);
+            }
+            if (res.Value == null)
+            {
+                return new ValueResult<ClientDto>(null, false).Error("Client not found");
+            }
+            return new ValueResult<ClientDto>(res.Value, true);
         }
 
         private ValueResult<EmployeeDto> GetEmployee(int employeeId)

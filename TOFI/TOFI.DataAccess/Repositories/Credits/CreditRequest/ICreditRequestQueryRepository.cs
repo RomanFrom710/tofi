@@ -9,7 +9,9 @@ namespace DAL.Repositories.Credits.CreditRequest
         IListQueryRepository<OperatorRequestsQuery, CreditRequestDto>,
         IListQueryRepository<SecurityRequestsQuery, CreditRequestDto>,
         IListQueryRepository<CommiteeRequestsQuery, CreditRequestDto>,
-        IListQueryRepository<DepartmentRequestsQuery, CreditRequestDto>
+        IListQueryRepository<DepartmentRequestsQuery, CreditRequestDto>,
+        IListQueryRepository<ApprovedRequestsQuery, CreditRequestDto>,
+        IListQueryRepository<ApprovedClientRequestsQuery, CreditRequestDto>
     {
     }
 }

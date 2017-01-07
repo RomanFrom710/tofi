@@ -16,5 +16,7 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes.ViewModels
         public string Description { get; set; }
 
         public double InterestRate { get; set; }
+
+        public bool IsArchived { get; set; }
     }
 }
