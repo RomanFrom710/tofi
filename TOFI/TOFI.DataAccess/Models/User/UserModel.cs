@@ -27,7 +27,6 @@ namespace DAL.Models.User
 
         #region Virtual Properties
 
-        [IgnoreMap]
         public virtual AuthModel Auth { get; set; }
 
         [IgnoreMap]

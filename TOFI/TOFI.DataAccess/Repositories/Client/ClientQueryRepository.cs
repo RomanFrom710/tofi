@@ -28,6 +28,10 @@ namespace DAL.Repositories.Client
             {
                 model = ModelsDao.FirstOrDefault(c => c.User.Id == query.UserId);
             }
+            if (!string.IsNullOrEmpty(query.PassportNumber))
+            {
+                model = ModelsDao.FirstOrDefault(c => c.PassportNumber == query.PassportNumber);
+            }
             return model == null ? null : Mapper.Map<ClientDto>(model);
         }
 
@@ -41,6 +45,10 @@ namespace DAL.Repositories.Client
             if (query.UserId.HasValue)
             {
                 model = await ModelsDao.FirstOrDefaultAsync(c => c.User.Id == query.UserId);
+            }
+            if (!string.IsNullOrEmpty(query.PassportNumber))
+            {
+                model = await ModelsDao.FirstOrDefaultAsync(c => c.PassportNumber == query.PassportNumber);
             }
             return model == null ? null : Mapper.Map<ClientDto>(model);
         }
