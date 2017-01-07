@@ -17,6 +17,7 @@
             <tr>
                 <th>#</th>
                 <th>Тип кредита</th>
+                <th>Цель</th>
                 <th>Сумма</th>
                 <th>Валюта</th>
                 <th>Кол-во месяцев</th>
@@ -24,7 +25,6 @@
                 <th title="Служба безопасности банка">Безопасность</th>
                 <th title="Отдел выдачи кредитов">Отдел</th>
                 <th title="Кредитный комитет">Комитет</th>
-                <th>Удалить</th>
             </tr>
             </thead>
             <tbody>
@@ -35,6 +35,7 @@
                 <tr>
                     <td>@index</td>
                     <td>@request.CreditType.Name</td>
+                    <td>@request.CreditPurpose</td>
                     <td>@request.CreditSum.Value</td>
                     <td>@request.CreditSum.Currency.Name</td>
                     <td>@request.MonthDuration</td>
@@ -65,11 +66,6 @@
                             if (request.IsCreditCommitteeApproved.Value) { <span class="yes">+</span> }
                             else { <span class="no">-</span> }
                         }
-                    </td>
-                    <td>
-                        <a href="@Url.Action("RemoveCreditRequest", new {id = request.Id})" onclick="return confirm('Вы уверены?');">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </a>
                     </td>
                 </tr>
             }
