@@ -39,11 +39,15 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
         #region Condition
 
         [CustomRequired]
+        [Display(Name = "Количество месяцев")]
         [Range(1, int.MaxValue, ErrorMessage = "Количество месяцев должно быть положительным.")]
         public int MonthDuration { get; set; }
 
+        [Display(Name = "Сумма кредита")]
         public virtual PriceViewModel CreditSum { get; set; }
 
+        [CustomRequired]
+        [Display(Name = "Цель получения кредита")]
         public string CreditPurpose { get; set; }
 
         #endregion
@@ -60,6 +64,7 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
 
         public EmployeeViewModel CreditDepartmentApproved { get; set; }
 
+        [Display(Name = "Кредит")]
         public CreditTypeViewModel CreditType { get; set; }
 
         #endregion

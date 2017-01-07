@@ -108,6 +108,11 @@ namespace TOFI.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Currency =
+                    _currencies.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
+                ViewBag.CreditTypes =
+                    _creditTypes.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
+                ViewBag.CreditTypesInfo = _creditTypes;
                 return View(credit);
             }
 
