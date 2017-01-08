@@ -24,5 +24,11 @@
                 @Html.ActionLink("Начальник отдела", "Department", "Employee")
             </li>
         }
+        @if (User.IsInRole("operator"))
+        {
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "OperatorFinal" ? "active" : "")">
+                @Html.ActionLink("Подтверждение заявок", "OperatorFinal", "Employee")
+            </li>
+        }
     </ul>
 </nav>

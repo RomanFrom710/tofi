@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using BLL.Services.Credits.CreditRequest;
+using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Employee;
 using BLL.Services.Employee.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -122,6 +124,39 @@ namespace TOFI.Web.Controllers
             command.EmployeeId = employee.Id;
             _employeeService.DepartmentApproveCommand(command);
             return RedirectToAction("Department");
+        }
+
+        [Authorize(Roles = "operator")]
+        [HttpGet]
+        public ActionResult OperatorFinal(IEnumerable<CreditRequestViewModel> requests, string passportNumber)
+        {
+            if (requests == null)
+            {
+                requests = _employeeService.GetApprovedClientRequests(new ApprovedClientRequestsQuery
+                {
+                    PassportNumber = passportNumber,
+                    EmployeeId = GetEmployee().Id
+                }).Value;
+            }
+            ViewBag.passportNumber = passportNumber;
+            return View(requests);
+        }
+
+        [Authorize(Roles = "operator")]
+        [HttpPost]
+        public ActionResult OperatorFinalApprove(int id, string passportNumber)
+        {
+            var requests = _employeeService.GetApprovedClientRequests(new ApprovedClientRequestsQuery
+            {
+                PassportNumber = passportNumber
+            }).Value;
+
+            _employeeService.OpenCreditAccount(new OpenCreditAccountCommand
+            {
+                CreditRequestId = id,
+                EmployeeId = GetEmployee().Id
+            });
+            return RedirectToAction("OperatorFinal", new { requests, passportNumber });
         }
 
         private EmployeeViewModel GetEmployee()
