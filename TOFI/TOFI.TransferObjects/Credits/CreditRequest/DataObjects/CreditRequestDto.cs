@@ -36,7 +36,7 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
 
         public int MonthDuration { get; set; }
 
-        public virtual PriceDto CreditSum { get; set; }
+        public PriceDto CreditSum { get; set; }
 
         public string CreditPurpose { get; set; }
 

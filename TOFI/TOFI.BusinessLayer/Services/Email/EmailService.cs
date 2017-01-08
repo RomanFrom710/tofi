@@ -62,5 +62,12 @@ namespace BLL.Services.Email
                 "с превышением максимального числа неверных попыток входа. " +
                 $"Дата окончания блокировки: {lockoutEnd.LocalDateTime:G}");
         }
+
+        public Task SendRequestApprovedNotification(string to)
+        {
+            return SendTextAsync(to, "Заявка на кредит",
+                "Ваша заявка на кредит была утверждена. " +
+                "Ждем вас с паспортом в любом отделении нашего банка.");
+        }
     }
 }

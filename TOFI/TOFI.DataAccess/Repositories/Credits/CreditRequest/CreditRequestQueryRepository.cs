@@ -18,12 +18,12 @@ namespace DAL.Repositories.Credits.CreditRequest
 
         public IEnumerable<CreditRequestDto> Handle(ClientRequestsQuery query)
         {
-            return ModelsDao.Where(m => m.Client.Id == query.ClientId).MapTo<CreditRequestDto>();
+            return ModelsDao.Where(m => m.Client.Id == query.ClientId && !(m.IsOpen ?? false)).MapTo<CreditRequestDto>();
         }
 
         public Task<IEnumerable<CreditRequestDto>> HandleAsync(ClientRequestsQuery query)
         {
-            return ModelsDao.Where(m => m.Client.Id == query.ClientId).MapToAsync<CreditRequestDto>();
+            return ModelsDao.Where(m => m.Client.Id == query.ClientId && !(m.IsOpen ?? false)).MapToAsync<CreditRequestDto>();
         }
 
         public IEnumerable<CreditRequestDto> Handle(OperatorRequestsQuery query)
@@ -82,7 +82,8 @@ namespace DAL.Repositories.Credits.CreditRequest
         {
             return ModelsDao.Where(
                 m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
-                     (m.IsCreditCommitteeApproved ?? false) && (m.IsCreditDepartmentApproved ?? false))
+                     (m.IsCreditCommitteeApproved ?? false) && (m.IsCreditDepartmentApproved ?? false)
+                     && !(m.IsOpen ?? false))
                 .MapTo<CreditRequestDto>();
         }
 
@@ -90,7 +91,8 @@ namespace DAL.Repositories.Credits.CreditRequest
         {
             return ModelsDao.Where(
                 m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
-                     (m.IsCreditCommitteeApproved ?? false) && (m.IsCreditDepartmentApproved ?? false))
+                     (m.IsCreditCommitteeApproved ?? false) && (m.IsCreditDepartmentApproved ?? false)
+                     && !(m.IsOpen ?? false))
                 .MapToAsync<CreditRequestDto>();
         }
 
@@ -99,7 +101,7 @@ namespace DAL.Repositories.Credits.CreditRequest
             return ModelsDao.Where(
                     m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
                          (m.IsCreditCommitteeApproved ?? false) && (m.IsCreditDepartmentApproved ?? false) &&
-                         m.Client.Id == query.ClientId)
+                         m.Client.Id == query.ClientId && !(m.IsOpen ?? false))
                 .MapTo<CreditRequestDto>();
         }
 
@@ -108,7 +110,7 @@ namespace DAL.Repositories.Credits.CreditRequest
             return ModelsDao.Where(
                     m => (m.IsOperatorApproved ?? false) && (m.IsSecurityApproved ?? false) &&
                          (m.IsCreditCommitteeApproved ?? false) && (m.IsCreditDepartmentApproved ?? false) &&
-                         m.Client.Id == query.ClientId)
+                         m.Client.Id == query.ClientId && !(m.IsOpen ?? false))
                 .MapToAsync<CreditRequestDto>();
         }
     }
