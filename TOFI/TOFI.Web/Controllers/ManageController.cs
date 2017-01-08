@@ -243,6 +243,7 @@ namespace TOFI.Web.Controllers
                     if (!res) await UserManager.ConfirmEmailAsync(userId,
                         await UserManager.GenerateEmailConfirmationTokenAsync(User.Identity.GetUserId()));
                 }
+                ViewBag.Success = true;
                 return View();
             }
             AddErrors(result);
