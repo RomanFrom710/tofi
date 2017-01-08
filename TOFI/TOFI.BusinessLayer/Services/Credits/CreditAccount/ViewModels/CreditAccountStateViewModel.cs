@@ -11,9 +11,7 @@ namespace BLL.Services.Credits.CreditAccount.ViewModels
     public class CreditAccountStateViewModel: ModelViewModel
     {
         public int Month { get; set; }
-
-        public PriceViewModel TotalDebt { get; set; }
-
+        
         public PriceViewModel InterestCounted { get; set; }
 
         public PriceViewModel FinesForOverdue { get; set; }

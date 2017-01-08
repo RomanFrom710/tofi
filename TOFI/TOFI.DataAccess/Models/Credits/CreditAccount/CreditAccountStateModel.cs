@@ -10,16 +10,17 @@ namespace DAL.Models.Credits.CreditAccount
         public int Month { get; set; }
 
         #region Virtual Properties
-
-        public virtual PriceModel TotalDebt { get; set; }
-
+        
+        // for latest month
         public virtual PriceModel InterestCounted { get; set; }
 
+        // for latest month
         public virtual PriceModel FinesForOverdue { get; set; }
 
+        // overall
         public virtual PriceModel RemainDebt { get; set; }
 
-        // For all previous months
+        // overall for all previous months
         public virtual PriceModel TotalInterestSumNotPaid { get; set; }
 
         [IgnoreMap]
