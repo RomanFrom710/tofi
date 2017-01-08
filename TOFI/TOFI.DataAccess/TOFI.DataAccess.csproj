@@ -74,6 +74,30 @@
     <Compile Include="Migrations\201701072358019_CreditRequestOpen.Designer.cs">
       <DependentUpon>201701072358019_CreditRequestOpen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701081254232_CreditAccountState.cs" />
+    <Compile Include="Migrations\201701081254232_CreditAccountState.Designer.cs">
+      <DependentUpon>201701081254232_CreditAccountState.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701081329168_CreditAccountDuration.cs" />
+    <Compile Include="Migrations\201701081329168_CreditAccountDuration.Designer.cs">
+      <DependentUpon>201701081329168_CreditAccountDuration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701081337101_CreditTypeFineInterest.cs" />
+    <Compile Include="Migrations\201701081337101_CreditTypeFineInterest.Designer.cs">
+      <DependentUpon>201701081337101_CreditTypeFineInterest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701081349221_CreditAccountStateTotalInterestNotPaid.cs" />
+    <Compile Include="Migrations\201701081349221_CreditAccountStateTotalInterestNotPaid.Designer.cs">
+      <DependentUpon>201701081349221_CreditAccountStateTotalInterestNotPaid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701081403451_CreditAccountCurrency.cs" />
+    <Compile Include="Migrations\201701081403451_CreditAccountCurrency.Designer.cs">
+      <DependentUpon>201701081403451_CreditAccountCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701081432551_CreditAccountStateTotalDebt.cs" />
+    <Compile Include="Migrations\201701081432551_CreditAccountStateTotalDebt.Designer.cs">
+      <DependentUpon>201701081432551_CreditAccountStateTotalDebt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Actions\PaymentActionModel.cs" />
@@ -85,6 +109,7 @@
     <Compile Include="Models\Credits\BankCredits\CreditRequirements\CreditRequirementModel.cs" />
     <Compile Include="Models\Credits\BankCredits\CreditTypes\CreditTypeModel.cs" />
     <Compile Include="Models\Credits\CreditAccount\CreditAccountModel.cs" />
+    <Compile Include="Models\Credits\CreditAccount\CreditAccountStateModel.cs" />
     <Compile Include="Models\Credits\CreditPayment\CreditPaymentModel.cs" />
     <Compile Include="Models\Credits\CreditRequest\CreditRequestModel.cs" />
     <Compile Include="Repositories\Auth\AuthCommandRepository.cs" />
@@ -111,6 +136,10 @@
     <Compile Include="Repositories\Credits\BankCredits\CreditTypes\CreditTypeQueryRepository.cs" />
     <Compile Include="Repositories\Credits\BankCredits\CreditTypes\ICreditTypeCommandRepository.cs" />
     <Compile Include="Repositories\Credits\BankCredits\CreditTypes\ICreditTypeQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccountState\CreditAccountStateCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccountState\CreditAccountStateQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccountState\ICreditAccountStateCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccountState\ICreditAccountStateQueryRepository.cs" />
     <Compile Include="Repositories\Credits\CreditAccount\CreditAccountCommandRepository.cs" />
     <Compile Include="Repositories\Credits\CreditAccount\CreditAccountQueryRepository.cs" />
     <Compile Include="Repositories\Credits\CreditAccount\ICreditAccountCommandRepository.cs" />
@@ -178,6 +207,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701072358019_CreditRequestOpen.resx">
       <DependentUpon>201701072358019_CreditRequestOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081254232_CreditAccountState.resx">
+      <DependentUpon>201701081254232_CreditAccountState.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081329168_CreditAccountDuration.resx">
+      <DependentUpon>201701081329168_CreditAccountDuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081337101_CreditTypeFineInterest.resx">
+      <DependentUpon>201701081337101_CreditTypeFineInterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081349221_CreditAccountStateTotalInterestNotPaid.resx">
+      <DependentUpon>201701081349221_CreditAccountStateTotalInterestNotPaid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081403451_CreditAccountCurrency.resx">
+      <DependentUpon>201701081403451_CreditAccountCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081432551_CreditAccountStateTotalDebt.resx">
+      <DependentUpon>201701081432551_CreditAccountStateTotalDebt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

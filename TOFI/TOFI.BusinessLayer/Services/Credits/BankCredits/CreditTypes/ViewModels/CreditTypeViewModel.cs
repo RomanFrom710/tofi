@@ -7,10 +7,6 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes.ViewModels
 {
     public class CreditTypeViewModel : ModelViewModel
     {
-        public List<CreditConditionViewModel> CreditConditions { get; set; }
-
-        public List<CreditRequirementViewModel> CreditRequirements { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -18,5 +14,11 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes.ViewModels
         public double InterestRate { get; set; }
 
         public bool IsArchived { get; set; }
+
+        public decimal FineInterest { get; set; }
+
+        public List<CreditConditionViewModel> CreditConditions { get; set; }
+
+        public List<CreditRequirementViewModel> CreditRequirements { get; set; }
     }
 }
