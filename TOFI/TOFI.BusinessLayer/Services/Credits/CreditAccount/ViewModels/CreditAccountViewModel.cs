@@ -15,8 +15,6 @@ namespace BLL.Services.Credits.CreditAccount.ViewModels
 
         public string Description { get; set; }
 
-        public double InterestRate { get; set; }
-
         public PriceViewModel RemainDebt { get; set; }
 
         public UserViewModel User { get; set; }

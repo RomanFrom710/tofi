@@ -70,6 +70,14 @@
     <Compile Include="Migrations\201701071945063_CreditTypeArchived.Designer.cs">
       <DependentUpon>201701071945063_CreditTypeArchived.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701072346597_CreditAccountInterestRate.cs" />
+    <Compile Include="Migrations\201701072346597_CreditAccountInterestRate.Designer.cs">
+      <DependentUpon>201701072346597_CreditAccountInterestRate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701072358019_CreditRequestOpen.cs" />
+    <Compile Include="Migrations\201701072358019_CreditRequestOpen.Designer.cs">
+      <DependentUpon>201701072358019_CreditRequestOpen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Actions\PaymentActionModel.cs" />
@@ -168,6 +176,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701071945063_CreditTypeArchived.resx">
       <DependentUpon>201701071945063_CreditTypeArchived.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701072346597_CreditAccountInterestRate.resx">
+      <DependentUpon>201701072346597_CreditAccountInterestRate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701072358019_CreditRequestOpen.resx">
+      <DependentUpon>201701072358019_CreditRequestOpen.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

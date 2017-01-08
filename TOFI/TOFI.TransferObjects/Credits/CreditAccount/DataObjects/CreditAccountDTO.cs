@@ -15,8 +15,6 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
 
         public string Description { get; set; }
 
-        public double InterestRate { get; set; }
-
         public PriceDto RemainDebt { get; set; }
 
         public UserDto User { get; set; }

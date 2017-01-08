@@ -40,6 +40,9 @@ namespace DAL.Models.Employee
         [IgnoreMap]
         public virtual ICollection<PaymentActionModel> PaymentActions { get; set; }
 
+        [IgnoreMap]
+        public virtual ICollection<CreditRequestModel> RequestsOpened { get; set; }
+
         #endregion
     }
 }
