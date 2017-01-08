@@ -6,7 +6,8 @@ using TOFI.TransferObjects.Credits.CreditPayment.DataObjects;
 namespace DAL.Repositories.Credits.CreditAccount
 {
     public interface ICreditAccountQueryRepository : IModelQueryRepository<CreditAccountDto>,
-        IListQueryRepository<CreditPaymentsQuery, CreditPaymentDto>
+        IListQueryRepository<CreditPaymentsQuery, CreditPaymentDto>,
+        IListQueryRepository<CreditAccountStatesQuery, CreditAccountStateDto>
     {
     }
 }

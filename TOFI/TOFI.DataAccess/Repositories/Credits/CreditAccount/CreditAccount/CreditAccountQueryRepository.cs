@@ -32,5 +32,25 @@ namespace DAL.Repositories.Credits.CreditAccount
                 return Enumerable.Empty<CreditPaymentDto>();
             return creditAccount.Payments.MapTo<CreditPaymentDto>();
         }
+
+        public IEnumerable<CreditAccountStateDto> Handle(CreditAccountStatesQuery query)
+        {
+            var creditAccount = ModelsDao.Find(query.CreditAccountId);
+            if (creditAccount == null)
+            {
+                return Enumerable.Empty<CreditAccountStateDto>();
+            }
+            return creditAccount.CreditAccountStates.MapTo<CreditAccountStateDto>();
+        }
+
+        public async Task<IEnumerable<CreditAccountStateDto>> HandleAsync(CreditAccountStatesQuery query)
+        {
+            var creditAccount = await ModelsDao.FindAsync(query.CreditAccountId);
+            if (creditAccount == null)
+            {
+                return Enumerable.Empty<CreditAccountStateDto>();
+            }
+            return creditAccount.CreditAccountStates.MapTo<CreditAccountStateDto>();
+        }
     }
 }

@@ -14,6 +14,8 @@ namespace BLL.Services.Credits.CreditAccount.ViewModels
 
         public DateTime AgreementDate { get; set; }
 
+        public int TotalMonthDuration { get; set; }
+
         public UserViewModel User { get; set; }
 
         public CreditTypeViewModel CreditType { get; set; }
