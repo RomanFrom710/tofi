@@ -20,6 +20,8 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
 
         public PriceDto RemainDebt { get; set; }
 
+        public PriceDto TotalInterestSumNotPaid { get; set; }
+
         public CreditAccountDto CreditAccount { get; set; }
     }
 }

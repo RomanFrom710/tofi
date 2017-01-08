@@ -19,6 +19,9 @@ namespace DAL.Models.Credits.CreditAccount
 
         public virtual PriceModel RemainDebt { get; set; }
 
+        // For all previous months
+        public virtual PriceModel TotalInterestSumNotPaid { get; set; }
+
         [IgnoreMap]
         public virtual CreditAccountModel CreditAccount { get; set; }
 

@@ -20,6 +20,8 @@ namespace BLL.Services.Credits.CreditAccount.ViewModels
 
         public PriceViewModel RemainDebt { get; set; }
 
+        public PriceViewModel TotalInterestSumNotPaid { get; set; }
+
         public CreditAccountViewModel CreditAccount { get; set; }
     }
 }
