@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BLL.Services.Credits.CreditAccount.ViewModels.CreditAccountViewModel>
+
+@{
+    ViewBag.Title = "Текущие кредиты";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_ClientMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Номер договора</th>
+                    <th>Тип кредита</th>
+                    <th>Валюта</th>
+                    <th>Осталось</th>
+                    <th>Всего</th>
+                    <th>Пеня</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var index = 0; }
+                @foreach (var credit in Model)
+                {
+                index++;
+                    <tr>
+                        <td>@index</td>
+                        <td>@credit.CreditAgreementNumber</td>
+                        <td>@credit.CreditType.Name</td>
+                        <td>@credit.RemainDebt.Currency.Name</td>
+                        <td>@credit.RemainDebt.Value</td>
+                        <td>@credit.TotalDebt.Value</td>
+                        <td>@credit.FinesForOverdue.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

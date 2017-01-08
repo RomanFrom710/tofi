@@ -50,6 +50,9 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
         [Display(Name = "Цель получения кредита")]
         public string CreditPurpose { get; set; }
 
+        [Display(Name = "Заявка создана")]
+        public bool? IsOpen { get; set; }
+
         #endregion
 
         #region Virtual Properties 
@@ -66,6 +69,8 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
 
         [Display(Name = "Кредит")]
         public CreditTypeViewModel CreditType { get; set; }
+
+        public EmployeeViewModel RequestOpener { get; set; }
 
         #endregion
     }

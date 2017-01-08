@@ -42,6 +42,8 @@ namespace DAL.Models.Credits.CreditRequest
 
         public string CreditPurpose { get; set; }
 
+        public bool? IsOpen { get; set; }
+
         #endregion
 
         #region Virtual Properties 
@@ -63,6 +65,9 @@ namespace DAL.Models.Credits.CreditRequest
 
         [IgnoreMap]
         public virtual CreditTypeModel CreditType { get; set; }
+
+        [IgnoreMap]
+        public virtual EmployeeModel RequestOpener { get; set; }
 
         #endregion
     }

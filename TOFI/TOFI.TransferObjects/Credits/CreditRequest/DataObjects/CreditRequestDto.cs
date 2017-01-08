@@ -40,6 +40,8 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
 
         public string CreditPurpose { get; set; }
 
+        public bool? IsOpen { get; set; }
+
         #endregion
 
         #region Virtual Properties 
@@ -55,6 +57,8 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
         public EmployeeDto CreditDepartmentApproved { get; set; }
 
         public CreditTypeDto CreditType { get; set; }
+
+        public EmployeeDto RequestOpener { get; set; }
 
         #endregion
     }

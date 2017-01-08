@@ -80,5 +80,9 @@ namespace BLL.Services.Employee
         CommandResult DepartmentApproveCommand(DepartmentApproveCommand command);
 
         Task<CommandResult> DepartmentApproveCommandAsync(DepartmentApproveCommand command);
+
+        CommandResult OpenCreditAccount(OpenCreditAccountCommand command);
+
+        Task<CommandResult> OpenCreditAccountAsync(OpenCreditAccountCommand command);
     }
 }
