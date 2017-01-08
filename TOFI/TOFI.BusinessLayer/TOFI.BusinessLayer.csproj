@@ -130,6 +130,7 @@
     <Compile Include="Services\User\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Services\User\ViewModels\UserViewModel.cs" />
     <Compile Include="Services\ViewModel.cs" />
+    <Compile Include="Updater\AccountUpdaterService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TOFI.DataAccess\TOFI.DataAccess.csproj">
