@@ -1,4 +1,4 @@
-﻿using BLL.Services.Common.Price.ViewModels;
+﻿using BLL.Services.Common.Currency.ViewModels;
 using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Model.ViewModels;
 using BLL.Services.User.ViewModels;
@@ -13,6 +13,8 @@ namespace BLL.Services.Credits.CreditAccount.ViewModels
         public string Description { get; set; }
 
         public DateTime AgreementDate { get; set; }
+
+        public CurrencyViewModel Currency { get; set; }
 
         public int TotalMonthDuration { get; set; }
 

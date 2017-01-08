@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using DAL.Models.Credits.CreditPayment;
 using System;
+using DAL.Models.Common;
 
 namespace DAL.Models.Credits.CreditAccount
 {
@@ -18,6 +19,8 @@ namespace DAL.Models.Credits.CreditAccount
         public DateTime AgreementDate { get; set; }
 
         public int TotalMonthDuration { get; set; }
+
+        public CurrencyModel Currency { get; set; } 
         
         #region Virtual Properties
         

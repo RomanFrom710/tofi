@@ -90,6 +90,10 @@
     <Compile Include="Migrations\201701081349221_CreditAccountStateTotalInterestNotPaid.Designer.cs">
       <DependentUpon>201701081349221_CreditAccountStateTotalInterestNotPaid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701081403451_CreditAccountCurrency.cs" />
+    <Compile Include="Migrations\201701081403451_CreditAccountCurrency.Designer.cs">
+      <DependentUpon>201701081403451_CreditAccountCurrency.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Actions\PaymentActionModel.cs" />
@@ -211,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701081349221_CreditAccountStateTotalInterestNotPaid.resx">
       <DependentUpon>201701081349221_CreditAccountStateTotalInterestNotPaid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081403451_CreditAccountCurrency.resx">
+      <DependentUpon>201701081403451_CreditAccountCurrency.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
