@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BLL.Services.Credits.CreditRequest.ViewModels.CreditRequestViewModel>
+
+@{
+    ViewBag.Title = "Подтверждение заявок";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_EmployeeMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+
+        @using (Html.BeginForm("OperatorFinal", "Employee", FormMethod.Get))
+        {
+            <div class="form-group">
+                <label>
+                    Номер паспорта
+                    <input type="text" class="form-control" name="passportNumber" value="@ViewBag.passportNumber" required />
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        }
+        
+        <hr/>
+
+        @if (Model != null)
+        {
+            <ul>
+                @foreach (var request in Model)
+                {
+                    <li>
+                        <dl>
+                            <dd>Тип кредита</dd>
+                            <dt>@request.CreditType.Name</dt>
+                        </dl>
+                        <dl>
+                            <dd>Цель кредита</dd>
+                            <dt>@request.CreditPurpose</dt>
+                        </dl>
+                        <dl>
+                            <dd>Сумма</dd>
+                            <dt>@request.CreditSum.Value @request.CreditSum.Currency.Name</dt>
+                        </dl>
+                        <dl>
+                            <dd>Период (месяцев)</dd>
+                            <dt>@request.MonthDuration</dt>
+                        </dl>
+                        @using (Html.BeginForm("OperatorFinalApprove", "Employee", FormMethod.Post))
+                        {
+                            @Html.Hidden("id", request.Id)
+                            @Html.Hidden("passportNumber", (string)ViewBag.passportNumber)
+                            <button type="submit" class="btn btn-success">Подтвердить</button>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
