@@ -1,7 +1,7 @@
-﻿using BLL.Services.Common.Currency.ViewModels;
+﻿using BLL.Services.Client.ViewModels;
+using BLL.Services.Common.Currency.ViewModels;
 using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Model.ViewModels;
-using BLL.Services.User.ViewModels;
 using System;
 
 namespace BLL.Services.Credits.CreditAccount.ViewModels
@@ -18,7 +18,7 @@ namespace BLL.Services.Credits.CreditAccount.ViewModels
 
         public CurrencyViewModel Currency { get; set; }
 
-        public UserViewModel User { get; set; }
+        public ClientViewModel Client { get; set; }
 
         public CreditTypeViewModel CreditType { get; set; }
     }
