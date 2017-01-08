@@ -1,12 +1,8 @@
 ﻿using BLL.Services.Common.Price.ViewModels;
+using BLL.Services.Credits.CreditAccount.ViewModels;
 using BLL.Services.Model.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BLL.Services.Credits.CreditAccount.ViewModels
+namespace BLL.Services.Credits.CreditAccountState.ViewModels
 {
     public class CreditAccountStateViewModel: ModelViewModel
     {

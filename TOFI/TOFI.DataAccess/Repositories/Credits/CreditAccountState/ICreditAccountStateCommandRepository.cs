@@ -1,7 +1,7 @@
 ﻿using DAL.Repositories.Model;
-using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
+using TOFI.TransferObjects.Credits.CreditAccountState.DataObjects;
 
-namespace DAL.Repositories.Credits.CreditAccount
+namespace DAL.Repositories.Credits.CreditAccountState
 {
     public interface ICreditAccountStateCommandRepository : IModelCommandRepository<CreditAccountStateDto>
     {

@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DAL.Models.Credits.CreditAccount
 {
     [Table("CreditAccountStates")]
-    public class CreditAccountStateModel: Model
+    public class CreditAccountStateModel : Model
     {
         public int Month { get; set; }
 
         #region Virtual Properties
-        
+
         // for latest month
         public virtual PriceModel InterestCounted { get; set; }
 
