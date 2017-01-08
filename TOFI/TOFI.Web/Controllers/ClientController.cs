@@ -10,7 +10,6 @@ using BLL.Services.Credits.BankCredits.CreditConditions.ViewModels;
 using BLL.Services.Credits.BankCredits.CreditRequirements.ViewModels;
 using BLL.Services.Credits.BankCredits.CreditTypes;
 using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
-using BLL.Services.Credits.CreditAccount.ViewModels;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.User;

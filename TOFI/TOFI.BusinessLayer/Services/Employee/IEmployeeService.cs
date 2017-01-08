@@ -84,5 +84,9 @@ namespace BLL.Services.Employee
         CommandResult OpenCreditAccount(OpenCreditAccountCommand command);
 
         Task<CommandResult> OpenCreditAccountAsync(OpenCreditAccountCommand command);
+
+        CommandResult AddPayment(AddPaymentCommand command);
+
+        Task<CommandResult> AddPaymentAsync(AddPaymentCommand command);
     }
 }

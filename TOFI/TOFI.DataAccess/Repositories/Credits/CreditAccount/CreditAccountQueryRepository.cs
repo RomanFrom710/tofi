@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DAL.Contexts;
 using DAL.Models.Credits.CreditAccount;
 using DAL.Repositories.Model;
@@ -66,6 +68,34 @@ namespace DAL.Repositories.Credits.CreditAccount
             var creditAccountStatesQuery = new CreditAccountStatesQuery {CreditAccountId = creditAccount.Id};
             var latestCreditAccountState = await HandleAsync(creditAccountStatesQuery);
             return latestCreditAccountState.OrderBy(s => s.Month).LastOrDefault();
+        }
+
+        public CreditAccountDto Handle(CreditAccountQuery query)
+        {
+            CreditAccountModel model = null;
+            if (query.Id.HasValue)
+            {
+                model = ModelsDao.Find(query.Id.Value);
+            }
+            if (!string.IsNullOrEmpty(query.AgreementNumber))
+            {
+                model = ModelsDao.FirstOrDefault(u => u.CreditAgreementNumber == query.AgreementNumber);
+            }
+            return model == null ? null : Mapper.Map<CreditAccountDto>(model);
+        }
+
+        public async Task<CreditAccountDto> HandleAsync(CreditAccountQuery query)
+        {
+            CreditAccountModel model = null;
+            if (query.Id.HasValue)
+            {
+                model = await ModelsDao.FindAsync(query.Id.Value);
+            }
+            if (!string.IsNullOrEmpty(query.AgreementNumber))
+            {
+                model = await ModelsDao.FirstOrDefaultAsync(u => u.CreditAgreementNumber == query.AgreementNumber);
+            }
+            return model == null ? null : Mapper.Map<CreditAccountDto>(model);
         }
     }
 }

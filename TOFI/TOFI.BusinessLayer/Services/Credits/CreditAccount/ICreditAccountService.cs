@@ -38,6 +38,14 @@ namespace BLL.Services.Credits.CreditAccount
 
         Task<QueryResult<CreditAccountStateViewModel>> GetActualAccountStateAsync(ActualCreditAccountStateQuery query);
 
+        QueryResult<CreditAccountDto> GetCreditAccountDto(CreditAccountQuery query);
+
+        Task<QueryResult<CreditAccountDto>> GetCreditAccountDtoAsync(CreditAccountQuery query);
+
+        QueryResult<CreditAccountViewModel> GetCreditAccount(CreditAccountQuery query);
+
+        Task<QueryResult<CreditAccountViewModel>> GetCreditAccountAsync(CreditAccountQuery query);
+
 
         CommandResult OpenCreditAccount(OpenAccountCommand command);
 
