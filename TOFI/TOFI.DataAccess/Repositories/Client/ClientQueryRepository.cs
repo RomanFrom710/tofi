@@ -19,17 +19,6 @@ namespace DAL.Repositories.Client
         {
         }
 
-        public IEnumerable<CreditAccountDto> Handle(ClientAccountsQuery query)
-        {
-            var client = ModelsDao.Find(query.ClientId);
-            return client?.CreditAccounts.MapTo<CreditAccountDto>() ?? Enumerable.Empty<CreditAccountDto>();
-        }
-
-        public async Task<IEnumerable<CreditAccountDto>> HandleAsync(ClientAccountsQuery query)
-        {
-            var client = await ModelsDao.FindAsync(query.ClientId);
-            return client?.CreditAccounts.MapTo<CreditAccountDto>() ?? Enumerable.Empty<CreditAccountDto>();
-        }
 
         public ClientDto Handle(ClientQuery query)
         {
@@ -48,7 +37,7 @@ namespace DAL.Repositories.Client
             }
             return model == null ? null : Mapper.Map<ClientDto>(model);
         }
-        
+
         public async Task<ClientDto> HandleAsync(ClientQuery query)
         {
             ClientModel model = null;
@@ -65,6 +54,18 @@ namespace DAL.Repositories.Client
                 model = await ModelsDao.FirstOrDefaultAsync(c => c.PassportNumber == query.PassportNumber);
             }
             return model == null ? null : Mapper.Map<ClientDto>(model);
+        }
+
+        public IEnumerable<CreditAccountDto> Handle(ClientAccountsQuery query)
+        {
+            var client = ModelsDao.Find(query.ClientId);
+            return client?.CreditAccounts.MapTo<CreditAccountDto>() ?? Enumerable.Empty<CreditAccountDto>();
+        }
+
+        public async Task<IEnumerable<CreditAccountDto>> HandleAsync(ClientAccountsQuery query)
+        {
+            var client = await ModelsDao.FindAsync(query.ClientId);
+            return client?.CreditAccounts.MapTo<CreditAccountDto>() ?? Enumerable.Empty<CreditAccountDto>();
         }
     }
 }

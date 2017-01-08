@@ -117,7 +117,7 @@ namespace BLL.Services.Client
                 return "Authority not filled";
             if (!client.Birthday.HasValue)
                 return "Birthday is not filled";
-            var age = (int) Math.Floor((DateTime.Now.Date - client.Birthday.Value.Date).TotalDays/365);
+            var age = (int)Math.Floor((DateTime.Now.Date - client.Birthday.Value.Date).TotalDays / 365);
             if (age < 18)
                 return "You are too young to take credits.";
             if (age > 150)
