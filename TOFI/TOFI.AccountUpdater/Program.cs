@@ -12,7 +12,7 @@ namespace TOFI.AccountUpdater
 
             var accountUpdater = new AccountUpdaterService();
             MapperConfig.Initialize();
-            accountUpdater.UpdateRemains();
+            accountUpdater.UpdateAccounts();
         }
     }
 }
