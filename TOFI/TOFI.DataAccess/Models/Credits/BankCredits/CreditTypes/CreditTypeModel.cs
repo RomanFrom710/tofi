@@ -19,6 +19,8 @@ namespace DAL.Models.Credits.BankCredits.CreditTypes
 
         public bool IsArchived { get; set; }
 
+        public decimal FineInterest { get; set; }
+
         #region Virtual Properties
 
         public virtual ICollection<CreditConditionModel> CreditConditions { get; set; }

@@ -14,11 +14,9 @@ namespace DAL.Repositories.Credits.CreditAccount
 
         protected override void RestoreFkModels(CreditAccountModel model, CreditAccountDto modelDto)
         {
-            model.TotalDebt.Currency = GetCurrencyModel(modelDto.TotalDebt.Currency?.Id);
-            model.FinesForOverdue.Currency = GetCurrencyModel(modelDto.FinesForOverdue.Currency?.Id);
-            model.RemainDebt.Currency = GetCurrencyModel(modelDto.RemainDebt.Currency?.Id);
             model.User = GetUserModel(modelDto.User?.Id);
             model.CreditType = GetCreditTypeModel(modelDto.CreditType?.Id);
+            model.Currency = GetCurrencyModel(model.Currency?.Id);
         }
     }
 }

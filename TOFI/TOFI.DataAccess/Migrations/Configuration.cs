@@ -76,7 +76,9 @@ namespace DAL.Migrations
                             MonthDurationFrom = 13,
                             MonthDurationTo = 60
                         }
-                    }
+                    },
+                    FineInterest = 0.01m,
+                    IsArchived = false
                 },
                 new CreditTypeModel
                 {
@@ -119,7 +121,9 @@ namespace DAL.Migrations
                                 Value = 50000
                             }
                         }
-                    }
+                    },
+                    FineInterest = 0.015m,
+                    IsArchived = false
                 }
             };
 
