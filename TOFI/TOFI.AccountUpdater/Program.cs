@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using TOFI.Web;
+using TOFI.BusinessLayer.Updater;
 
 namespace TOFI.AccountUpdater
 {
@@ -12,7 +13,7 @@ namespace TOFI.AccountUpdater
 
             var accountUpdater = new AccountUpdaterService();
             MapperConfig.Initialize();
-            accountUpdater.UpdateAccounts();
+            accountUpdater.UpdateAccounts(DateTime.Today);
         }
     }
 }

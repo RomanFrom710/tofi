@@ -13,7 +13,7 @@ using DAL.Repositories.Credits.CreditAccountState;
 using TOFI.TransferObjects.Credits.CreditAccountState.DataObjects;
 using DAL.Repositories.Common.Price;
 
-namespace TOFI.AccountUpdater
+namespace TOFI.BusinessLayer.Updater
 {
     public class AccountUpdaterService
     {
@@ -35,7 +35,7 @@ namespace TOFI.AccountUpdater
             _priceCommandRepository = new PriceCommandRepository(context);
         }
         
-        public void UpdateAccounts()
+        public void UpdateAccounts(DateTime specifiedDate)
         {
             Logger.Info("UpdateAccounts called");
             var query = new AllModelsQuery();
@@ -72,7 +72,7 @@ namespace TOFI.AccountUpdater
                     };
                     _priceCommandRepository.Execute(updateFinesCommand);                    
                 }
-                if (ShouldAccountUpdate(account))
+                if (ShouldAccountUpdate(account, specifiedDate))
                 {
                     var previousFinesForOverdue = latestCreditAccountState.FinesForOverdue;
                     var accountCurrency = account.Currency;
@@ -150,9 +150,9 @@ namespace TOFI.AccountUpdater
 
         #region Private Methods
 
-        private static bool ShouldAccountUpdate(CreditAccountDto account)
+        private static bool ShouldAccountUpdate(CreditAccountDto account, DateTime today)
         {
-            return account.AgreementDate != DateTime.Today && account.AgreementDate.Day == DateTime.Now.Day;
+            return account.AgreementDate.Date != today && account.AgreementDate.Day == today.Day;
         }
 
         private static decimal GetDebtForMonth(CreditAccountStateDto accountState)
