@@ -164,7 +164,8 @@ namespace BLL.Services.Credits.CreditAccount
                 TotalMonthDuration = request.MonthDuration,
                 Client = request.Client,
                 Currency = request.CreditSum.Currency,
-                Description = request.CreditPurpose
+                Description = request.CreditPurpose,
+                CreditRequest = request
             };
         }
 
