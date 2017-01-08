@@ -102,6 +102,14 @@
     <Compile Include="Migrations\201701081719131_CreditAccountClient.Designer.cs">
       <DependentUpon>201701081719131_CreditAccountClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701081939266_CreditAccountRequest.cs" />
+    <Compile Include="Migrations\201701081939266_CreditAccountRequest.Designer.cs">
+      <DependentUpon>201701081939266_CreditAccountRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701081941471_CreditAccountCurrencyFixed.cs" />
+    <Compile Include="Migrations\201701081941471_CreditAccountCurrencyFixed.Designer.cs">
+      <DependentUpon>201701081941471_CreditAccountCurrencyFixed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Actions\PaymentActionModel.cs" />
@@ -232,6 +240,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701081719131_CreditAccountClient.resx">
       <DependentUpon>201701081719131_CreditAccountClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081939266_CreditAccountRequest.resx">
+      <DependentUpon>201701081939266_CreditAccountRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081941471_CreditAccountCurrencyFixed.resx">
+      <DependentUpon>201701081941471_CreditAccountCurrencyFixed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BLL.Services.Credits.CreditAccount.ViewModels.CreditAccountViewModel>
+﻿@model IEnumerable<BLL.Services.Credits.CreditAccountState.ViewModels.CreditAccountStateViewModel>
 
 @{
     ViewBag.Title = "Текущие кредиты";
@@ -22,6 +22,7 @@
                     <th>Осталось</th>
                     <th>Всего</th>
                     <th>Пеня</th>
+                    <th>Невыплаченные проценты</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,12 +32,13 @@
                 index++;
                     <tr>
                         <td>@index</td>
-                        <td>@credit.CreditAgreementNumber</td>
-                        <td>@credit.CreditType.Name</td>
-                        <td>@credit.RemainDebt.Currency.Name</td>
+                        <td>@credit.CreditAccount.CreditAgreementNumber</td>
+                        <td>@credit.CreditAccount.CreditType.Name</td>
+                        <td>@credit.CreditAccount.Currency.Name</td>
                         <td>@credit.RemainDebt.Value</td>
-                        <td>@credit.TotalDebt.Value</td>
+                        <td>@credit.CreditAccount.CreditRequest.CreditSum.Value</td>
                         <td>@credit.FinesForOverdue.Value</td>
+                        <td>@credit.TotalInterestSumNotPaid.Value</td>
                     </tr>
                 }
             </tbody>
