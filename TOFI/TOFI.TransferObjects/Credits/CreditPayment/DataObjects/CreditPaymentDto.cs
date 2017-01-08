@@ -1,6 +1,7 @@
 ﻿using System;
 using TOFI.TransferObjects.Common.Price.DataObjects;
 using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
+using TOFI.TransferObjects.Employee.DataObjects;
 using TOFI.TransferObjects.Model.DataObjects;
 
 namespace TOFI.TransferObjects.Credits.CreditPayment.DataObjects
@@ -12,5 +13,7 @@ namespace TOFI.TransferObjects.Credits.CreditPayment.DataObjects
         public PriceDto PaymentSum { get; set; }
 
         public CreditAccountDto CreditAccount { get; set; }
+
+        public EmployeeDto Employee { get; set; }
     }
 }
