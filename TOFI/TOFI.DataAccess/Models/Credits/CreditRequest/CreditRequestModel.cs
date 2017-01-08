@@ -4,6 +4,7 @@ using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
 using System.ComponentModel.DataAnnotations.Schema;
 using AutoMapper;
+using DAL.Models.Credits.CreditAccount;
 
 namespace DAL.Models.Credits.CreditRequest
 {
@@ -68,6 +69,9 @@ namespace DAL.Models.Credits.CreditRequest
 
         [IgnoreMap]
         public virtual EmployeeModel RequestOpener { get; set; }
+
+        [IgnoreMap]
+        public virtual CreditAccountModel CreditAccount { get; set; }
 
         #endregion
     }

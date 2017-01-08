@@ -17,6 +17,7 @@ namespace DAL.Repositories.Credits.CreditAccount
             model.Client = GetClientModel(modelDto.Client?.Id);
             model.CreditType = GetCreditTypeModel(modelDto.CreditType?.Id);
             model.Currency = GetCurrencyModel(modelDto.Currency?.Id);
+            model.CreditRequest = GetCreditRequestModel(modelDto.CreditRequest?.Id);
         }
     }
 }
