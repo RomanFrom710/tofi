@@ -121,6 +121,10 @@ namespace DAL.Contexts
                 .HasRequired(s => s.InterestCounted)
                 .WithOptional()
                 .Map(a => a.MapKey("InterestCounted_Id"));
+            modelBuilder.Entity<CreditAccountStateModel>()
+                .HasRequired(s => s.TotalInterestSumNotPaid)
+                .WithOptional()
+                .Map(a => a.MapKey("TotalInterestSumNotPaid_Id"));
 
             modelBuilder.Entity<CreditRequestModel>()
                 .HasRequired(r => r.Client)
