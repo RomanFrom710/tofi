@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -7,6 +9,7 @@ using DAL.Models.Client;
 using DAL.Repositories.Model;
 using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Client.Queries;
+using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
 
 namespace DAL.Repositories.Client
 {
@@ -16,6 +19,17 @@ namespace DAL.Repositories.Client
         {
         }
 
+        public IEnumerable<CreditAccountDto> Handle(ClientAccountsQuery query)
+        {
+            var client = ModelsDao.Find(query.ClientId);
+            return client?.CreditAccounts.MapTo<CreditAccountDto>() ?? Enumerable.Empty<CreditAccountDto>();
+        }
+
+        public async Task<IEnumerable<CreditAccountDto>> HandleAsync(ClientAccountsQuery query)
+        {
+            var client = await ModelsDao.FindAsync(query.ClientId);
+            return client?.CreditAccounts.MapTo<CreditAccountDto>() ?? Enumerable.Empty<CreditAccountDto>();
+        }
 
         public ClientDto Handle(ClientQuery query)
         {
@@ -34,7 +48,7 @@ namespace DAL.Repositories.Client
             }
             return model == null ? null : Mapper.Map<ClientDto>(model);
         }
-
+        
         public async Task<ClientDto> HandleAsync(ClientQuery query)
         {
             ClientModel model = null;
