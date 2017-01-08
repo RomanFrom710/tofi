@@ -60,6 +60,7 @@
     <Compile Include="Credits\CreditAccount\Commands\OpenAccountCommand.cs" />
     <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDto.cs" />
     <Compile Include="Credits\CreditAccount\Queries\ActualCreditAccountStateQuery.cs" />
+    <Compile Include="Credits\CreditAccount\Queries\CreditAccountQuery.cs" />
     <Compile Include="Credits\CreditAccount\Queries\CreditAccountStatesQuery.cs" />
     <Compile Include="Credits\CreditAccount\Queries\CreditPaymentsQuery.cs" />
     <Compile Include="Credits\CreditPayment\DataObjects\CreditPaymentDto.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Credits\CreditRequest\Queries\OperatorRequestsQuery.cs" />
     <Compile Include="Credits\CreditRequest\Queries\SecurityRequestsQuery.cs" />
     <Compile Include="Dto.cs" />
+    <Compile Include="Employee\Commands\AddPaymentCommand.cs" />
     <Compile Include="Employee\Commands\ApproveCommand.cs" />
     <Compile Include="Employee\Commands\CommiteeApproveCommand.cs" />
     <Compile Include="Employee\Commands\DepartmentApproveCommand.cs" />
