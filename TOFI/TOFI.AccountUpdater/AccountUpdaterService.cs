@@ -32,7 +32,7 @@ namespace TOFI.AccountUpdater
         
         public void UpdateAccounts()
         {
-            Logger.Info("UpdateRemains called");
+            Logger.Info("UpdateAccounts called");
             var query = new AllModelsQuery();
             var accounts = _creditAccountQueryRepository.Handle(query);
             var creditAccountsStates = new List<CreditAccountStateDto>();
@@ -41,11 +41,11 @@ namespace TOFI.AccountUpdater
                 if (ShouldAccountUpdate(account))
                 {
                     var accountCurrency = account.Currency;
-                    var creditAccountStatesQuery = new CreditAccountStatesQuery()
+                    var latestCreditAccountStateQuery = new ActualCreditAccountStateQuery()
                     {
                         CreditAccountId = account.Id
                     };
-                    var latestCreditAccountState = _creditAccountQueryRepository.Handle(creditAccountStatesQuery).AsEnumerable().OrderBy(s => s.Month).LastOrDefault();
+                    var latestCreditAccountState = _creditAccountQueryRepository.Handle(latestCreditAccountStateQuery);
                     var creditAccountPaymentsQuery = new CreditPaymentsQuery()
                     {
                         CreditAccountId = account.Id

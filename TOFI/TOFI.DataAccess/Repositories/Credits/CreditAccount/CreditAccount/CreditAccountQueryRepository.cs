@@ -52,5 +52,35 @@ namespace DAL.Repositories.Credits.CreditAccount
             }
             return creditAccount.CreditAccountStates.MapTo<CreditAccountStateDto>();
         }
+
+        public CreditAccountStateDto Handle(ActualCreditAccountStateQuery query)
+        {
+            var creditAccount = ModelsDao.Find(query.CreditAccountId);
+            if (creditAccount == null)
+            {
+                return null;
+            }
+            var creditAccountStatesQuery = new CreditAccountStatesQuery()
+            {
+                CreditAccountId = creditAccount.Id
+            };
+            var latestCreditAccountState = Handle(creditAccountStatesQuery).OrderBy(s => s.Month).LastOrDefault();
+            return latestCreditAccountState;
+        }
+
+        public async Task<CreditAccountStateDto> HandleAsync(ActualCreditAccountStateQuery query)
+        {
+            var creditAccount = await ModelsDao.FindAsync(query.CreditAccountId);
+            if (creditAccount == null)
+            {
+                return null;
+            }
+            var creditAccountStatesQuery = new CreditAccountStatesQuery()
+            {
+                CreditAccountId = creditAccount.Id
+            };
+            var latestCreditAccountState = await HandleAsync(creditAccountStatesQuery);
+            return latestCreditAccountState.OrderBy(s => s.Month).LastOrDefault();
+        }
     }
 }
