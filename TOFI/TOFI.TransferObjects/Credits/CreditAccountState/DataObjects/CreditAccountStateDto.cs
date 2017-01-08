@@ -8,6 +8,8 @@ namespace TOFI.TransferObjects.Credits.CreditAccountState.DataObjects
     {
         public int Month { get; set; }
 
+        public PriceDto MainDebtRemain { get; set; }
+
         public PriceDto InterestCounted { get; set; }
 
         public PriceDto FinesForOverdue { get; set; }

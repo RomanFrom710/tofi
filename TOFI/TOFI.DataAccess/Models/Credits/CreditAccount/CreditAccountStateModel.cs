@@ -11,6 +11,8 @@ namespace DAL.Models.Credits.CreditAccount
 
         #region Virtual Properties
 
+        public virtual PriceModel MainDebtRemain { get; set; }
+
         // for latest month
         public virtual PriceModel InterestCounted { get; set; }
 
