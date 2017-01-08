@@ -439,7 +439,7 @@ namespace BLL.Services.Employee
             request.CreditDepartmentComments = command.Comments;
             request.CreditDepartmentApproved = employeeRes.Value;
             var updateRes = UpdateCreditRequest(command, request);
-            if (request.Client.User.EmailConfirmed)
+            if (request.Client.User.EmailConfirmed && !updateRes.IsFailed)
                 Task.Run(async () => await _emailService.SendRequestApprovedNotification(request.Client.User.Email));
             return updateRes;
         }
@@ -459,7 +459,7 @@ namespace BLL.Services.Employee
             request.CreditDepartmentComments = command.Comments;
             request.CreditDepartmentApproved = employeeRes.Value;
             var updateRes = await UpdateCreditRequestAsync(command, request);
-            if (request.Client.User.EmailConfirmed)
+            if (request.Client.User.EmailConfirmed && !updateRes.IsFailed)
                 await _emailService.SendRequestApprovedNotification(request.Client.User.Email);
             return updateRes;
         }

@@ -177,7 +177,7 @@ namespace BLL.Services.Credits.CreditAccount
                 InterestCounted = new PriceDto {Value = 0, Currency = account.Currency},
                 FinesForOverdue = new PriceDto {Value = 0, Currency = account.Currency},
                 TotalInterestSumNotPaid = new PriceDto {Value = 0, Currency = account.Currency},
-                RemainDebt = request.CreditSum
+                RemainDebt = new PriceDto {Value = request.CreditSum.Value, Currency = request.CreditSum.Currency}
             };
         }
     }
