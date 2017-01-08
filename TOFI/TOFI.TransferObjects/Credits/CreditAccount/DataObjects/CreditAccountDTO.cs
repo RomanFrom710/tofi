@@ -14,6 +14,8 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
 
         public DateTime AgreementDate { get; set; }
 
+        public int TotalMonthDuration { get; set; }
+
         public UserDto User { get; set; }
 
         public CreditTypeDto CreditType { get; set; }

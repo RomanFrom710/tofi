@@ -17,6 +17,8 @@ namespace DAL.Models.Credits.CreditAccount
 
         public DateTime AgreementDate { get; set; }
 
+        public int TotalMonthDuration { get; set; }
+        
         #region Virtual Properties
         
         [IgnoreMap]

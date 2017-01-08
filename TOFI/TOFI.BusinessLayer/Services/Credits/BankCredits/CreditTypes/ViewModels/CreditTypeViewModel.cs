@@ -18,5 +18,7 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes.ViewModels
         public double InterestRate { get; set; }
 
         public bool IsArchived { get; set; }
+
+        public decimal FineInterest { get; set; }
     }
 }
