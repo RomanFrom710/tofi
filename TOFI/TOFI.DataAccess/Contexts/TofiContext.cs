@@ -100,6 +100,10 @@ namespace DAL.Contexts
             modelBuilder.Entity<CreditAccountModel>()
                 .HasMany(a => a.Payments)
                 .WithRequired(p => p.CreditAccount);
+            modelBuilder.Entity<CreditAccountModel>()
+                .HasRequired(a => a.Currency)
+                .WithOptional()
+                .Map(a => a.MapKey("AccountCurrency_Id"));
 
             modelBuilder.Entity<CreditAccountStateModel>()
                 .HasRequired(s => s.CreditAccount)
