@@ -1,13 +1,16 @@
 ﻿using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Client;
+using BLL.Services.Credits.CreditAccount;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
+using BLL.Services.Email;
 using BLL.Services.Employee.ViewModels;
 using BLL.Services.Model;
 using DAL.Repositories.Employee;
 using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Client.Queries;
+using TOFI.TransferObjects.Credits.CreditAccount.Commands;
 using TOFI.TransferObjects.Credits.CreditRequest.DataObjects;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Employee.Commands;
@@ -24,16 +27,21 @@ namespace BLL.Services.Employee
         private readonly IEmployeeCommandRepository _commandRepository;
         private readonly ICreditRequestService _creditRequestService;
         private readonly IClientService _clientService;
+        private readonly ICreditAccountService _creditAccountService;
+        private readonly IEmailService _emailService;
 
 
         public EmployeeService(IEmployeeQueryRepository queryRepository, IEmployeeCommandRepository commandRepository,
-            ICreditRequestService creditRequestService, IClientService clientService)
+            ICreditRequestService creditRequestService, IClientService clientService,
+            ICreditAccountService creditAccountService, IEmailService emailService)
             : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
             _creditRequestService = creditRequestService;
             _clientService = clientService;
+            _creditAccountService = creditAccountService;
+            _emailService = emailService;
         }
 
 
@@ -430,7 +438,10 @@ namespace BLL.Services.Employee
             request.IsCreditDepartmentApproved = command.Approved;
             request.CreditDepartmentComments = command.Comments;
             request.CreditDepartmentApproved = employeeRes.Value;
-            return UpdateCreditRequest(command, request);
+            var updateRes = UpdateCreditRequest(command, request);
+            if (request.Client.User.EmailConfirmed)
+                Task.Run(async () => await _emailService.SendRequestApprovedNotification(request.Client.User.Email));
+            return updateRes;
         }
 
         public async Task<CommandResult> DepartmentApproveCommandAsync(DepartmentApproveCommand command)
@@ -447,7 +458,10 @@ namespace BLL.Services.Employee
             request.IsCreditDepartmentApproved = command.Approved;
             request.CreditDepartmentComments = command.Comments;
             request.CreditDepartmentApproved = employeeRes.Value;
-            return await UpdateCreditRequestAsync(command, request);
+            var updateRes = await UpdateCreditRequestAsync(command, request);
+            if (request.Client.User.EmailConfirmed)
+                await _emailService.SendRequestApprovedNotification(request.Client.User.Email);
+            return updateRes;
         }
 
         public CommandResult OpenCreditAccount(OpenCreditAccountCommand command)
@@ -460,7 +474,20 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(res);
             }
-            return null;
+            var accountRes = _creditAccountService.OpenCreditAccount(new OpenAccountCommand {Request = requestRes.Value});
+            if (accountRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(accountRes);
+            }
+            var request = requestRes.Value;
+            request.IsOpen = true;
+            request.RequestOpener = employeeRes.Value;
+            var updateRes = _creditRequestService.UpdateModel(request);
+            if (updateRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(updateRes);
+            }
+            return new CommandResult(command, true);
         }
 
         public async Task<CommandResult> OpenCreditAccountAsync(OpenCreditAccountCommand command)
@@ -473,7 +500,20 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(res);
             }
-            return null;
+            var accountRes = await _creditAccountService.OpenCreditAccountAsync(new OpenAccountCommand {Request = requestRes.Value});
+            if (accountRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(accountRes);
+            }
+            var request = requestRes.Value;
+            request.IsOpen = true;
+            request.RequestOpener = employeeRes.Value;
+            var updateRes = await _creditRequestService.UpdateModelAsync(request);
+            if (updateRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(updateRes);
+            }
+            return new CommandResult(command, true);
         }
 
 

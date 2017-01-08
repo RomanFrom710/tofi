@@ -12,5 +12,7 @@ namespace BLL.Services.Email
         Task SendEmailAsync(string to, string subject, string body);
 
         Task SendLockoutNotification(string to, DateTimeOffset lockoutEnd);
+
+        Task SendRequestApprovedNotification(string to);
     }
 }

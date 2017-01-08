@@ -21,6 +21,7 @@ namespace DAL.Repositories.Credits.CreditRequest
             model.SecurityApproved = GetEmployeeModelOptional(modelDto.SecurityApproved?.Id);
             model.CreditCommitteeApproved = GetEmployeeModelOptional(modelDto.CreditCommitteeApproved?.Id);
             model.CreditDepartmentApproved = GetEmployeeModelOptional(modelDto.CreditDepartmentApproved?.Id);
+            model.RequestOpener = GetEmployeeModelOptional(modelDto.RequestOpener?.Id);
         }
     }
 }

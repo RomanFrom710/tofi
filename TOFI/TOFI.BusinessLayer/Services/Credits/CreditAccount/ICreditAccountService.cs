@@ -4,6 +4,7 @@ using BLL.Services.Credits.CreditAccount.ViewModels;
 using BLL.Services.Credits.CreditAccountState.ViewModels;
 using BLL.Services.Credits.CreditPayment.ViewModels;
 using BLL.Services.Model;
+using TOFI.TransferObjects.Credits.CreditAccount.Commands;
 using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
 using TOFI.TransferObjects.Credits.CreditAccount.Queries;
 using TOFI.TransferObjects.Credits.CreditAccountState.DataObjects;
@@ -36,5 +37,10 @@ namespace BLL.Services.Credits.CreditAccount
         QueryResult<CreditAccountStateViewModel> GetActualAccountState(ActualCreditAccountStateQuery query);
 
         Task<QueryResult<CreditAccountStateViewModel>> GetActualAccountStateAsync(ActualCreditAccountStateQuery query);
+
+
+        CommandResult OpenCreditAccount(OpenAccountCommand command);
+
+        Task<CommandResult> OpenCreditAccountAsync(OpenAccountCommand command);
     }
 }

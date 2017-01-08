@@ -44,7 +44,7 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
         public int MonthDuration { get; set; }
 
         [Display(Name = "Сумма кредита")]
-        public virtual PriceViewModel CreditSum { get; set; }
+        public PriceViewModel CreditSum { get; set; }
 
         [CustomRequired]
         [Display(Name = "Цель получения кредита")]
