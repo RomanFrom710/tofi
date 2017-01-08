@@ -11,9 +11,7 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
     public class CreditAccountStateDto: ModelDto
     {
         public int Month { get; set; }
-
-        public PriceDto TotalDebt { get; set; }
-
+        
         public PriceDto InterestCounted { get; set; }
 
         public PriceDto FinesForOverdue { get; set; }

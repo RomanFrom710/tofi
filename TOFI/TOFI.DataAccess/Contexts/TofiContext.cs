@@ -110,10 +110,6 @@ namespace DAL.Contexts
                 .WithMany(a => a.CreditAccountStates)
                 .WillCascadeOnDelete(false);
             modelBuilder.Entity<CreditAccountStateModel>()
-                .HasRequired(s => s.TotalDebt)
-                .WithOptional()
-                .Map(a => a.MapKey("TotalDebt_Id"));
-            modelBuilder.Entity<CreditAccountStateModel>()
                 .HasRequired(s => s.FinesForOverdue)
                 .WithOptional()
                 .Map(a => a.MapKey("FinesForOverdue_Id"));
