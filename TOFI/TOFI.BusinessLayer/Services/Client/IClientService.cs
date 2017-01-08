@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Client.ViewModels;
 using BLL.Services.Model;
@@ -34,8 +35,8 @@ namespace BLL.Services.Client
         Task<CommandResult> AddOrUpdateClientAsync(ClientViewModel client);
 
 
-        ValueResult<bool> CanAddCreditRequest(int clientId);
+        ValueResult<bool> CanAddCreditRequest(int userId);
 
-        ValueResult<bool> ValidateClientInfo(ClientViewModel client);
+        ValueResult<List<KeyValuePair<string, string>>> ValidateClientInfo(ClientViewModel client);
     }
 }
