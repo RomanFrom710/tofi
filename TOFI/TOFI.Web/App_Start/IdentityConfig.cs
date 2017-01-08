@@ -41,8 +41,8 @@ namespace TOFI.Web
 
             // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = true;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 7;
+            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            manager.MaxFailedAccessAttemptsBeforeLockout = 3;
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using BLL.Result;
+using BLL.Services.Email;
 using BLL.Services.User;
 using BLL.Services.UserRole;
 using Microsoft.AspNet.Identity;
@@ -24,11 +25,13 @@ namespace TOFI.Web.Auth
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IUserService _userService;
         private readonly IUserRoleService _userRoleService;
+        private readonly IEmailService _emailService;
 
         public CustomUserStore()
         { // There is complicated classes hierarchy with all that asp.net stuff. Too lazy to use DI here
             _userService = DependencyResolver.Current.GetService<IUserService>();
             _userRoleService = DependencyResolver.Current.GetService<IUserRoleService>();
+            _emailService = DependencyResolver.Current.GetService<IEmailService>();
         }
 
         public async Task CreateAsync(AuthUser user)
@@ -127,10 +130,11 @@ namespace TOFI.Web.Auth
             return Task.FromResult(user.Dto.Auth.LockoutDateUtc ?? DateTimeOffset.MinValue);
         }
 
-        public Task SetLockoutEndDateAsync(AuthUser user, DateTimeOffset lockoutEnd)
+        public async Task SetLockoutEndDateAsync(AuthUser user, DateTimeOffset lockoutEnd)
         {
             user.Dto.Auth.LockoutDateUtc = lockoutEnd;
-            return Task.FromResult(0);
+            if (user.Dto.EmailConfirmed)
+                await _emailService.SendLockoutNotification(user.Dto.Email, lockoutEnd);
         }
 
         public Task<int> IncrementAccessFailedCountAsync(AuthUser user)
