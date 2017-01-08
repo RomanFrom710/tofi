@@ -24,18 +24,18 @@ namespace TOFI.AccountUpdater
         
         public void UpdateRemains()
         {
-            Logger.Info("UpdateRemains called");
-            var query = new AllModelsQuery();
-            var accounts = _creditAccountQueryRepository.Handle(query);
-            foreach (var account in accounts)
-            {
-                account.RemainDebt.Value *= (decimal) (1 + account.CreditType.InterestRate);
-            }
-            var updateModelsCommand = new UpdateModelsCommand<CreditAccountDto>()
-            {
-                ModelsDto = accounts.ToList()
-            };
-            _creditAccountCommandRepository.Execute(updateModelsCommand);
+            //Logger.Info("UpdateRemains called");
+            //var query = new AllModelsQuery();
+            //var accounts = _creditAccountQueryRepository.Handle(query);
+            //foreach (var account in accounts)
+            //{
+            //    account.RemainDebt.Value *= (decimal) (1 + account.CreditType.InterestRate);
+            //}
+            //var updateModelsCommand = new UpdateModelsCommand<CreditAccountDto>()
+            //{
+            //    ModelsDto = accounts.ToList()
+            //};
+            //_creditAccountCommandRepository.Execute(updateModelsCommand);
         }
     }
 }

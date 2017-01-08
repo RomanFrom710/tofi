@@ -74,6 +74,10 @@
     <Compile Include="Migrations\201701072358019_CreditRequestOpen.Designer.cs">
       <DependentUpon>201701072358019_CreditRequestOpen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701081254232_CreditAccountState.cs" />
+    <Compile Include="Migrations\201701081254232_CreditAccountState.Designer.cs">
+      <DependentUpon>201701081254232_CreditAccountState.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Actions\PaymentActionModel.cs" />
@@ -85,6 +89,7 @@
     <Compile Include="Models\Credits\BankCredits\CreditRequirements\CreditRequirementModel.cs" />
     <Compile Include="Models\Credits\BankCredits\CreditTypes\CreditTypeModel.cs" />
     <Compile Include="Models\Credits\CreditAccount\CreditAccountModel.cs" />
+    <Compile Include="Models\Credits\CreditAccount\CreditAccountStateModel.cs" />
     <Compile Include="Models\Credits\CreditPayment\CreditPaymentModel.cs" />
     <Compile Include="Models\Credits\CreditRequest\CreditRequestModel.cs" />
     <Compile Include="Repositories\Auth\AuthCommandRepository.cs" />
@@ -111,10 +116,14 @@
     <Compile Include="Repositories\Credits\BankCredits\CreditTypes\CreditTypeQueryRepository.cs" />
     <Compile Include="Repositories\Credits\BankCredits\CreditTypes\ICreditTypeCommandRepository.cs" />
     <Compile Include="Repositories\Credits\BankCredits\CreditTypes\ICreditTypeQueryRepository.cs" />
-    <Compile Include="Repositories\Credits\CreditAccount\CreditAccountCommandRepository.cs" />
-    <Compile Include="Repositories\Credits\CreditAccount\CreditAccountQueryRepository.cs" />
-    <Compile Include="Repositories\Credits\CreditAccount\ICreditAccountCommandRepository.cs" />
-    <Compile Include="Repositories\Credits\CreditAccount\ICreditAccountQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccountState\CreditAccountStateCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccountState\CreditAccountStateQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccountState\ICreditAccountStateCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccountState\ICreditAccountStateQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccount\CreditAccountCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccount\CreditAccountQueryRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccount\ICreditAccountCommandRepository.cs" />
+    <Compile Include="Repositories\Credits\CreditAccount\CreditAccount\ICreditAccountQueryRepository.cs" />
     <Compile Include="Repositories\Credits\CreditPayment\CreditPaymentCommandRepository.cs" />
     <Compile Include="Repositories\Credits\CreditPayment\CreditPaymentQueryRepository.cs" />
     <Compile Include="Repositories\Credits\CreditPayment\ICreditPaymentCommandRepository.cs" />
@@ -178,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701072358019_CreditRequestOpen.resx">
       <DependentUpon>201701072358019_CreditRequestOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701081254232_CreditAccountState.resx">
+      <DependentUpon>201701081254232_CreditAccountState.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

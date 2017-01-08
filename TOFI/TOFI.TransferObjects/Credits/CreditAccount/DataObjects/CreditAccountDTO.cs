@@ -9,13 +9,7 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
     {
         public string CreditAgreementNumber { get; set; }
 
-        public PriceDto TotalDebt { get; set; }
-
-        public PriceDto FinesForOverdue { get; set; }
-
         public string Description { get; set; }
-
-        public PriceDto RemainDebt { get; set; }
 
         public UserDto User { get; set; }
 
