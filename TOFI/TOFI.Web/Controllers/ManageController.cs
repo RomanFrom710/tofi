@@ -1,14 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using TOFI.Web.Infrastructure;
 using TOFI.Web.Models;
 
 namespace TOFI.Web.Controllers
 {
+    //[EmployeePasswordChange]
     [Authorize]
     public class ManageController : Controller
     {
@@ -52,6 +53,9 @@ namespace TOFI.Web.Controllers
         [HttpGet]
         public ActionResult ChangePassword()
         {
+            var userId = User.Identity.GetUserId();
+            if (User.IsInRole("employee") && !UserManager.IsEmailConfirmed(userId))
+                TempData["PassNotChanged"] = true;
             return View();
         }
 
@@ -61,11 +65,13 @@ namespace TOFI.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            var userId = User.Identity.GetUserId();
             if (!ModelState.IsValid)
             {
+                if (User.IsInRole("employee") && !UserManager.IsEmailConfirmed(userId))
+                    TempData["PassNotChanged"] = true;
                 return View(model);
             }
-            var userId = User.Identity.GetUserId();
             var result = await UserManager.ChangePasswordAsync(userId, model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
@@ -83,6 +89,7 @@ namespace TOFI.Web.Controllers
                 ViewBag.Success = true;
                 return View();
             }
+            TempData["PassNotChanged"] = true;
             AddErrors(result);
             return View(model);
         }
