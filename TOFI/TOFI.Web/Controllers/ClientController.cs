@@ -20,6 +20,9 @@ using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Model.Queries;
 using TOFI.TransferObjects.User.Queries;
 using TOFI.Web.Infrastructure;
+using BLL.Services.Credits.CreditAccountState.ViewModels;
+using BLL.Services.Credits.CreditAccount;
+using TOFI.TransferObjects.Credits.CreditAccount.Queries;
 
 namespace TOFI.Web.Controllers
 {
@@ -30,6 +33,7 @@ namespace TOFI.Web.Controllers
         private readonly ICreditRequestService _creditRequestService;
         private readonly IClientService _clientService;
         private readonly IUserService _userService;
+        private readonly ICreditAccountService _creditAccountService;
 
         private readonly IEnumerable<CreditTypeViewModel> _creditTypes;
         private readonly IEnumerable<CurrencyViewModel> _currencies;
@@ -38,11 +42,13 @@ namespace TOFI.Web.Controllers
                                 IClientService clientService,
                                 ICreditRequestService creditRequestService,
                                 ICreditTypeService creditTypeService,
-                                IUserService userService)
+                                IUserService userService,
+                                ICreditAccountService creditAccountService)
         {
             _clientService = clientService;
             _creditRequestService = creditRequestService;
             _userService = userService;
+            _creditAccountService = creditAccountService;
 
             _currencies = currencyService.GetAllModels(new AllModelsQuery()).Value.ToArray();
             _creditTypes = creditTypeService.GetAllModels(new AllModelsQuery()).Value.ToArray();
@@ -160,11 +166,28 @@ namespace TOFI.Web.Controllers
         public ActionResult Credits()
         {
             var client = GetClient();
+            var clientAccountsStates = GetClientAccountsStates(client);
             
-            // todo: pass credit accounts
-            return View(new List<CreditAccountViewModel>());
+            return View(clientAccountsStates);
         }
 
+        private IEnumerable<CreditAccountStateViewModel> GetClientAccountsStates(ClientViewModel client)
+        {
+            var clientAccountsQuery = new ClientAccountsQuery()
+            {
+                ClientId = client.Id
+            };
+            var clientAccounts = _clientService.GetClientAccounts(clientAccountsQuery).Value;
+            var accountsStates = clientAccounts.Select(a =>
+            {
+                var accountStateQuery = new ActualCreditAccountStateQuery()
+                {
+                    CreditAccountId = a.Id
+                };
+                return _creditAccountService.GetActualAccountState(accountStateQuery).Value;
+            });
+            return accountsStates;
+        }
 
         private ClientViewModel GetClient()
         {

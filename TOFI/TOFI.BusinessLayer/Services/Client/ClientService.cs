@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Client.ViewModels;
+using BLL.Services.Credits.CreditAccount.ViewModels;
 using BLL.Services.Model;
 using DAL.Repositories.Client;
 using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Client.Queries;
+using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
 
 namespace BLL.Services.Client
 {
@@ -129,6 +131,26 @@ namespace BLL.Services.Client
             if (DateTime.Now.Date > client.ExpirationDate)
                 return "Your passport is outdated. Go get a new one.";
             return string.Empty;
+        }
+
+        public ListQueryResult<CreditAccountDto> GetClientAccountsDto(ClientAccountsQuery query)
+        {
+            return RunListQuery<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query);
+        }
+
+        public async Task<ListQueryResult<CreditAccountDto>> GetClientAccountsDtoAsync(ClientAccountsQuery query)
+        {
+            return await RunListQueryAsync<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query);
+        }
+
+        public ListQueryResult<CreditAccountViewModel> GetClientAccounts(ClientAccountsQuery query)
+        {
+            return RunListQuery<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query).MapTo<CreditAccountViewModel>();
+        }
+
+        public async Task<ListQueryResult<CreditAccountViewModel>> GetClientAccountsAsync(ClientAccountsQuery query)
+        {
+            return (await RunListQueryAsync<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query)).MapTo<CreditAccountViewModel>();
         }
     }
 }
