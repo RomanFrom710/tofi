@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace BLL.Services.Email
 {
@@ -9,5 +10,7 @@ namespace BLL.Services.Email
         Task SendTextAsync(string to, string subject, string text);
 
         Task SendEmailAsync(string to, string subject, string body);
+
+        Task SendLockoutNotification(string to, DateTimeOffset lockoutEnd);
     }
 }
