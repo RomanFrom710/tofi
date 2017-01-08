@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.Result;
 using DAL.Repositories;
@@ -109,7 +110,7 @@ namespace BLL.Services
                 return new ListQueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
-                ? new ListQueryResult<TDto>(query, null).Warning("Query return nothing")
+                ? new ListQueryResult<TDto>(query, Enumerable.Empty<TDto>()).Warning("Query return nothing")
                 : new ListQueryResult<TDto>(query, queryRes);
         }
 
@@ -125,7 +126,7 @@ namespace BLL.Services
             catch (Exception ex)
             {
                 Logger.Error(ex, $"Unhandled exception: {ex.Message}");
-                return new ListQueryResult<TDto>(query, null, false).Fatal($"Unhandled exception: {ex.Message}", ex);
+                return new ListQueryResult<TDto>(query, Enumerable.Empty<TDto>(), false).Fatal($"Unhandled exception: {ex.Message}", ex);
             }
             return queryRes == null
                 ? new ListQueryResult<TDto>(query, null).Warning("Query return nothing")
