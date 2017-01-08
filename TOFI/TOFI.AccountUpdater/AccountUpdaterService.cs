@@ -28,7 +28,7 @@ namespace TOFI.AccountUpdater
             var accounts = value.ToArray();
             foreach (var account in accounts)
             {
-                account.RemainDebt.Value *= (decimal) (1 + account.InterestRate);
+                account.RemainDebt.Value *= (decimal) (1 + account.CreditType.InterestRate);
                 _creditAccountService.UpdateModel(account);
             }
             
