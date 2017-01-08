@@ -178,6 +178,10 @@ namespace TOFI.Web.Controllers
                 ClientId = client.Id
             };
             var clientAccounts = _clientService.GetClientAccounts(clientAccountsQuery).Value;
+            if (clientAccounts == null)
+            {
+                return Enumerable.Empty<CreditAccountStateViewModel>();
+            }
             var accountsStates = clientAccounts.Select(a =>
             {
                 var accountStateQuery = new ActualCreditAccountStateQuery()

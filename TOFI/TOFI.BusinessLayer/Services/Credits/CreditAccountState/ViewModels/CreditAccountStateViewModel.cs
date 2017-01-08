@@ -8,6 +8,8 @@ namespace BLL.Services.Credits.CreditAccountState.ViewModels
     {
         public int Month { get; set; }
         
+        public PriceViewModel MainDebtRemain { get; set; }
+
         public PriceViewModel InterestCounted { get; set; }
 
         public PriceViewModel FinesForOverdue { get; set; }

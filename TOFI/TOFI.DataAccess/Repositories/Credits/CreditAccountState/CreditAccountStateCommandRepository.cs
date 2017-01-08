@@ -17,6 +17,7 @@ namespace DAL.Repositories.Credits.CreditAccountState
             model.InterestCounted.Currency = GetCurrencyModel(modelDto.InterestCounted.Currency?.Id);
             model.FinesForOverdue.Currency = GetCurrencyModel(modelDto.FinesForOverdue.Currency?.Id);
             model.RemainDebt.Currency = GetCurrencyModel(modelDto.RemainDebt.Currency?.Id);
+            model.MainDebtRemain.Currency = GetCurrencyModel(modelDto.MainDebtRemain.Currency?.Id);
             model.TotalInterestSumNotPaid.Currency = GetCurrencyModel(modelDto.TotalInterestSumNotPaid.Currency?.Id);
             model.CreditAccount = GetCreditAccountModel(modelDto.CreditAccount?.Id);
         }
