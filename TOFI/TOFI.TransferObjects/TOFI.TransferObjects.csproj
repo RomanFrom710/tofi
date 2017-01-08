@@ -70,6 +70,7 @@
     <Compile Include="Employee\Commands\ApproveCommand.cs" />
     <Compile Include="Employee\Commands\CommiteeApproveCommand.cs" />
     <Compile Include="Employee\Commands\DepartmentApproveCommand.cs" />
+    <Compile Include="Employee\Commands\OpenCreditAccountCommand.cs" />
     <Compile Include="Employee\Commands\OperatorApproveCommand.cs" />
     <Compile Include="Employee\Commands\SecurityApproveCommand.cs" />
     <Compile Include="Employee\DataObjects\EmployeeDto.cs" />

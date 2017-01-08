@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using TOFI.Web.Auth;
+using TOFI.Web.Infrastructure;
 
 namespace TOFI.Web
 {

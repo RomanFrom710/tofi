@@ -130,6 +130,9 @@ namespace DAL.Contexts
                 .HasRequired(r => r.CreditType)
                 .WithMany(t => t.CreditRequests);
             modelBuilder.Entity<CreditRequestModel>()
+                .HasOptional(r => r.RequestOpener)
+                .WithMany(e => e.RequestsOpened);
+            modelBuilder.Entity<CreditRequestModel>()
                 .HasRequired(r => r.CreditSum)
                 .WithOptional()
                 .Map(config => config.MapKey("CreditSum_Id"));

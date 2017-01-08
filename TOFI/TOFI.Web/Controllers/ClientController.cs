@@ -10,6 +10,7 @@ using BLL.Services.Credits.BankCredits.CreditConditions.ViewModels;
 using BLL.Services.Credits.BankCredits.CreditRequirements.ViewModels;
 using BLL.Services.Credits.BankCredits.CreditTypes;
 using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
+using BLL.Services.Credits.CreditAccount.ViewModels;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.User;
@@ -153,6 +154,15 @@ namespace TOFI.Web.Controllers
             _creditRequestService.DeleteModel(id);
 
             return RedirectToAction("CreditRequests");
+        }
+
+
+        public ActionResult Credits()
+        {
+            var client = GetClient();
+            
+            // todo: pass credit accounts
+            return View(new List<CreditAccountViewModel>());
         }
 
 

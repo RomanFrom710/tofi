@@ -15,8 +15,6 @@ namespace DAL.Models.Credits.CreditAccount
 
         public string Description { get; set; }
 
-        public double InterestRate { get; set; }
-
         #region Virtual Properties
 
         public virtual PriceModel TotalDebt { get; set; }
