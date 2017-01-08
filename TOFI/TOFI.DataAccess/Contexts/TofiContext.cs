@@ -41,6 +41,8 @@ namespace DAL.Contexts
 
         public DbSet<CreditAccountModel> CreditAccounts { get; set; }
 
+        public DbSet<CreditAccountStateModel> CreditAccountStates { get; set; }
+
         public DbSet<CreditPaymentModel> CreditPayments { get; set; }
 
         public DbSet<RequestActionModel> RequestActions { get; set; }
@@ -93,23 +95,32 @@ namespace DAL.Contexts
                 .WithRequired(a => a.CreditType);
 
             modelBuilder.Entity<CreditAccountModel>()
-                .HasRequired(a => a.TotalDebt)
-                .WithOptional()
-                .Map(a => a.MapKey("TotalDebt_Id"));
-            modelBuilder.Entity<CreditAccountModel>()
-                .HasRequired(a => a.FinesForOverdue)
-                .WithOptional()
-                .Map(a => a.MapKey("FinesForOverdue_Id"));
-            modelBuilder.Entity<CreditAccountModel>()
-                .HasRequired(a => a.RemainDebt)
-                .WithOptional()
-                .Map(a => a.MapKey("RemainDebt_Id"));
-            modelBuilder.Entity<CreditAccountModel>()
                 .HasRequired(a => a.User)
                 .WithMany(u => u.CreditAccounts);
             modelBuilder.Entity<CreditAccountModel>()
                 .HasMany(a => a.Payments)
                 .WithRequired(p => p.CreditAccount);
+
+            modelBuilder.Entity<CreditAccountStateModel>()
+                .HasRequired(s => s.CreditAccount)
+                .WithMany(a => a.CreditAccountStates)
+                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditAccountStateModel>()
+                .HasRequired(s => s.TotalDebt)
+                .WithOptional()
+                .Map(a => a.MapKey("TotalDebt_Id"));
+            modelBuilder.Entity<CreditAccountStateModel>()
+                .HasRequired(s => s.FinesForOverdue)
+                .WithOptional()
+                .Map(a => a.MapKey("FinesForOverdue_Id"));
+            modelBuilder.Entity<CreditAccountStateModel>()
+                .HasRequired(s => s.RemainDebt)
+                .WithOptional()
+                .Map(a => a.MapKey("RemainDebt_Id"));
+            modelBuilder.Entity<CreditAccountStateModel>()
+                .HasRequired(s => s.InterestCounted)
+                .WithOptional()
+                .Map(a => a.MapKey("InterestCounted_Id"));
 
             modelBuilder.Entity<CreditRequestModel>()
                 .HasRequired(r => r.Client)

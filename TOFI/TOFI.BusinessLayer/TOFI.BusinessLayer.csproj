@@ -96,8 +96,11 @@
     <Compile Include="Services\Credits\BankCredits\CreditTypes\CreditTypeService.cs" />
     <Compile Include="Services\Credits\BankCredits\CreditTypes\ICreditTypeService.cs" />
     <Compile Include="Services\Credits\BankCredits\CreditTypes\ViewModels\CreditTypeViewModel.cs" />
-    <Compile Include="Services\Credits\CreditAccount\CreditAccountService.cs" />
-    <Compile Include="Services\Credits\CreditAccount\ICreditAccountService.cs" />
+    <Compile Include="Services\Credits\CreditAccount\CreditAccountState\CreditAccountStateService.cs" />
+    <Compile Include="Services\Credits\CreditAccount\CreditAccountState\ICreditAccountStateService.cs" />
+    <Compile Include="Services\Credits\CreditAccount\CreditAccount\CreditAccountService.cs" />
+    <Compile Include="Services\Credits\CreditAccount\CreditAccount\ICreditAccountService.cs" />
+    <Compile Include="Services\Credits\CreditAccount\ViewModels\CreditAccountStateViewModel.cs" />
     <Compile Include="Services\Credits\CreditAccount\ViewModels\CreditAccountViewModel.cs" />
     <Compile Include="Services\Credits\CreditPayment\CreditPaymentService.cs" />
     <Compile Include="Services\Credits\CreditPayment\ICreditPaymentService.cs" />
