@@ -14,7 +14,7 @@ namespace DAL.Repositories.Credits.CreditAccount
 
         protected override void RestoreFkModels(CreditAccountModel model, CreditAccountDto modelDto)
         {
-            model.User = GetUserModel(modelDto.User?.Id);
+            model.Client = GetClientModel(modelDto.Client?.Id);
             model.CreditType = GetCreditTypeModel(modelDto.CreditType?.Id);
             model.Currency = GetCurrencyModel(model.Currency?.Id);
         }

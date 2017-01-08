@@ -1,8 +1,8 @@
 ﻿using System;
+using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Common.Currency.DataObjects;
 using TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects;
 using TOFI.TransferObjects.Model.DataObjects;
-using TOFI.TransferObjects.User.DataObjects;
 
 namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
 {
@@ -18,7 +18,7 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
 
         public CurrencyDto Currency { get; set; }
 
-        public UserDto User { get; set; }
+        public ClientDto Client { get; set; }
 
         public CreditTypeDto CreditType { get; set; }
     }

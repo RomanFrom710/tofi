@@ -95,7 +95,7 @@ namespace DAL.Contexts
                 .WithRequired(a => a.CreditType);
 
             modelBuilder.Entity<CreditAccountModel>()
-                .HasRequired(a => a.User)
+                .HasRequired(a => a.Client)
                 .WithMany(u => u.CreditAccounts);
             modelBuilder.Entity<CreditAccountModel>()
                 .HasMany(a => a.Payments)
