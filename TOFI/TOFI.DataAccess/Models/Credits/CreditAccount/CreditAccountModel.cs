@@ -6,6 +6,7 @@ using DAL.Models.Credits.CreditPayment;
 using System;
 using DAL.Models.Common;
 using DAL.Models.Client;
+using DAL.Models.Credits.CreditRequest;
 
 namespace DAL.Models.Credits.CreditAccount
 {
@@ -37,6 +38,9 @@ namespace DAL.Models.Credits.CreditAccount
 
         [IgnoreMap]
         public virtual ICollection<CreditAccountStateModel> CreditAccountStates { get; set; }
+
+        [IgnoreMap]
+        public virtual CreditRequestModel CreditRequest { get; set; }
 
         #endregion
     }
