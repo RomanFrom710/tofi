@@ -16,6 +16,7 @@ namespace DAL.Repositories.Credits.CreditPayment
         {
             model.CreditAccount = GetCreditAccountModel(modelDto.CreditAccount?.Id);
             model.PaymentSum.Currency = GetCurrencyModel(modelDto.PaymentSum.Currency?.Id);
+            model.Employee = GetEmployeeModel(modelDto.Employee?.Id);
         }
     }
 }

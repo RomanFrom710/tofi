@@ -104,6 +104,26 @@ namespace BLL.Services.Credits.CreditAccount
                 .MapTo<CreditAccountStateViewModel>();
         }
 
+        public QueryResult<CreditAccountDto> GetCreditAccountDto(CreditAccountQuery query)
+        {
+            return RunQuery<CreditAccountQuery, CreditAccountDto>(_queryRepository, query);
+        }
+
+        public async Task<QueryResult<CreditAccountDto>> GetCreditAccountDtoAsync(CreditAccountQuery query)
+        {
+            return await RunQueryAsync<CreditAccountQuery, CreditAccountDto>(_queryRepository, query);
+        }
+
+        public QueryResult<CreditAccountViewModel> GetCreditAccount(CreditAccountQuery query)
+        {
+            return RunQuery<CreditAccountQuery, CreditAccountDto>(_queryRepository, query).MapTo<CreditAccountViewModel>();
+        }
+
+        public async Task<QueryResult<CreditAccountViewModel>> GetCreditAccountAsync(CreditAccountQuery query)
+        {
+            return (await RunQueryAsync<CreditAccountQuery, CreditAccountDto>(_queryRepository, query)).MapTo<CreditAccountViewModel>();
+        }
+
 
         public CommandResult OpenCreditAccount(OpenAccountCommand command)
         {

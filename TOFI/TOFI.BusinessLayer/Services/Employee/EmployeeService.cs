@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Client;
 using BLL.Services.Credits.CreditAccount;
+using BLL.Services.Credits.CreditPayment;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Email;
@@ -10,7 +12,10 @@ using BLL.Services.Model;
 using DAL.Repositories.Employee;
 using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Client.Queries;
+using TOFI.TransferObjects.Common.Price.DataObjects;
 using TOFI.TransferObjects.Credits.CreditAccount.Commands;
+using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
+using TOFI.TransferObjects.Credits.CreditPayment.DataObjects;
 using TOFI.TransferObjects.Credits.CreditRequest.DataObjects;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Employee.Commands;
@@ -29,12 +34,13 @@ namespace BLL.Services.Employee
         private readonly IClientService _clientService;
         private readonly ICreditAccountService _creditAccountService;
         private readonly IEmailService _emailService;
+        private readonly ICreditPaymentService _creditPaymentService;
 
 
         public EmployeeService(IEmployeeQueryRepository queryRepository, IEmployeeCommandRepository commandRepository,
             ICreditRequestService creditRequestService, IClientService clientService,
-            ICreditAccountService creditAccountService, IEmailService emailService)
-            : base(queryRepository, commandRepository)
+            ICreditAccountService creditAccountService, IEmailService emailService,
+            ICreditPaymentService creditPaymentService) : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
@@ -42,6 +48,7 @@ namespace BLL.Services.Employee
             _clientService = clientService;
             _creditAccountService = creditAccountService;
             _emailService = emailService;
+            _creditPaymentService = creditPaymentService;
         }
 
 
@@ -516,6 +523,56 @@ namespace BLL.Services.Employee
             return new CommandResult(command, true);
         }
 
+        public CommandResult AddPayment(AddPaymentCommand command)
+        {
+            var rightsRes = CheckEmployeeRights(command.EmployeeId, EmployeeRights.Cashier);
+            var employeeRes = GetEmployee(command.EmployeeId);
+            var accountRes = GetCreditAccount(command.CreditAccountId);
+            var res = CheckPayment(rightsRes, employeeRes, accountRes, command.PaymentSum);
+            if (res.IsFailed)
+            {
+                return new CommandResult(command, false).From(res);
+            }
+            var paymentRes =
+                _creditPaymentService.CreateModel(new CreditPaymentDto
+                {
+                    Timestamp = DateTime.Now,
+                    PaymentSum = command.PaymentSum,
+                    CreditAccount = accountRes.Value,
+                    Employee = employeeRes.Value
+                });
+            if (paymentRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(paymentRes);
+            }
+            return new CommandResult(command, true);
+        }
+
+        public async Task<CommandResult> AddPaymentAsync(AddPaymentCommand command)
+        {
+            var rightsRes = await CheckEmployeeRightsAsync(command.EmployeeId, EmployeeRights.Cashier);
+            var employeeRes = await GetEmployeeAsync(command.EmployeeId);
+            var accountRes = await GetCreditAccountAsync(command.CreditAccountId);
+            var res = CheckPayment(rightsRes, employeeRes, accountRes, command.PaymentSum);
+            if (res.IsFailed)
+            {
+                return new CommandResult(command, false).From(res);
+            }
+            var paymentRes =
+                await _creditPaymentService.CreateModelAsync(new CreditPaymentDto
+                {
+                    Timestamp = DateTime.Now,
+                    PaymentSum = command.PaymentSum,
+                    CreditAccount = accountRes.Value,
+                    Employee = employeeRes.Value
+                });
+            if (paymentRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(paymentRes);
+            }
+            return new CommandResult(command, true);
+        }
+
 
         private ValueResult<bool> CheckEmployeeRights(int employeeId, EmployeeRights rights)
         {
@@ -629,6 +686,34 @@ namespace BLL.Services.Employee
             return new ValueResult<CreditRequestDto>(res.Value, true);
         }
 
+        private ValueResult<CreditAccountDto> GetCreditAccount(int creditAccountId)
+        {
+            var res = _creditAccountService.GetModelDto(new ModelQuery { Id = creditAccountId });
+            if (res.IsFailed)
+            {
+                return new ValueResult<CreditAccountDto>(null, false).From(res);
+            }
+            if (res.Value == null)
+            {
+                return new ValueResult<CreditAccountDto>(null, false).Error("Credit Account not found");
+            }
+            return new ValueResult<CreditAccountDto>(res.Value, true);
+        }
+
+        private async Task<ValueResult<CreditAccountDto>> GetCreditAccountAsync(int creditAccountId)
+        {
+            var res = await _creditAccountService.GetModelDtoAsync(new ModelQuery { Id = creditAccountId });
+            if (res.IsFailed)
+            {
+                return new ValueResult<CreditAccountDto>(null, false).From(res);
+            }
+            if (res.Value == null)
+            {
+                return new ValueResult<CreditAccountDto>(null, false).Error("Credit Account not found");
+            }
+            return new ValueResult<CreditAccountDto>(res.Value, true);
+        }
+
         private ServiceResult CheckQueries(ValueResult<bool> rightsRes, ValueResult<EmployeeDto> employeeRes,
             ValueResult<CreditRequestDto> requestRes)
         {
@@ -643,6 +728,28 @@ namespace BLL.Services.Employee
             if (requestRes.IsFailed)
             {
                 return new ServiceResult(false).From(requestRes);
+            }
+            return new ServiceResult(true);
+        }
+
+        private ServiceResult CheckPayment(ValueResult<bool> rightsRes, ValueResult<EmployeeDto> employeeRes,
+            ValueResult<CreditAccountDto> accountRes, PriceDto price)
+        {
+            if (rightsRes.IsFailed)
+            {
+                return new ServiceResult(false).From(rightsRes);
+            }
+            if (employeeRes.IsFailed)
+            {
+                return new ServiceResult(false).From(employeeRes);
+            }
+            if (accountRes.IsFailed)
+            {
+                return new ServiceResult(false).From(accountRes);
+            }
+            if (accountRes.Value.Currency.Id != price.Currency.Id)
+            {
+                return new ServiceResult(false).Error("Payment currency should equal account currency");
             }
             return new ServiceResult(true);
         }
