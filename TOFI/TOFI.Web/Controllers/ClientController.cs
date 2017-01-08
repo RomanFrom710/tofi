@@ -57,10 +57,17 @@ namespace TOFI.Web.Controllers
         public ActionResult Index()
         {
             var client = GetClient();
-            var validationResult = _clientService.CanAddCreditRequest(int.Parse(User.Identity.GetUserId()));
-            if (!validationResult.Value)
+            var validationResult = _clientService.ValidateClientInfo(client);
+            if (validationResult.IsFailed)
             {
                 ModelState.AddModelError(string.Empty, validationResult.Message);
+            }
+            if (validationResult.Value != null)
+            {
+                foreach (var valuePair in validationResult.Value)
+                {
+                    ModelState.AddModelError(valuePair.Key, valuePair.Value);
+                }
             }
             return View(client);
         }
@@ -69,10 +76,18 @@ namespace TOFI.Web.Controllers
         public ActionResult Index(ClientViewModel client)
         {
             var validationResult = _clientService.ValidateClientInfo(client);
-            if (!validationResult.Value)
+            if (validationResult.IsFailed)
             {
                 ViewBag.isValid = false;
                 ModelState.AddModelError(string.Empty, validationResult.Message);
+            }
+            if (validationResult.Value != null)
+            {
+                ViewBag.isValid = false;
+                foreach (var valuePair in validationResult.Value)
+                {
+                    ModelState.AddModelError(valuePair.Key, valuePair.Value);
+                }
             }
 
             if (ModelState.IsValid)
