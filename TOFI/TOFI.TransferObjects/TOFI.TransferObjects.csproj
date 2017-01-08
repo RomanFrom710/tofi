@@ -55,8 +55,8 @@
     <Compile Include="Credits\BankCredits\CreditConditions\DataObjects\CreditConditionDto.cs" />
     <Compile Include="Credits\BankCredits\CreditRequirements\DataObjects\CreditRequirementDto.cs" />
     <Compile Include="Credits\BankCredits\CreditTypes\DataObjects\CreditTypeDto.cs" />
+    <Compile Include="Credits\CreditAccountState\DataObjects\CreditAccountStateDto.cs" />
     <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDto.cs" />
-    <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountStateDto.cs" />
     <Compile Include="Credits\CreditAccount\Queries\ActualCreditAccountStateQuery.cs" />
     <Compile Include="Credits\CreditAccount\Queries\CreditAccountStatesQuery.cs" />
     <Compile Include="Credits\CreditAccount\Queries\CreditPaymentsQuery.cs" />
@@ -110,6 +110,8 @@
     <Folder Include="Credits\BankCredits\CreditRequirements\Queries\" />
     <Folder Include="Credits\BankCredits\CreditTypes\Commands\" />
     <Folder Include="Credits\BankCredits\CreditTypes\Queries\" />
+    <Folder Include="Credits\CreditAccountState\Commands\" />
+    <Folder Include="Credits\CreditAccountState\Queries\" />
     <Folder Include="Credits\CreditAccount\Commands\" />
     <Folder Include="Credits\CreditPayment\Commands\" />
     <Folder Include="Credits\CreditPayment\Queries\" />

@@ -9,6 +9,8 @@ using System;
 using TOFI.TransferObjects.Credits.CreditAccount.Queries;
 using TOFI.TransferObjects.Common.Price.DataObjects;
 using System.Collections.Generic;
+using DAL.Repositories.Credits.CreditAccountState;
+using TOFI.TransferObjects.Credits.CreditAccountState.DataObjects;
 
 namespace TOFI.AccountUpdater
 {

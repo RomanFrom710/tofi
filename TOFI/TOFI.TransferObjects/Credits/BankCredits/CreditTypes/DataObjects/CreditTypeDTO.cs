@@ -7,10 +7,6 @@ namespace TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects
 {
     public class CreditTypeDto : ModelDto
     {
-        public List<CreditConditionDto> CreditConditions { get; set; }
-
-        public List<CreditRequirementDto> CreditRequirements { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -20,5 +16,9 @@ namespace TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects
         public bool IsArchived { get; set; }
 
         public decimal FineInterest { get; set; }
+
+        public List<CreditConditionDto> CreditConditions { get; set; }
+
+        public List<CreditRequirementDto> CreditRequirements { get; set; }
     }
 }

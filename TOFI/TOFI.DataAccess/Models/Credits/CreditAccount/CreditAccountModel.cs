@@ -19,9 +19,13 @@ namespace DAL.Models.Credits.CreditAccount
         public DateTime AgreementDate { get; set; }
 
         public int TotalMonthDuration { get; set; }
-        
+
+
         #region Virtual Properties
-        
+
+        [IgnoreMap]
+        public virtual CurrencyModel Currency { get; set; }
+
         [IgnoreMap]
         public virtual UserModel User { get; set; }
 
@@ -33,9 +37,6 @@ namespace DAL.Models.Credits.CreditAccount
 
         [IgnoreMap]
         public virtual ICollection<CreditAccountStateModel> CreditAccountStates { get; set; }
-
-        [IgnoreMap]
-        public virtual CurrencyModel Currency { get; set; }
 
         #endregion
     }

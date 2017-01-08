@@ -6,6 +6,7 @@ using DAL.Models.Credits.CreditAccount;
 using DAL.Repositories.Model;
 using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
 using TOFI.TransferObjects.Credits.CreditAccount.Queries;
+using TOFI.TransferObjects.Credits.CreditAccountState.DataObjects;
 using TOFI.TransferObjects.Credits.CreditPayment.DataObjects;
 
 namespace DAL.Repositories.Credits.CreditAccount
@@ -20,37 +21,27 @@ namespace DAL.Repositories.Credits.CreditAccount
         public IEnumerable<CreditPaymentDto> Handle(CreditPaymentsQuery query)
         {
             var creditAccount = ModelsDao.Find(query.CreditAccountId);
-            if (creditAccount == null)
-                return Enumerable.Empty<CreditPaymentDto>();
-            return creditAccount.Payments.MapTo<CreditPaymentDto>();
+            return creditAccount?.Payments.MapTo<CreditPaymentDto>() ?? Enumerable.Empty<CreditPaymentDto>();
         }
 
         public async Task<IEnumerable<CreditPaymentDto>> HandleAsync(CreditPaymentsQuery query)
         {
             var creditAccount = await ModelsDao.FindAsync(query.CreditAccountId);
-            if (creditAccount == null)
-                return Enumerable.Empty<CreditPaymentDto>();
-            return creditAccount.Payments.MapTo<CreditPaymentDto>();
+            return creditAccount?.Payments.MapTo<CreditPaymentDto>() ?? Enumerable.Empty<CreditPaymentDto>();
         }
 
         public IEnumerable<CreditAccountStateDto> Handle(CreditAccountStatesQuery query)
         {
             var creditAccount = ModelsDao.Find(query.CreditAccountId);
-            if (creditAccount == null)
-            {
-                return Enumerable.Empty<CreditAccountStateDto>();
-            }
-            return creditAccount.CreditAccountStates.MapTo<CreditAccountStateDto>();
+            return creditAccount?.CreditAccountStates.MapTo<CreditAccountStateDto>() ??
+                   Enumerable.Empty<CreditAccountStateDto>();
         }
 
         public async Task<IEnumerable<CreditAccountStateDto>> HandleAsync(CreditAccountStatesQuery query)
         {
             var creditAccount = await ModelsDao.FindAsync(query.CreditAccountId);
-            if (creditAccount == null)
-            {
-                return Enumerable.Empty<CreditAccountStateDto>();
-            }
-            return creditAccount.CreditAccountStates.MapTo<CreditAccountStateDto>();
+            return creditAccount?.CreditAccountStates.MapTo<CreditAccountStateDto>() ??
+                   Enumerable.Empty<CreditAccountStateDto>();
         }
 
         public CreditAccountStateDto Handle(ActualCreditAccountStateQuery query)
@@ -60,12 +51,9 @@ namespace DAL.Repositories.Credits.CreditAccount
             {
                 return null;
             }
-            var creditAccountStatesQuery = new CreditAccountStatesQuery()
-            {
-                CreditAccountId = creditAccount.Id
-            };
-            var latestCreditAccountState = Handle(creditAccountStatesQuery).OrderBy(s => s.Month).LastOrDefault();
-            return latestCreditAccountState;
+            var creditAccountStatesQuery = new CreditAccountStatesQuery {CreditAccountId = creditAccount.Id};
+            var latestCreditAccountState = Handle(creditAccountStatesQuery);
+            return latestCreditAccountState.OrderBy(s => s.Month).LastOrDefault();
         }
 
         public async Task<CreditAccountStateDto> HandleAsync(ActualCreditAccountStateQuery query)
@@ -75,10 +63,7 @@ namespace DAL.Repositories.Credits.CreditAccount
             {
                 return null;
             }
-            var creditAccountStatesQuery = new CreditAccountStatesQuery()
-            {
-                CreditAccountId = creditAccount.Id
-            };
+            var creditAccountStatesQuery = new CreditAccountStatesQuery {CreditAccountId = creditAccount.Id};
             var latestCreditAccountState = await HandleAsync(creditAccountStatesQuery);
             return latestCreditAccountState.OrderBy(s => s.Month).LastOrDefault();
         }

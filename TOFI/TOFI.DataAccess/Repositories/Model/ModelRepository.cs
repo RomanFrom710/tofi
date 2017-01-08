@@ -128,7 +128,7 @@ namespace DAL.Repositories.Model
             var creditAccount = Context.CreditAccounts.Find(id.Value);
             if (creditAccount == null)
             {
-                throw new ArgumentException("Credit account with given Id doesn't exist");
+                throw new ArgumentException("Credit Account with given Id doesn't exist");
             }
             return creditAccount;
         }
