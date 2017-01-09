@@ -92,7 +92,7 @@ namespace BLL.Services.AccountUpdater
             var account = _creditAccountQueryRepository.Handle(query);
             var latestCreditAccountStateQuery = new ActualCreditAccountStateQuery()
             {
-                CreditAccountId = account.Id
+                Id = account.Id
             };
             var latestCreditAccountState = _creditAccountQueryRepository.Handle(latestCreditAccountStateQuery);
             var creditAccountPaymentsQuery = new CreditPaymentsQuery()

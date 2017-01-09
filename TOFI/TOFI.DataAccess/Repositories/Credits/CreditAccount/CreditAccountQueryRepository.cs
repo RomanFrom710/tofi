@@ -48,7 +48,15 @@ namespace DAL.Repositories.Credits.CreditAccount
 
         public CreditAccountStateDto Handle(ActualCreditAccountStateQuery query)
         {
-            var creditAccount = ModelsDao.Find(query.CreditAccountId);
+            CreditAccountModel creditAccount = null;
+            if (query.Id.HasValue)
+            {
+                creditAccount = ModelsDao.Find(query.Id.Value);
+            }
+            if (!string.IsNullOrEmpty(query.AgreementNumber))
+            {
+                creditAccount = ModelsDao.FirstOrDefault(u => u.CreditAgreementNumber == query.AgreementNumber);
+            }
             if (creditAccount == null)
             {
                 return null;
@@ -60,12 +68,20 @@ namespace DAL.Repositories.Credits.CreditAccount
 
         public async Task<CreditAccountStateDto> HandleAsync(ActualCreditAccountStateQuery query)
         {
-            var creditAccount = await ModelsDao.FindAsync(query.CreditAccountId);
+            CreditAccountModel creditAccount = null;
+            if (query.Id.HasValue)
+            {
+                creditAccount = await ModelsDao.FindAsync(query.Id.Value);
+            }
+            if (!string.IsNullOrEmpty(query.AgreementNumber))
+            {
+                creditAccount = await ModelsDao.FirstOrDefaultAsync(u => u.CreditAgreementNumber == query.AgreementNumber);
+            }
             if (creditAccount == null)
             {
                 return null;
             }
-            var creditAccountStatesQuery = new CreditAccountStatesQuery {CreditAccountId = creditAccount.Id};
+            var creditAccountStatesQuery = new CreditAccountStatesQuery { CreditAccountId = creditAccount.Id };
             var latestCreditAccountState = await HandleAsync(creditAccountStatesQuery);
             return latestCreditAccountState.OrderBy(s => s.Month).LastOrDefault();
         }
