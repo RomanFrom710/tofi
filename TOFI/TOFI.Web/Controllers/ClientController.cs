@@ -202,7 +202,7 @@ namespace TOFI.Web.Controllers
                 {
                     Id = a.Id
                 };
-                return _creditAccountService.GetActualAccountState(accountStateQuery).Value;
+                return _creditAccountService.GetActualAccountState(accountStateQuery)?.Value;
             });
             return accountsStates;
         }
