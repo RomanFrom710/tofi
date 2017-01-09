@@ -15,7 +15,7 @@ using TOFI.TransferObjects.Model.Queries;
 
 namespace BLL.Services.AccountUpdater
 {
-    public class AccountUpdaterService : IAccountUpdaterService
+    public class AccountUpdaterService : Service, IAccountUpdaterService
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -58,7 +58,7 @@ namespace BLL.Services.AccountUpdater
             try
             {
                 Logger.Info("UpdateAccounts called");
-                UpdateAccount(creditAccountId, specifiedDate);
+                UpdateAccountInternal(creditAccountId, specifiedDate);
             }
             catch (Exception ex)
             {
@@ -66,19 +66,6 @@ namespace BLL.Services.AccountUpdater
                 return new ServiceResult(false).Error($"Failed to update accounts: {ex.Message}", ex);
             }
             return new ServiceResult(true);
-        }
-
-        private void UpdateAccountInternal(int creditAccountId, DateTime specifiedDate)
-        {
-            var newCreditAccountState = UpdateFinesAndGetAccountState(creditAccountId, specifiedDate);
-            if (newCreditAccountState != null)
-            {
-                var createModelCommand = new CreateModelCommand<CreditAccountStateDto>()
-                {
-                    ModelDto = newCreditAccountState
-                };
-                _creditAccountStateCommandRepository.Execute(createModelCommand);
-            }
         }
 
         #region Private Methods
@@ -213,6 +200,19 @@ namespace BLL.Services.AccountUpdater
             }
         }
 
+        private void UpdateAccountInternal(int creditAccountId, DateTime specifiedDate)
+        {
+            var newCreditAccountState = UpdateFinesAndGetAccountState(creditAccountId, specifiedDate);
+            if (newCreditAccountState != null)
+            {
+                var createModelCommand = new CreateModelCommand<CreditAccountStateDto>()
+                {
+                    ModelDto = newCreditAccountState
+                };
+                _creditAccountStateCommandRepository.Execute(createModelCommand);
+            }
+        }
+
         private static bool ShouldAccountUpdate(CreditAccountDto account, DateTime today)
         {
             return account.AgreementDate.Date != today && account.AgreementDate.Day == today.Day;
@@ -222,11 +222,6 @@ namespace BLL.Services.AccountUpdater
         {
             var totalDebtRemaining = accountState.RemainDebt.Value;
             return totalDebtRemaining / (accountState.CreditAccount.TotalMonthDuration - accountState.Month);
-        }
-
-        public void Dispose()
-        {
-            
         }
 
         #endregion

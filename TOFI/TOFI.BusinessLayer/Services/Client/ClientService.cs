@@ -118,7 +118,7 @@ namespace BLL.Services.Client
             if (string.IsNullOrWhiteSpace(client.PassportNumber))
                 res.Add(new KeyValuePair<string, string>(nameof(client.PassportNumber), "Серия и номер паспорта не указан"));
             var clientRes = GetClient(new ClientQuery {PassportNumber = client.PassportNumber});
-            if (!clientRes.IsFailed && clientRes.Value == null)
+            if (!clientRes.IsFailed && clientRes.Value != null && clientRes.Value.Id != client.Id)
                 res.Add(new KeyValuePair<string, string>(nameof(client.PassportNumber), "Номер паспорта уже зарегистрирован"));
             if (string.IsNullOrWhiteSpace(client.PassportId))
                 res.Add(new KeyValuePair<string, string>(nameof(client.PassportId), "Идентификационный номер не указан"));
