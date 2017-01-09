@@ -11,6 +11,13 @@
             <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ChangePassword" ? "active" : "")">
                 @Html.ActionLink("Смена пароля", "ChangePassword", "Manage")
             </li>
+            @if (!User.IsInRole("employee"))
+            {
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ChangeEmail" ? "active" : "")">
+                    @Html.ActionLink("Операции с e-mail", "ChangeEmail", "Manage")
+                </li>
+            }
+            
             @if (DependencyResolver.Current.GetService<ClientService>().CanAddCreditRequest(int.Parse(User.Identity.GetUserId())).Value)
             {
                 <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AddCredit" ? "active" : "")">

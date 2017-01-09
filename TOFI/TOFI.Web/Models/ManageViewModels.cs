@@ -26,6 +26,14 @@ namespace TOFI.Web.Models
         public string Purpose { get; set; }
     }
 
+    public class ChangeEmailViewModel
+    {
+        [CustomRequired]
+        [Display(Name = "Новый адрес e-mail")]
+        [EmailAddress(ErrorMessage = "Неправильный формат адреса электронной почты.")]
+        public string NewEmail { get; set; }
+    }
+
     public class SetPasswordViewModel
     {
         [Required]
