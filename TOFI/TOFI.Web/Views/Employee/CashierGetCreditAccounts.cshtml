@@ -1,0 +1,87 @@
+﻿@using AutoMapper
+@using Microsoft.AspNet.Identity
+@using TOFI.TransferObjects.Common.Currency.DataObjects
+@using TOFI.TransferObjects.Common.Price.DataObjects
+@using TOFI.TransferObjects.Employee.Commands
+@model BLL.Services.Credits.CreditAccountState.ViewModels.CreditAccountStateViewModel
+
+@{
+    ViewBag.Title = "Внесение оплаты";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_EmployeeMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+
+        @using (Html.BeginForm("CashierGetCreditAccounts", "Employee", FormMethod.Get))
+        {
+            <div class="form-group">
+                <label>
+                    Номер кредитного соглашения
+                    <input type="text" class="form-control" name="agreementNumber" value="@ViewBag.agreementNumber" required />
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        }
+        @if (Model != null)
+        {
+            
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ФИО клиента</th>
+                    <th>Номер пасспорта</th>
+                    <th>Дата договора</th>
+                    <th>Кредитное предложение</th>
+                    <th>Валюта</th>
+                    <th>Ставка, % год.</th>
+                    <th>Основной долг</th>
+                    <th>Остаток по задолженности</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.CreditAccount.Client.User.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.CreditAccount.Client.PassportNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.CreditAccount.AgreementDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.CreditAccount.CreditType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.CreditAccount.Currency.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.CreditAccount.CreditType.InterestRate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.MainDebtRemain.Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.RemainDebt.Value)
+                    </td>
+
+                    <td></td>
+                </tr>
+            </table>
+        
+            @Html.Partial("_PaymentPartial", new AddPaymentCommand()
+               {
+                   CreditAccountId = Model.CreditAccount.Id,
+                   EmployeeId = int.Parse(User.Identity.GetUserId()),
+                   PaymentSum = new PriceDto()
+                   {
+                       Value = 0,
+                       Currency = Mapper.Map<CurrencyDto>(Model.MainDebtRemain.Currency),
+                   }
+               })
+        }
+    </div>
+</div>
