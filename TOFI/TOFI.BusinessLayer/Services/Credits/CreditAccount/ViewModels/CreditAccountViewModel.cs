@@ -17,6 +17,8 @@ namespace BLL.Services.Credits.CreditAccount.ViewModels
 
         public int TotalMonthDuration { get; set; }
 
+        public bool IsClosed { get; set; }
+
         public CurrencyViewModel Currency { get; set; }
 
         public ClientViewModel Client { get; set; }

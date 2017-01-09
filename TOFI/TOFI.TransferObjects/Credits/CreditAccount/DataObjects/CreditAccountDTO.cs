@@ -17,6 +17,8 @@ namespace TOFI.TransferObjects.Credits.CreditAccount.DataObjects
 
         public int TotalMonthDuration { get; set; }
 
+        public bool IsClosed { get; set; }
+
         public CurrencyDto Currency { get; set; }
 
         public ClientDto Client { get; set; }

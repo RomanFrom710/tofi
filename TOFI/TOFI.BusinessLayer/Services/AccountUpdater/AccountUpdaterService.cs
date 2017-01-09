@@ -167,7 +167,7 @@ namespace BLL.Services.AccountUpdater
                     RemainDebt = new PriceDto()
                     {
                         Currency = accountCurrency,
-                        Value = newTotalDebtRemaining + previousFinesForOverdue.Value
+                        Value = Math.Max(newTotalDebtRemaining + previousFinesForOverdue.Value, 0m)
                     },
                     TotalInterestSumNotPaid = new PriceDto()
                     {
@@ -188,7 +188,7 @@ namespace BLL.Services.AccountUpdater
         private void UpdateAccountsInternal(DateTime specifiedDate)
         {
             var query = new AllModelsQuery();
-            var accounts = _creditAccountQueryRepository.Handle(query);
+            var accounts = _creditAccountQueryRepository.Handle(query).Where(a => !a.IsClosed);
             var creditAccountsStates = new List<CreditAccountStateDto>();
             foreach (var account in accounts)
             {
@@ -211,13 +211,27 @@ namespace BLL.Services.AccountUpdater
         private void UpdateAccountInternal(int creditAccountId, DateTime specifiedDate)
         {
             var newCreditAccountState = UpdateFinesAndGetAccountState(creditAccountId, specifiedDate);
-            if (newCreditAccountState != null)
+            var account = _creditAccountQueryRepository.Handle(new ModelQuery() { Id = creditAccountId });
+            if (account.IsClosed)
+            {
+                return;
+            }
+                if (newCreditAccountState != null)
             {
                 var createModelCommand = new CreateModelCommand<CreditAccountStateDto>()
                 {
                     ModelDto = newCreditAccountState
                 };
                 _creditAccountStateCommandRepository.Execute(createModelCommand);
+                if (newCreditAccountState.RemainDebt.Value <= 0)
+                {
+                    account.IsClosed = true;
+                    var updateModelCommand = new UpdateModelCommand<CreditAccountDto>()
+                    {
+                        ModelDto = account
+                    };
+                    _creditAccountCommandRepository.Execute(updateModelCommand);
+                }
             }
         }
 
