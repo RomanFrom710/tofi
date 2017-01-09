@@ -21,6 +21,7 @@ namespace DAL.Models.Credits.CreditAccount
 
         public int TotalMonthDuration { get; set; }
 
+        public bool IsClosed { get; set; }
 
         #region Virtual Properties
 
