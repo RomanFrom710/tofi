@@ -18,7 +18,7 @@ namespace TOFI.Web.Auth
         public string HashPassword(string password)
         {
             var salt = _securityService.GetNewSalt().Value;
-            var passwordHash = _securityService.ApplySalt(password, salt);
+            var passwordHash = _securityService.ApplySalt(password, salt).Value;
             return $"{passwordHash} {salt}";
         }
 
