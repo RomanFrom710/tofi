@@ -189,6 +189,8 @@ namespace TOFI.Web.Controllers
         [HttpPost]
         public ActionResult CashierPaymentApprove(AddPaymentCommand command)
         {
+            if (command == null) return RedirectToAction("CashierGetCreditAccounts");
+            _employeeService.AddPayment(command);
             command.EmployeeId = int.Parse(User.Identity.GetUserId());
             var account = _creditAccountService.GetActualAccountStateDto(new ActualCreditAccountStateQuery()
             {
