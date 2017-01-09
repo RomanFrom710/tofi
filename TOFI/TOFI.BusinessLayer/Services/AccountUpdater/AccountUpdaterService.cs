@@ -1,43 +1,62 @@
-﻿using DAL.Repositories.Credits.CreditAccount;
-using TOFI.TransferObjects.Model.Queries;
-using DAL.Contexts;
-using NLog;
-using TOFI.TransferObjects.Model.Commands;
-using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
-using System.Linq;
-using System;
-using TOFI.TransferObjects.Credits.CreditAccount.Queries;
-using TOFI.TransferObjects.Common.Price.DataObjects;
+﻿using System;
 using System.Collections.Generic;
-using DAL.Repositories.Credits.CreditAccountState;
-using TOFI.TransferObjects.Credits.CreditAccountState.DataObjects;
+using System.Linq;
+using BLL.Result;
 using DAL.Repositories.Common.Price;
+using DAL.Repositories.Credits.CreditAccount;
+using DAL.Repositories.Credits.CreditAccountState;
+using NLog;
+using TOFI.TransferObjects.Common.Price.DataObjects;
+using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
+using TOFI.TransferObjects.Credits.CreditAccount.Queries;
+using TOFI.TransferObjects.Credits.CreditAccountState.DataObjects;
+using TOFI.TransferObjects.Model.Commands;
+using TOFI.TransferObjects.Model.Queries;
 
-namespace TOFI.BusinessLayer.Updater
+namespace BLL.Services.AccountUpdater
 {
-    public class AccountUpdaterService
+    public class AccountUpdaterService : Service
     {
-        private readonly Logger Logger;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly CreditAccountQueryRepository _creditAccountQueryRepository;
         private readonly CreditAccountCommandRepository _creditAccountCommandRepository;
         private readonly CreditAccountStateQueryRepository _creditAccountStateQueryRepository;
         private readonly CreditAccountStateCommandRepository _creditAccountStateCommandRepository;
         private readonly PriceCommandRepository _priceCommandRepository;
 
-        public AccountUpdaterService()
+        public AccountUpdaterService(CreditAccountQueryRepository creditAccountQueryRepository,
+            CreditAccountCommandRepository creditAccountCommandRepository,
+            CreditAccountStateQueryRepository creditAccountStateQueryRepository,
+            CreditAccountStateCommandRepository creditAccountStateCommandRepository,
+            PriceCommandRepository priceCommandRepository)
         {
-            Logger = LogManager.GetCurrentClassLogger(); 
-            var context = new TofiContext();
-            _creditAccountCommandRepository = new CreditAccountCommandRepository(context);
-            _creditAccountQueryRepository = new CreditAccountQueryRepository(context);
-            _creditAccountStateCommandRepository = new CreditAccountStateCommandRepository(context);
-            _creditAccountStateQueryRepository = new CreditAccountStateQueryRepository(context);
-            _priceCommandRepository = new PriceCommandRepository(context);
+            _creditAccountQueryRepository = creditAccountQueryRepository;
+            _creditAccountCommandRepository = creditAccountCommandRepository;
+            _creditAccountStateQueryRepository = creditAccountStateQueryRepository;
+            _creditAccountStateCommandRepository = creditAccountStateCommandRepository;
+            _priceCommandRepository = priceCommandRepository;
         }
-        
-        public void UpdateAccounts(DateTime specifiedDate)
+
+        public ServiceResult UpdateAccounts(DateTime specifiedDate)
         {
-            Logger.Info("UpdateAccounts called");
+            try
+            {
+                Logger.Info("UpdateAccounts called");
+                UpdateAccountsInternal(specifiedDate);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Failed to update accounts: {ex.Message}");
+                return new ServiceResult(false).Error($"Failed to update accounts: {ex.Message}", ex);
+            }
+            return new ServiceResult(true);
+        }
+
+        #region Private Methods
+
+        private void UpdateAccountsInternal(DateTime specifiedDate)
+        {
             var query = new AllModelsQuery();
             var accounts = _creditAccountQueryRepository.Handle(query);
             var creditAccountsStates = new List<CreditAccountStateDto>();
@@ -65,19 +84,20 @@ namespace TOFI.BusinessLayer.Updater
                 if (latestCreditAccountState.MainDebtRemain.Value > sumPaidForLatestPeriod)
                 {
                     var finesForOverdue = latestCreditAccountState.FinesForOverdue;
-                    finesForOverdue.Value += account.CreditType.FineInterest * latestCreditAccountState.MainDebtRemain.Value;
+                    finesForOverdue.Value += account.CreditType.FineInterest *
+                                             latestCreditAccountState.MainDebtRemain.Value;
                     var updateFinesCommand = new UpdateModelCommand<PriceDto>()
                     {
                         ModelDto = finesForOverdue
                     };
-                    _priceCommandRepository.Execute(updateFinesCommand);                    
+                    _priceCommandRepository.Execute(updateFinesCommand);
                 }
                 if (ShouldAccountUpdate(account, specifiedDate))
                 {
                     var previousFinesForOverdue = latestCreditAccountState.FinesForOverdue;
                     var accountCurrency = account.Currency;
-                    
-                    
+
+
                     // B
                     var interestForMonth = (decimal)account.CreditType.InterestRate / 12 * totalDebtRemaining;
                     var totalInterestNotPaid = latestCreditAccountState.TotalInterestSumNotPaid.Value;
@@ -92,10 +112,12 @@ namespace TOFI.BusinessLayer.Updater
                         newTotalInterestNotPaid += interestForMonth;
                         mainDebtRemain = debtForMonth + mainDebtRemain - sumPaidForLatestPeriod;
                     }
-                    else if (sumPaidForLatestPeriod < debtForMonth + mainDebtRemain + totalInterestNotPaid + interestForMonth)
+                    else if (sumPaidForLatestPeriod <
+                             debtForMonth + mainDebtRemain + totalInterestNotPaid + interestForMonth)
                     {
                         newTotalDebtRemaining -= debtForMonth + mainDebtRemain;
-                        newTotalInterestNotPaid += interestForMonth - (sumPaidForLatestPeriod - debtForMonth - mainDebtRemain);
+                        newTotalInterestNotPaid += interestForMonth -
+                                                   (sumPaidForLatestPeriod - debtForMonth - mainDebtRemain);
                         mainDebtRemain = 0m;
                     }
                     else
@@ -122,7 +144,7 @@ namespace TOFI.BusinessLayer.Updater
                         RemainDebt = new PriceDto()
                         {
                             Currency = accountCurrency,
-                            Value = newTotalDebtRemaining + previousFinesForOverdue.Value   
+                            Value = newTotalDebtRemaining + previousFinesForOverdue.Value
                         },
                         TotalInterestSumNotPaid = new PriceDto()
                         {
@@ -138,7 +160,7 @@ namespace TOFI.BusinessLayer.Updater
                     creditAccountsStates.Add(newCreditAccountState);
                 }
             }
-            foreach(var state in creditAccountsStates.ToList())
+            foreach (var state in creditAccountsStates.ToList())
             {
                 var createModelCommand = new CreateModelCommand<CreditAccountStateDto>()
                 {
@@ -147,8 +169,6 @@ namespace TOFI.BusinessLayer.Updater
                 _creditAccountStateCommandRepository.Execute(createModelCommand);
             }
         }
-
-        #region Private Methods
 
         private static bool ShouldAccountUpdate(CreditAccountDto account, DateTime today)
         {

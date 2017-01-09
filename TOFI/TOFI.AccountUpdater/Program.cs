@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using TOFI.Web;
-using TOFI.BusinessLayer.Updater;
+using BLL.Mapping;
+using BLL.Services.AccountUpdater;
+using Ninject;
+using TOFI.DependencyInjection;
 
 namespace TOFI.AccountUpdater
 {
@@ -9,10 +11,11 @@ namespace TOFI.AccountUpdater
     {
         static void Main(string[] args)
         {
-            Trace.TraceInformation("from webjob " + DateTime.Now.ToString());
+            Trace.TraceInformation("from webjob " + DateTime.Now.ToString("G"));
 
-            var accountUpdater = new AccountUpdaterService();
             MapperConfig.Initialize();
+            var kernel = ResolverModule.GetKernel();
+            var accountUpdater = kernel.Get<IAccountUpdaterService>();
             accountUpdater.UpdateAccounts(DateTime.Today);
         }
     }
