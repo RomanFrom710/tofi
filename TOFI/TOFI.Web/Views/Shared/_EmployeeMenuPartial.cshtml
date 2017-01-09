@@ -30,5 +30,11 @@
                 @Html.ActionLink("Подтверждение заявок", "OperatorFinal", "Employee")
             </li>
         }
+        @if (User.IsInRole("cashier"))
+        {
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CashierGetCreditAccounts" ? "active" : "")">
+                @Html.ActionLink("Внесение оплаты", "CashierGetCreditAccounts", "Employee")
+            </li>
+        }
     </ul>
 </nav>
