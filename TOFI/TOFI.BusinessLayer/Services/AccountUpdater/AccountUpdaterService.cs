@@ -106,6 +106,14 @@ namespace BLL.Services.AccountUpdater
                     ModelDto = finesForOverdue
                 };
                 _priceCommandRepository.Execute(updateFinesCommand);
+
+                var totalDebt = latestCreditAccountState.RemainDebt;
+                totalDebt.Value += finesForOverdue.Value;
+                var updateTotalDebtCommand = new UpdateModelCommand<PriceDto>()
+                {
+                    ModelDto = totalDebt
+                };
+                _priceCommandRepository.Execute(updateTotalDebtCommand);
             }
             if (ShouldAccountUpdate(account, specifiedDate))
             {
