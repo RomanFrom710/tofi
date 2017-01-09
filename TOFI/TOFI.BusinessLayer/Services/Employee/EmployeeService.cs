@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BLL.Result;
+using BLL.Services.Actions.PaymentAction;
+using BLL.Services.Actions.RequestAction;
 using BLL.Services.Client;
 using BLL.Services.Credits.CreditAccount;
 using BLL.Services.Credits.CreditPayment;
@@ -9,7 +11,11 @@ using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Email;
 using BLL.Services.Employee.ViewModels;
 using BLL.Services.Model;
+using BLL.Services.Signature;
 using DAL.Repositories.Employee;
+using Newtonsoft.Json;
+using TOFI.TransferObjects.Actions.PaymentAction.DataObjects;
+using TOFI.TransferObjects.Actions.RequestAction.DataObjects;
 using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Client.Queries;
 using TOFI.TransferObjects.Common.Price.DataObjects;
@@ -35,12 +41,17 @@ namespace BLL.Services.Employee
         private readonly ICreditAccountService _creditAccountService;
         private readonly IEmailService _emailService;
         private readonly ICreditPaymentService _creditPaymentService;
+        private readonly IRequestActionService _requestActionService;
+        private readonly IPaymentActionService _paymentActionService;
+        private readonly ISignatureService _signatureService;
 
 
         public EmployeeService(IEmployeeQueryRepository queryRepository, IEmployeeCommandRepository commandRepository,
             ICreditRequestService creditRequestService, IClientService clientService,
             ICreditAccountService creditAccountService, IEmailService emailService,
-            ICreditPaymentService creditPaymentService) : base(queryRepository, commandRepository)
+            ICreditPaymentService creditPaymentService, IRequestActionService requestActionService,
+            IPaymentActionService paymentActionService, ISignatureService signatureService)
+            : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
@@ -49,6 +60,9 @@ namespace BLL.Services.Employee
             _creditAccountService = creditAccountService;
             _emailService = emailService;
             _creditPaymentService = creditPaymentService;
+            _requestActionService = requestActionService;
+            _paymentActionService = paymentActionService;
+            _signatureService = signatureService;
         }
 
 
@@ -494,6 +508,15 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(updateRes);
             }
+            var action = new RequestActionDto
+            {
+                Timestamp = DateTime.Now,
+                Employee = employeeRes.Value,
+                CreditRequest = request,
+                ActionType = GetActionType(command.GetType().Name)
+            };
+            action.Signature = GetOpenAccountSignature(action);
+            _requestActionService.CreateModel(action);
             return new CommandResult(command, true);
         }
 
@@ -520,6 +543,15 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(updateRes);
             }
+            var action = new RequestActionDto
+            {
+                Timestamp = DateTime.Now,
+                Employee = employeeRes.Value,
+                CreditRequest = request,
+                ActionType = GetActionType(command.GetType().Name)
+            };
+            action.Signature = GetOpenAccountSignature(action);
+            await _requestActionService.CreateModelAsync(action);
             return new CommandResult(command, true);
         }
 
@@ -533,18 +565,27 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(res);
             }
-            var paymentRes =
-                _creditPaymentService.CreateModel(new CreditPaymentDto
-                {
-                    Timestamp = DateTime.Now,
-                    PaymentSum = command.PaymentSum,
-                    CreditAccount = accountRes.Value,
-                    Employee = employeeRes.Value
-                });
+            var payment = new CreditPaymentDto
+            {
+                Timestamp = DateTime.Now,
+                PaymentSum = command.PaymentSum,
+                CreditAccount = accountRes.Value,
+                Employee = employeeRes.Value
+            };
+            var paymentRes = _creditPaymentService.CreateModel(payment);
             if (paymentRes.IsFailed)
             {
                 return new CommandResult(command, false).From(paymentRes);
             }
+            var action = new PaymentActionDto
+            {
+                Timestamp = DateTime.Now,
+                Employee = employeeRes.Value,
+                CreditPayment = payment,
+                ActionType = GetActionType(command.GetType().Name)
+            };
+            action.Signature = GetPaymentSignature(action);
+            _paymentActionService.CreateModel(action);
             return new CommandResult(command, true);
         }
 
@@ -558,18 +599,27 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(res);
             }
-            var paymentRes =
-                await _creditPaymentService.CreateModelAsync(new CreditPaymentDto
-                {
-                    Timestamp = DateTime.Now,
-                    PaymentSum = command.PaymentSum,
-                    CreditAccount = accountRes.Value,
-                    Employee = employeeRes.Value
-                });
+            var payment = new CreditPaymentDto
+            {
+                Timestamp = DateTime.Now,
+                PaymentSum = command.PaymentSum,
+                CreditAccount = accountRes.Value,
+                Employee = employeeRes.Value
+            };
+            var paymentRes = await _creditPaymentService.CreateModelAsync(payment);
             if (paymentRes.IsFailed)
             {
                 return new CommandResult(command, false).From(paymentRes);
             }
+            var action = new PaymentActionDto
+            {
+                Timestamp = DateTime.Now,
+                Employee = employeeRes.Value,
+                CreditPayment = payment,
+                ActionType = GetActionType(command.GetType().Name)
+            };
+            action.Signature = GetPaymentSignature(action);
+            await _paymentActionService.CreateModelAsync(action);
             return new CommandResult(command, true);
         }
 
@@ -761,6 +811,11 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(updateRes);
             }
+            var signRes = SignApprove(command, request);
+            if (signRes.IsFailed)
+            {
+                //Well this is not good
+            }
             return new CommandResult(command, true);
         }
 
@@ -771,7 +826,126 @@ namespace BLL.Services.Employee
             {
                 return new CommandResult(command, false).From(updateRes);
             }
+            var signRes = await SignApproveAsync(command, request);
+            if (signRes.IsFailed)
+            {
+                //Well this is not good
+            }
             return new CommandResult(command, true);
+        }
+
+        private CommandResult SignApprove(ApproveCommand command, CreditRequestDto request)
+        {
+            var employeeRes = GetEmployee(command.EmployeeId);
+            if (employeeRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(employeeRes);
+            }
+            if (employeeRes.Value == null || request == null)
+            {
+                return new CommandResult(command, false).Error("Invalid command");
+            }
+            var action = new RequestActionDto
+            {
+                Timestamp = DateTime.Now,
+                Employee = employeeRes.Value,
+                CreditRequest = request,
+                ActionType = GetActionType(command.GetType().Name)
+            };
+            action.Signature = GetApproveSignature(action, command);
+            return _requestActionService.CreateModel(action);
+        }
+
+        private async Task<CommandResult> SignApproveAsync(ApproveCommand command, CreditRequestDto request)
+        {
+            var employeeRes = await GetEmployeeAsync(command.EmployeeId);
+            if (employeeRes.IsFailed)
+            {
+                return new CommandResult(command, false).From(employeeRes);
+            }
+            if (employeeRes.Value == null || request == null)
+            {
+                return new CommandResult(command, false).Error("Invalid command");
+            }
+            var action = new RequestActionDto
+            {
+                Timestamp = DateTime.Now,
+                Employee = employeeRes.Value,
+                CreditRequest = request,
+                ActionType = GetActionType(command.GetType().Name)
+            };
+            action.Signature = GetApproveSignature(action, command);
+            return await _requestActionService.CreateModelAsync(action);
+        }
+
+        private string GetActionType(string commandName)
+        {
+            if (commandName == typeof(OperatorApproveCommand).Name)
+                return "operator approve";
+            if (commandName == typeof(SecurityApproveCommand).Name)
+                return "security approve";
+            if (commandName == typeof(CommiteeApproveCommand).Name)
+                return "commitee approve";
+            if (commandName == typeof(DepartmentApproveCommand).Name)
+                return "department approve";
+            if (commandName == typeof(OpenCreditAccountCommand).Name)
+                return "open credit account";
+            if (commandName == typeof(AddPaymentCommand).Name)
+                return "add payment";
+            return string.Empty;
+        }
+
+        private string GetApproveSignature(RequestActionDto action, ApproveCommand command)
+        {
+            var data = new
+            {
+                action.Timestamp,
+                action.ActionType,
+                command.Approved,
+                command.Comments,
+                EmployeeId = action.Employee.Id,
+                CreditRequestId = action.CreditRequest.Id,
+                Duration = action.CreditRequest.MonthDuration,
+                Sum = action.CreditRequest.CreditSum.Value,
+                SumCurrencyId = action.CreditRequest.CreditSum.Currency.Id,
+                CreditTypeId = action.CreditRequest.CreditType.Id
+            };
+            var json = JsonConvert.SerializeObject(data);
+            return _signatureService.Sign(json, action.Employee.User.Key).Value;
+        }
+
+        private string GetOpenAccountSignature(RequestActionDto action)
+        {
+            var data = new
+            {
+                action.Timestamp,
+                action.ActionType,
+                EmployeeId = action.Employee.Id,
+                CreditRequestId = action.CreditRequest.Id,
+                Duration = action.CreditRequest.MonthDuration,
+                Sum = action.CreditRequest.CreditSum.Value,
+                SumCurrencyId = action.CreditRequest.CreditSum.Currency.Id,
+                CreditTypeId = action.CreditRequest.CreditType.Id
+            };
+            var json = JsonConvert.SerializeObject(data);
+            return _signatureService.Sign(json, action.Employee.User.Key).Value;
+        }
+
+        private string GetPaymentSignature(PaymentActionDto action)
+        {
+            var data = new
+            {
+                action.Timestamp,
+                action.ActionType,
+                EmployeeId = action.Employee.Id,
+                CreditPaymentId = action.CreditPayment.Id,
+                CreditPaymentTimeStamp = action.CreditPayment.Timestamp,
+                CreditAccountId = action.CreditPayment.CreditAccount.Id,
+                PaymentSum = action.CreditPayment.PaymentSum.Value,
+                PaymentCurrencyId = action.CreditPayment.PaymentSum.Currency.Id
+            };
+            var json = JsonConvert.SerializeObject(data);
+            return _signatureService.Sign(json, action.Employee.User.Key).Value;
         }
     }
 }
