@@ -6,6 +6,7 @@
 
         public string AgreementNumber { get; set; }
 
+
         public static ActualCreditAccountStateQuery WithId(int id)
         {
             return new ActualCreditAccountStateQuery { Id = id };
