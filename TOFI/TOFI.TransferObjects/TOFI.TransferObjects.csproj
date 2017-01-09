@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ActionDto.cs" />
+    <Compile Include="Actions\PaymentAction\DataObjects\PaymentActionDto.cs" />
+    <Compile Include="Actions\RequestAction\DataObjects\RequestActionDto.cs" />
     <Compile Include="Auth\DataObjects\AuthDto.cs" />
     <Compile Include="Client\Enums\Sex.cs" />
     <Compile Include="Client\Queries\ClientAccountsQuery.cs" />
@@ -102,6 +105,10 @@
     <Compile Include="User\Queries\UserQuery.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Actions\PaymentAction\Commands\" />
+    <Folder Include="Actions\PaymentAction\Queries\" />
+    <Folder Include="Actions\RequestAction\Commands\" />
+    <Folder Include="Actions\RequestAction\Queries\" />
     <Folder Include="Auth\Commands\" />
     <Folder Include="Auth\Queries\" />
     <Folder Include="Client\Commands\" />

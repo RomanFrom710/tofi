@@ -7,6 +7,7 @@ using DAL.Models.Credits.BankCredits.CreditTypes;
 using DAL.Models.Employee;
 using DAL.Models.User;
 using DAL.Models.Credits.CreditAccount;
+using DAL.Models.Credits.CreditPayment;
 using DAL.Models.Credits.CreditRequest;
 
 namespace DAL.Repositories.Model
@@ -146,6 +147,20 @@ namespace DAL.Repositories.Model
                 throw new ArgumentException("Credit Request with given Id doesn't exist");
             }
             return creditRequest;
+        }
+
+        protected CreditPaymentModel GetCreditPaymentModel(int? id)
+        {
+            if (!id.HasValue)
+            {
+                throw new ArgumentException("Credit Payment Id is invalid");
+            }
+            var creditPayment = Context.CreditPayments.Find(id.Value);
+            if (creditPayment == null)
+            {
+                throw new ArgumentException("Credit Payment with given Id doesn't exist");
+            }
+            return creditPayment;
         }
     }
 }
