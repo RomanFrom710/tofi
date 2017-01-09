@@ -4,6 +4,7 @@ using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Model;
 using TOFI.TransferObjects.Credits.CreditRequest.DataObjects;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
+using BLL.Services.Employee.ViewModels;
 
 namespace BLL.Services.Credits.CreditRequest
 {
@@ -66,5 +67,9 @@ namespace BLL.Services.Credits.CreditRequest
         Task<ListQueryResult<CreditRequestViewModel>> GetApprovedClientRequestsAsync(ApprovedClientRequestsQuery query);
 
         ValueResult<bool> ValidateCreditRequest(CreditRequestViewModel request);
+
+        CommandResult AssignToEmployee(CreditRequestViewModel request, EmployeeViewModel employee);
+
+        CommandResult UnassignEmployee(CreditRequestViewModel request);
     }
 }

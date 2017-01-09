@@ -31,6 +31,19 @@
                 <dd>Период (месяцев)</dd>
                 <dt>@request.MonthDuration</dt>
             </dl>
+            <dl>
+                <dd>Назначена на меня</dd>
+                <dt>
+                    @if (request.LatestEmployeeHandledBy != null)
+                    {
+                        <span class="yes">+</span>
+                    }
+                    else
+                    {
+                        <span class="no">-</span>
+                    }
+                </dt>
+            </dl>
 
             <hr />
         }

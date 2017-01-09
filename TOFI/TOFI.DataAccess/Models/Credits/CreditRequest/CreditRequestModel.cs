@@ -65,6 +65,9 @@ namespace DAL.Models.Credits.CreditRequest
         public virtual EmployeeModel CreditDepartmentApproved { get; set; }
 
         [IgnoreMap]
+        public virtual EmployeeModel LatestEmployeeHandledBy { get; set; }
+
+        [IgnoreMap]
         public virtual CreditTypeModel CreditType { get; set; }
 
         [IgnoreMap]
