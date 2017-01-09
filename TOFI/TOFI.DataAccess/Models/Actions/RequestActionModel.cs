@@ -1,5 +1,6 @@
 ﻿using DAL.Models.Credits.CreditRequest;
 using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 
 namespace DAL.Models.Actions
 {
@@ -8,6 +9,7 @@ namespace DAL.Models.Actions
     {
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual CreditRequestModel CreditRequest { get; set; }
 
         #endregion

@@ -72,6 +72,14 @@
     <Compile Include="Models\Credits\CreditAccount\CreditAccountStateModel.cs" />
     <Compile Include="Models\Credits\CreditPayment\CreditPaymentModel.cs" />
     <Compile Include="Models\Credits\CreditRequest\CreditRequestModel.cs" />
+    <Compile Include="Repositories\Actions\PaymentAction\PaymentActionCommandRepository.cs" />
+    <Compile Include="Repositories\Actions\PaymentAction\PaymentActionQueryRepository.cs" />
+    <Compile Include="Repositories\Actions\PaymentAction\IPaymentActionCommandRepository.cs" />
+    <Compile Include="Repositories\Actions\PaymentAction\IPaymentActionQueryRepository.cs" />
+    <Compile Include="Repositories\Actions\RequestAction\RequestActionCommandRepository.cs" />
+    <Compile Include="Repositories\Actions\RequestAction\RequestActionQueryRepository.cs" />
+    <Compile Include="Repositories\Actions\RequestAction\IRequestActionCommandRepository.cs" />
+    <Compile Include="Repositories\Actions\RequestAction\IRequestActionQueryRepository.cs" />
     <Compile Include="Repositories\Auth\AuthCommandRepository.cs" />
     <Compile Include="Repositories\Auth\AuthQueryRepository.cs" />
     <Compile Include="Repositories\Auth\IAuthCommandRepository.cs" />
@@ -161,6 +169,7 @@
       <DependentUpon>201701082316282_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

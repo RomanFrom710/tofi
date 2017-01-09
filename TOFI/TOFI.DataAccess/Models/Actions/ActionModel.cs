@@ -1,5 +1,6 @@
 ﻿using DAL.Models.Employee;
 using System;
+using AutoMapper;
 
 namespace DAL.Models.Actions
 {
@@ -13,6 +14,7 @@ namespace DAL.Models.Actions
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual EmployeeModel Employee { get; set; }
 
         #endregion
