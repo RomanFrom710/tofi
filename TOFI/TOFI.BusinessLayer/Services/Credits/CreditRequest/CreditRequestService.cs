@@ -205,7 +205,7 @@ namespace BLL.Services.Credits.CreditRequest
                     continue;
                 return new ValueResult<bool>(true, true);
             }
-            return new ValueResult<bool>(false, true).Error("None of the Credit Conditions are satisfied");
+            return new ValueResult<bool>(false, true).Error("Ни одно из условий кредита не выполнено");
         }
     }
 }
