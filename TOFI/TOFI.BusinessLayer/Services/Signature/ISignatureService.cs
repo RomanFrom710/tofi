@@ -1,11 +1,13 @@
-﻿namespace BLL.Services.Signature
+﻿using BLL.Result;
+
+namespace BLL.Services.Signature
 {
     public interface ISignatureService
     {
-        string GenerateNewKey();
+        ValueResult<string> GenerateNewKey();
 
-        string Sign(string data, string key);
+        ValueResult<string> Sign(string data, string key);
 
-        bool Verify(string data, string signature, string key);
+        ValueResult<bool> Verify(string data, string signature, string key);
     }
 }

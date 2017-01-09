@@ -1,46 +1,39 @@
 ﻿using System;
-using System.Configuration;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+using BLL.Result;
+using NLog;
+using TOFI.Providers;
 
 namespace BLL.Services.Security
 {
     public class SecurityService : Service, ISecurityService
     {
-        private readonly byte[] _pepper;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 
-        public SecurityService()
+        public ValueResult<string> GetNewSalt()
         {
-            _pepper = Guid.Parse(ConfigurationManager.AppSettings["pepper"]).ToByteArray();
+            try
+            {
+                return new ValueResult<string>(SecurityProvider.GetNewSalt(), true);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Can't generate new salt: {ex.Message}");
+                return new ValueResult<string>(null, false).Error($"Can't generate new salt: {ex.Message}", ex);
+            }
         }
 
-
-        public string GetNewSalt()
+        public ValueResult<string> ApplySalt(string passwordText, string saltText)
         {
-            return ConcealSalt(Guid.NewGuid());
-        }
-
-        public string ApplySalt(string passwordText, string saltText)
-        {
-            var salt = RevealSalt(saltText).ToByteArray();
-            var saltedPassword = Encoding.Unicode.GetBytes(passwordText).Concat(salt).ToArray();
-            var hashAlgo = SHA256.Create();
-            var hash = hashAlgo.ComputeHash(saltedPassword);
-            var pepperedHash = hash.Concat(_pepper).ToArray();
-            return Convert.ToBase64String(hashAlgo.ComputeHash(pepperedHash));
-        }
-
-
-        private string ConcealSalt(Guid guid)
-        {
-            return Convert.ToBase64String(guid.ToByteArray());
-        }
-
-        private Guid RevealSalt(string saltText)
-        {
-            return new Guid(Convert.FromBase64String(saltText));
+            try
+            {
+                return new ValueResult<string>(SecurityProvider.ApplySalt(passwordText, saltText), true);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Can't apply salt: {ex.Message}");
+                return new ValueResult<string>(null, false).Error($"Can't apply salt: {ex.Message}", ex);
+            }
         }
     }
 }

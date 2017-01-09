@@ -1,9 +1,11 @@
-﻿namespace BLL.Services.Security
+﻿using BLL.Result;
+
+namespace BLL.Services.Security
 {
     public interface ISecurityService : IService
     {
-        string GetNewSalt();
+        ValueResult<string> GetNewSalt();
 
-        string ApplySalt(string password, string salt);
+        ValueResult<string> ApplySalt(string password, string salt);
     }
 }

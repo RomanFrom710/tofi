@@ -1,75 +1,52 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Text;
+using BLL.Result;
+using NLog;
+using TOFI.Providers;
 
 namespace BLL.Services.Signature
 {
     public class SignatureService : Service, ISignatureService
     {
-        public string GenerateNewKey()
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+
+        public ValueResult<string> GenerateNewKey()
         {
-            byte[] key;
-            using (var rsa = new RSACryptoServiceProvider(2048))
+            try
             {
-                rsa.PersistKeyInCsp = false;
-                key = rsa.ExportCspBlob(true);
+                return new ValueResult<string>(SignatureProvider.GenerateNewKey(), true);
             }
-            return ConcealKey(key);
-        }
-
-        public string Sign(string data, string key)
-        {
-            using (var rsa = new RSACryptoServiceProvider(2048))
+            catch (Exception ex)
             {
-                rsa.PersistKeyInCsp = false;
-                rsa.ImportCspBlob(RevealKey(key));
-
-                var rsaFormatter = new RSAPKCS1SignatureFormatter(rsa);
-                rsaFormatter.SetHashAlgorithm("SHA256");
-
-                return ConcealSignature(rsaFormatter.CreateSignature(CalculateHash(data)));
+                Logger.Error(ex, $"Can't generate new key: {ex.Message}");
+                return new ValueResult<string>(null, false).Error($"Can't generate new key: {ex.Message}", ex);
             }
         }
 
-        public bool Verify(string data, string signature, string key)
+        public ValueResult<string> Sign(string data, string key)
         {
-            using (var rsa = new RSACryptoServiceProvider(2048))
+            try
             {
-                rsa.PersistKeyInCsp = false;
-                rsa.ImportCspBlob(RevealKey(key));
-
-                var rsaDeformatter = new RSAPKCS1SignatureDeformatter(rsa);
-                rsaDeformatter.SetHashAlgorithm("SHA256");
-
-                return rsaDeformatter.VerifySignature(CalculateHash(data), RevealSignature(signature));
+                return new ValueResult<string>(SignatureProvider.Sign(data, key), true);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Can't sign data: {ex.Message}");
+                return new ValueResult<string>(null, false).Error($"Can't sign data: {ex.Message}", ex);
             }
         }
 
-
-        private string ConcealKey(byte[] key)
+        public ValueResult<bool> Verify(string data, string signature, string key)
         {
-            return Convert.ToBase64String(key);
-        }
-
-        private byte[] RevealKey(string key)
-        {
-            return Convert.FromBase64String(key);
-        }
-
-        private string ConcealSignature(byte[] signature)
-        {
-            return Convert.ToBase64String(signature);
-        }
-
-        private byte[] RevealSignature(string signature)
-        {
-            return Convert.FromBase64String(signature);
-        }
-
-        private byte[] CalculateHash(string data)
-        {
-            var hashAlgo = SHA256.Create();
-            return hashAlgo.ComputeHash(Encoding.Unicode.GetBytes(data));
+            try
+            {
+                return new ValueResult<bool>(SignatureProvider.Verify(data, signature, key), true);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Can't verify signature: {ex.Message}");
+                return new ValueResult<bool>(false, false).Error($"Can't verify signature: {ex.Message}", ex);
+            }
         }
     }
 }

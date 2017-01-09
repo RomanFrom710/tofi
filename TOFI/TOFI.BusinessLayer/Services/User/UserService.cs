@@ -27,25 +27,25 @@ namespace BLL.Services.User
 
         public override CommandResult CreateModel(UserDto dto)
         {
-            dto.Key = _signatureService.GenerateNewKey();
+            dto.Key = _signatureService.GenerateNewKey().Value;
             return base.CreateModel(dto);
         }
 
         public override Task<CommandResult> CreateModelAsync(UserDto dto)
         {
-            dto.Key = _signatureService.GenerateNewKey();
+            dto.Key = _signatureService.GenerateNewKey().Value;
             return base.CreateModelAsync(dto);
         }
 
         public override CommandResult CreateModel(UserViewModel viewModel)
         {
-            viewModel.Key = _signatureService.GenerateNewKey();
+            viewModel.Key = _signatureService.GenerateNewKey().Value;
             return base.CreateModel(viewModel);
         }
 
         public override Task<CommandResult> CreateModelAsync(UserViewModel viewModel)
         {
-            viewModel.Key = _signatureService.GenerateNewKey();
+            viewModel.Key = _signatureService.GenerateNewKey().Value;
             return base.CreateModelAsync(viewModel);
         }
 

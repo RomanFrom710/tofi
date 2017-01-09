@@ -17,7 +17,7 @@ namespace TOFI.Web.Auth
 
         public string HashPassword(string password)
         {
-            var salt = _securityService.GetNewSalt();
+            var salt = _securityService.GetNewSalt().Value;
             var passwordHash = _securityService.ApplySalt(password, salt);
             return $"{passwordHash} {salt}";
         }
@@ -25,7 +25,7 @@ namespace TOFI.Web.Auth
         public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
             var passwordParts = hashedPassword.Split(' ');
-            var passwordHash = _securityService.ApplySalt(providedPassword, passwordParts[1]);
+            var passwordHash = _securityService.ApplySalt(providedPassword, passwordParts[1]).Value;
             return passwordParts[0] == passwordHash
                 ? PasswordVerificationResult.Success
                 : PasswordVerificationResult.Failed;
