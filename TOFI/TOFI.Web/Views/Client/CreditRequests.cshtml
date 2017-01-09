@@ -23,8 +23,8 @@
                 <th>Кол-во месяцев</th>
                 <th>Оператор</th>
                 <th title="Служба безопасности банка">Безопасность</th>
-                <th title="Отдел выдачи кредитов">Отдел</th>
                 <th title="Кредитный комитет">Комитет</th>
+                <th title="Отдел выдачи кредитов">Отдел</th>
             </tr>
             </thead>
             <tbody>
@@ -54,16 +54,16 @@
                         }
                     </td>
                     <td>
-                        @if (request.IsCreditDepartmentApproved.HasValue)
+                        @if (request.IsCreditCommitteeApproved.HasValue)
                         {
-                            if (request.IsCreditDepartmentApproved.Value) { <span class="yes">+</span> }
+                            if (request.IsCreditCommitteeApproved.Value) { <span class="yes">+</span> }
                             else { <span class="no">-</span> }
                         }
                     </td>
                     <td>
-                        @if (request.IsCreditCommitteeApproved.HasValue)
+                        @if (request.IsCreditDepartmentApproved.HasValue)
                         {
-                            if (request.IsCreditCommitteeApproved.Value) { <span class="yes">+</span> }
+                            if (request.IsCreditDepartmentApproved.Value) { <span class="yes">+</span> }
                             else { <span class="no">-</span> }
                         }
                     </td>
