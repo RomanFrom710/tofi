@@ -10,6 +10,8 @@ using DAL.Models.Credits.BankCredits.CreditTypes;
 using System.Collections.Generic;
 using DAL.Models.Employee;
 using TOFI.Providers;
+using DAL.Models.Client;
+using DAL.Models.Credits.CreditRequest;
 
 namespace DAL.Migrations
 {
@@ -135,6 +137,19 @@ namespace DAL.Migrations
                 Email = "test@test.test",
                 FirstName = "Test",
                 LastName = "Testovich",
+                MiddleName = "Иванович",
+                Client = new ClientModel()
+                {
+                    Address = "temp",
+                    Birthday = new DateTime(1992, 04, 05),
+                    Authority = "Беларусь",
+                    ExpirationDate = new DateTime(2020, 03, 04),
+                    IssueDate = new DateTime(2009, 01, 06),
+                    PassportId = "1234567890фыва",
+                    PassportNumber = "АВ1234567",
+                    Sex = TOFI.TransferObjects.Client.Enums.Sex.Male,
+                    TelephoneNumber = "987654321"
+                },
                 Key = SignatureProvider.GenerateNewKey(),
                 Auth = new AuthModel
                 {
@@ -142,7 +157,8 @@ namespace DAL.Migrations
                     Salt = salt,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true
-                }
+                }, 
+                EmailConfirmed = true
             };
 
             salt = SecurityProvider.GetNewSalt();
