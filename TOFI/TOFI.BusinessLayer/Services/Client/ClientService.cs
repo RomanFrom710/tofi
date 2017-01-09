@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Client.ViewModels;
+using BLL.Services.Credits.BankCredits.CreditTypes;
+using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Credits.CreditAccount.ViewModels;
 using BLL.Services.Model;
 using DAL.Repositories.Client;
 using TOFI.TransferObjects.Client.DataObjects;
 using TOFI.TransferObjects.Client.Queries;
+using TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects;
 using TOFI.TransferObjects.Credits.CreditAccount.DataObjects;
+using TOFI.TransferObjects.Model.Queries;
 
 namespace BLL.Services.Client
 {
@@ -16,13 +21,15 @@ namespace BLL.Services.Client
     {
         private readonly IClientQueryRepository _queryRepository;
         private readonly IClientCommandRepository _commandRepository;
+        private readonly ICreditTypeService _creditTypeService;
 
 
-        public ClientService(IClientQueryRepository queryRepository, IClientCommandRepository commandRepository)
-            : base(queryRepository, commandRepository)
+        public ClientService(IClientQueryRepository queryRepository, IClientCommandRepository commandRepository,
+            ICreditTypeService creditTypeService) : base(queryRepository, commandRepository)
         {
             _queryRepository = queryRepository;
             _commandRepository = commandRepository;
+            _creditTypeService = creditTypeService;
         }
 
 
@@ -44,6 +51,130 @@ namespace BLL.Services.Client
         public async Task<QueryResult<ClientViewModel>> GetClientAsync(ClientQuery query)
         {
             return (await RunQueryAsync<ClientQuery, ClientDto>(_queryRepository, query)).MapTo<ClientViewModel>();
+        }
+
+        public ListQueryResult<CreditAccountDto> GetClientAccountsDto(ClientAccountsQuery query)
+        {
+            return RunListQuery<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query);
+        }
+
+        public async Task<ListQueryResult<CreditAccountDto>> GetClientAccountsDtoAsync(ClientAccountsQuery query)
+        {
+            return await RunListQueryAsync<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query);
+        }
+
+        public ListQueryResult<CreditAccountViewModel> GetClientAccounts(ClientAccountsQuery query)
+        {
+            return RunListQuery<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query).MapTo<CreditAccountViewModel>();
+        }
+
+        public async Task<ListQueryResult<CreditAccountViewModel>> GetClientAccountsAsync(ClientAccountsQuery query)
+        {
+            return (await RunListQueryAsync<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query)).MapTo<CreditAccountViewModel>();
+        }
+
+        public ListQueryResult<CreditTypeDto> GetCreditTypesDto(SelectCreditTypesQuery query)
+        {
+            var creditsRes = _creditTypeService.GetAllModelDtos(new AllModelsQuery());
+            if (creditsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditTypeDto>(query, Enumerable.Empty<CreditTypeDto>(), false).From(creditsRes);
+            }
+            var credits = creditsRes.Value.Where(c =>
+            {
+                foreach (var condition in c.CreditConditions)
+                {
+                    if (condition.MonthDurationFrom > query.MonthDuration ||
+                        query.MonthDuration > condition.MonthDurationTo)
+                        continue;
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                        continue;
+                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
+                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                        continue;
+                    return true;
+                }
+                return false;
+            });
+            return new ListQueryResult<CreditTypeDto>(query, credits, true);
+        }
+
+        public async Task<ListQueryResult<CreditTypeDto>> GetCreditTypesDtoAsync(SelectCreditTypesQuery query)
+        {
+            var creditsRes = await _creditTypeService.GetAllModelDtosAsync(new AllModelsQuery());
+            if (creditsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditTypeDto>(query, Enumerable.Empty<CreditTypeDto>(), false).From(creditsRes);
+            }
+            var credits = creditsRes.Value.Where(c =>
+            {
+                foreach (var condition in c.CreditConditions)
+                {
+                    if (condition.MonthDurationFrom > query.MonthDuration ||
+                        query.MonthDuration > condition.MonthDurationTo)
+                        continue;
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                        continue;
+                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
+                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                        continue;
+                    return true;
+                }
+                return false;
+            });
+            return new ListQueryResult<CreditTypeDto>(query, credits, true);
+        }
+
+        public ListQueryResult<CreditTypeViewModel> GetCreditTypes(SelectCreditTypesQuery query)
+        {
+            var creditsRes = _creditTypeService.GetAllModels(new AllModelsQuery());
+            if (creditsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditTypeViewModel>(query, Enumerable.Empty<CreditTypeViewModel>(), false).From(creditsRes);
+            }
+            var credits = creditsRes.Value.Where(c =>
+            {
+                foreach (var condition in c.CreditConditions)
+                {
+                    if (condition.MonthDurationFrom > query.MonthDuration ||
+                        query.MonthDuration > condition.MonthDurationTo)
+                        continue;
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                        continue;
+                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
+                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                        continue;
+                    return true;
+                }
+                return false;
+            });
+            return new ListQueryResult<CreditTypeViewModel>(query, credits, true);
+        }
+
+        public async Task<ListQueryResult<CreditTypeViewModel>> GetCreditTypesAsync(SelectCreditTypesQuery query)
+        {
+            var creditsRes = await _creditTypeService.GetAllModelsAsync(new AllModelsQuery());
+            if (creditsRes.IsFailed)
+            {
+                return new ListQueryResult<CreditTypeViewModel>(query, Enumerable.Empty<CreditTypeViewModel>(), false).From(creditsRes);
+            }
+            var credits = creditsRes.Value.Where(c =>
+            {
+                foreach (var condition in c.CreditConditions)
+                {
+                    if (condition.MonthDurationFrom > query.MonthDuration ||
+                        query.MonthDuration > condition.MonthDurationTo)
+                        continue;
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                        continue;
+                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
+                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                        continue;
+                    return true;
+                }
+                return false;
+            });
+            return new ListQueryResult<CreditTypeViewModel>(query, credits, true);
         }
 
 
@@ -121,26 +252,6 @@ namespace BLL.Services.Client
                 res.Add(new KeyValuePair<string, string>(nameof(client.ExpirationDate),
                     "Ваш паспорт недействителен. Сначала получите новый"));
             return res;
-        }
-
-        public ListQueryResult<CreditAccountDto> GetClientAccountsDto(ClientAccountsQuery query)
-        {
-            return RunListQuery<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query);
-        }
-
-        public async Task<ListQueryResult<CreditAccountDto>> GetClientAccountsDtoAsync(ClientAccountsQuery query)
-        {
-            return await RunListQueryAsync<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query);
-        }
-
-        public ListQueryResult<CreditAccountViewModel> GetClientAccounts(ClientAccountsQuery query)
-        {
-            return RunListQuery<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query).MapTo<CreditAccountViewModel>();
-        }
-
-        public async Task<ListQueryResult<CreditAccountViewModel>> GetClientAccountsAsync(ClientAccountsQuery query)
-        {
-            return (await RunListQueryAsync<ClientAccountsQuery, CreditAccountDto>(_queryRepository, query)).MapTo<CreditAccountViewModel>();
         }
     }
 }
