@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Actions.PaymentAction;
@@ -93,7 +94,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetOperatorRequestsDtos(new OperatorRequestsQuery());
+            return Filter(_creditRequestService.GetOperatorRequestsDtos(new OperatorRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestDto>> GetOperatorCreditRequestDtosAsync(OperatorCreditRequestsQuery query)
@@ -103,7 +104,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetOperatorRequestsDtosAsync(new OperatorRequestsQuery());
+            return Filter(await _creditRequestService.GetOperatorRequestsDtosAsync(new OperatorRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestViewModel> GetOperatorCreditRequests(OperatorCreditRequestsQuery query)
@@ -113,7 +114,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetOperatorRequests(new OperatorRequestsQuery());
+            return Filter(_creditRequestService.GetOperatorRequests(new OperatorRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestViewModel>> GetOperatorCreditRequestsAsync(OperatorCreditRequestsQuery query)
@@ -123,7 +124,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetOperatorRequestsAsync(new OperatorRequestsQuery());
+            return Filter(await _creditRequestService.GetOperatorRequestsAsync(new OperatorRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestDto> GetSecurityCreditRequestDtos(SecurityCreditRequestsQuery query)
@@ -133,7 +134,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetSecurityRequestsDtos(new SecurityRequestsQuery());
+            return Filter(_creditRequestService.GetSecurityRequestsDtos(new SecurityRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestDto>> GetSecurityCreditRequestDtosAsync(SecurityCreditRequestsQuery query)
@@ -143,7 +144,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetSecurityRequestsDtosAsync(new SecurityRequestsQuery());
+            return Filter(await _creditRequestService.GetSecurityRequestsDtosAsync(new SecurityRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestViewModel> GetSecurityCreditRequests(SecurityCreditRequestsQuery query)
@@ -153,7 +154,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetSecurityRequests(new SecurityRequestsQuery());
+            return Filter(_creditRequestService.GetSecurityRequests(new SecurityRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestViewModel>> GetSecurityCreditRequestsAsync(SecurityCreditRequestsQuery query)
@@ -163,7 +164,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetSecurityRequestsAsync(new SecurityRequestsQuery());
+            return Filter(await _creditRequestService.GetSecurityRequestsAsync(new SecurityRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestDto> GetCommiteeCreditRequestDtos(CommiteeCreditRequestsQuery query)
@@ -173,7 +174,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetCommiteeRequestsDtos(new CommiteeRequestsQuery());
+            return Filter(_creditRequestService.GetCommiteeRequestsDtos(new CommiteeRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestDto>> GetCommiteeCreditRequestDtosAsync(CommiteeCreditRequestsQuery query)
@@ -183,7 +184,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetCommiteeRequestsDtosAsync(new CommiteeRequestsQuery());
+            return Filter(await _creditRequestService.GetCommiteeRequestsDtosAsync(new CommiteeRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestViewModel> GetCommiteeCreditRequests(CommiteeCreditRequestsQuery query)
@@ -193,7 +194,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetCommiteeRequests(new CommiteeRequestsQuery());
+            return Filter(_creditRequestService.GetCommiteeRequests(new CommiteeRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestViewModel>> GetCommiteeCreditRequestsAsync(CommiteeCreditRequestsQuery query)
@@ -203,7 +204,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetCommiteeRequestsAsync(new CommiteeRequestsQuery());
+            return Filter(await _creditRequestService.GetCommiteeRequestsAsync(new CommiteeRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestDto> GetDepartmentCreditRequestDtos(DepartmentCreditRequestsQuery query)
@@ -213,7 +214,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetDepartmentRequestsDtos(new DepartmentRequestsQuery());
+            return Filter(_creditRequestService.GetDepartmentRequestsDtos(new DepartmentRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestDto>> GetDepartmentCreditRequestDtosAsync(DepartmentCreditRequestsQuery query)
@@ -223,7 +224,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestDto>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetDepartmentRequestsDtosAsync(new DepartmentRequestsQuery());
+            return Filter(await _creditRequestService.GetDepartmentRequestsDtosAsync(new DepartmentRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestViewModel> GetDepartmentCreditRequests(DepartmentCreditRequestsQuery query)
@@ -233,7 +234,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return _creditRequestService.GetDepartmentRequests(new DepartmentRequestsQuery());
+            return Filter(_creditRequestService.GetDepartmentRequests(new DepartmentRequestsQuery()), query);
         }
 
         public async Task<ListQueryResult<CreditRequestViewModel>> GetDepartmentCreditRequestsAsync(DepartmentCreditRequestsQuery query)
@@ -243,7 +244,7 @@ namespace BLL.Services.Employee
             {
                 return new ListQueryResult<CreditRequestViewModel>(query, null, false).From(rightsRes);
             }
-            return await _creditRequestService.GetDepartmentRequestsAsync(new DepartmentRequestsQuery());
+            return Filter(await _creditRequestService.GetDepartmentRequestsAsync(new DepartmentRequestsQuery()), query);
         }
 
         public ListQueryResult<CreditRequestDto> GetApprovedClientRequestDtos(ApprovedClientRequestsQuery query)
@@ -946,6 +947,36 @@ namespace BLL.Services.Employee
             };
             var json = JsonConvert.SerializeObject(data);
             return _signatureService.Sign(json, action.Employee.User.Key).Value;
+        }
+
+        private ListQueryResult<CreditRequestDto> Filter(ListQueryResult<CreditRequestDto> res,
+            CreditRequestsQuery query)
+        {
+            if (res.Value == null)
+            {
+                return new ListQueryResult<CreditRequestDto>(query, Enumerable.Empty<CreditRequestDto>());
+            }
+            var requests =
+                res.Value.Where(r => (!query.CreditTypeId.HasValue || query.CreditTypeId == r.CreditType.Id) &&
+                                     (!query.CreditSumCurrencyId.HasValue ||
+                                      query.CreditSumCurrencyId == r.CreditSum.Currency.Id) &&
+                                     (!query.MinCreditSumValue.HasValue || query.MinCreditSumValue <= r.CreditSum.Value));
+            return new ListQueryResult<CreditRequestDto>(query, requests);
+        }
+
+        private ListQueryResult<CreditRequestViewModel> Filter(ListQueryResult<CreditRequestViewModel> res,
+            CreditRequestsQuery query)
+        {
+            if (res.Value == null)
+            {
+                return new ListQueryResult<CreditRequestViewModel>(query, Enumerable.Empty<CreditRequestViewModel>());
+            }
+            var requests =
+                res.Value.Where(r => (!query.CreditTypeId.HasValue || query.CreditTypeId == r.CreditType.Id) &&
+                                     (!query.CreditSumCurrencyId.HasValue ||
+                                      query.CreditSumCurrencyId == r.CreditSum.Currency.Id) &&
+                                     (!query.MinCreditSumValue.HasValue || query.MinCreditSumValue <= r.CreditSum.Value));
+            return new ListQueryResult<CreditRequestViewModel>(query, requests);
         }
     }
 }
