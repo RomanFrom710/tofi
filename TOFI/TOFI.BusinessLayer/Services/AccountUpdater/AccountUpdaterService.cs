@@ -15,7 +15,7 @@ using TOFI.TransferObjects.Model.Queries;
 
 namespace BLL.Services.AccountUpdater
 {
-    public class AccountUpdaterService : Service
+    public class AccountUpdaterService : IAccountUpdaterService
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -222,6 +222,11 @@ namespace BLL.Services.AccountUpdater
         {
             var totalDebtRemaining = accountState.RemainDebt.Value;
             return totalDebtRemaining / (accountState.CreditAccount.TotalMonthDuration - accountState.Month);
+        }
+
+        public void Dispose()
+        {
+            
         }
 
         #endregion
