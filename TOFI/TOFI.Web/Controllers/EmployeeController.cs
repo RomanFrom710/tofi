@@ -190,8 +190,9 @@ namespace TOFI.Web.Controllers
         public ActionResult CashierPaymentApprove(AddPaymentCommand command)
         {
             if (command == null) return RedirectToAction("CashierGetCreditAccounts");
+            command.EmployeeId =
+                _employeeService.GetEmployee(EmployeeQuery.WithUserId(int.Parse(User.Identity.GetUserId()))).Value.Id;
             _employeeService.AddPayment(command);
-            command.EmployeeId = int.Parse(User.Identity.GetUserId());
             var account = _creditAccountService.GetActualAccountStateDto(new ActualCreditAccountStateQuery()
             {
                 Id = command.CreditAccountId
