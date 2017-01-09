@@ -138,6 +138,10 @@
       <Project>{12d792cb-c027-4244-b9e0-9f33743dade3}</Project>
       <Name>TOFI.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TOFI.Providers\TOFI.Providers.csproj">
+      <Project>{38f5918c-366b-41e5-bc91-aac293218193}</Project>
+      <Name>TOFI.Providers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TOFI.TransferObjects\TOFI.TransferObjects.csproj">
       <Project>{16c9f8f2-41fb-4fb1-9a2e-f976dfdf1352}</Project>
       <Name>TOFI.TransferObjects</Name>

@@ -9,6 +9,7 @@ using DAL.Models.Credits.BankCredits.CreditRequirements;
 using DAL.Models.Credits.BankCredits.CreditTypes;
 using System.Collections.Generic;
 using DAL.Models.Employee;
+using TOFI.Providers;
 
 namespace DAL.Migrations
 {
@@ -127,21 +128,24 @@ namespace DAL.Migrations
                 }
             };
 
+            var salt = SecurityProvider.GetNewSalt();
             var testUser = new UserModel
             {
                 Username = "test@test.test",
                 Email = "test@test.test",
                 FirstName = "Test",
                 LastName = "Testovich",
+                Key = SignatureProvider.GenerateNewKey(),
                 Auth = new AuthModel
                 {
-                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                    PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                    Salt = salt,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true
                 }
             };
-            
+
+            salt = SecurityProvider.GetNewSalt();
             var employees = new List<UserModel>()
             {
                 new UserModel
@@ -150,10 +154,11 @@ namespace DAL.Migrations
                     Email = "empl@empl.empl",
                     FirstName = "Employee",
                     LastName = "Employevich",
+                    Key = SignatureProvider.GenerateNewKey(),
                     Auth = new AuthModel
                     {
-                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                        Salt = salt,
                         SecurityStamp = Guid.NewGuid().ToString(),
                         LockoutEnabled = true
                     },
@@ -168,10 +173,11 @@ namespace DAL.Migrations
                     Email = "cashier@gmail.com",
                     FirstName = "Cashier",
                     LastName = "Cashierovich",
+                    Key = SignatureProvider.GenerateNewKey(),
                     Auth = new AuthModel
                     {
-                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                        Salt = salt,
                         SecurityStamp = Guid.NewGuid().ToString(),
                         LockoutEnabled = true
                     },
@@ -186,10 +192,11 @@ namespace DAL.Migrations
                     Email = "operator@gmail.com",
                     FirstName = "Operator",
                     LastName = "Operatorovich",
+                    Key = SignatureProvider.GenerateNewKey(),
                     Auth = new AuthModel
                     {
-                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                        Salt = salt,
                         SecurityStamp = Guid.NewGuid().ToString(),
                         LockoutEnabled = true
                     },
@@ -204,10 +211,11 @@ namespace DAL.Migrations
                     Email = "committee@gmail.com",
                     FirstName = "Committee",
                     LastName = "committeevich",
+                    Key = SignatureProvider.GenerateNewKey(),
                     Auth = new AuthModel
                     {
-                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                        Salt = salt,
                         SecurityStamp = Guid.NewGuid().ToString(),
                         LockoutEnabled = true
                     },
@@ -222,10 +230,11 @@ namespace DAL.Migrations
                     Email = "depchef@gmail.com",
                     FirstName = "Depchef",
                     LastName = "Depchefovich",
+                    Key = SignatureProvider.GenerateNewKey(),
                     Auth = new AuthModel
                     {
-                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                        Salt = salt,
                         SecurityStamp = Guid.NewGuid().ToString(),
                         LockoutEnabled = true
                     },
@@ -240,10 +249,11 @@ namespace DAL.Migrations
                     Email = "security@gmail.com",
                     FirstName = "Security",
                     LastName = "Securitievich",
+                    Key = SignatureProvider.GenerateNewKey(),
                     Auth = new AuthModel
                     {
-                        PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                        Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                        PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                        Salt = salt,
                         SecurityStamp = Guid.NewGuid().ToString(),
                         LockoutEnabled = true
                     },
@@ -253,17 +263,19 @@ namespace DAL.Migrations
                     }
                 },
             };
-            
+
+            salt = SecurityProvider.GetNewSalt();
             var adminUser = new UserModel
             {
                 Username = "admin@admin.admin",
                 Email = "admin@admin.admin",
                 FirstName = "Admin",
                 LastName = "Adminovich",
+                Key = SignatureProvider.GenerateNewKey(),
                 Auth = new AuthModel
                 {
-                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                    PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                    Salt = salt,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true
                 },
@@ -273,16 +285,18 @@ namespace DAL.Migrations
                 }
             };
 
+            salt = SecurityProvider.GetNewSalt();
             var superUser = new UserModel
             {
                 Username = "super@super.super",
                 Email = "super@super.super",
                 FirstName = "Super",
                 LastName = "Superovich",
+                Key = SignatureProvider.GenerateNewKey(),
                 Auth = new AuthModel
                 {
-                    PasswordHash = "Vj6ZiT90kMnqcgg98gBL0qJ2GhHo2N1NnkPlSiZspDs=",
-                    Salt = "ReSAlajKUU2ZGYb0tLaNAw==",
+                    PasswordHash = SecurityProvider.ApplySalt("qwe123", salt),
+                    Salt = salt,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true
                 },
