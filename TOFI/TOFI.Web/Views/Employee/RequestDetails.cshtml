@@ -88,7 +88,7 @@
             <label>Решение</label>
             <div class="radio">
                 <label>
-                    <input type="radio" name="Approved" value="true"/>
+                    <input type="radio" name="Approved" value="true" checked/>
                     Подтвердить
                 </label>
             </div>
@@ -98,9 +98,9 @@
                     Отвергнуть
                 </label>
             </div>
-            @Html.TextArea("Comments", new { @class = "form-control" })
+            @Html.TextArea("Comments", new { @class = "form-control", required = "required" })
 
-            <button type="submit" class="btn btn-primary">Утвердить</button>
+            <button type="submit" class="btn btn-primary" required onclick="return confirm('Вы действительно хотите ' + ($('input:checked').attr('value') === 'true' ? 'подтвердить' : 'отклонить') + ' заявку?')">Утвердить</button>
         }
     </div>
     <div class="col-md-4">
