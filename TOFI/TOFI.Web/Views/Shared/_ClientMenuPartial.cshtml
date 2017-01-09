@@ -16,6 +16,9 @@
                 <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AddCredit" ? "active" : "")">
                     @Html.ActionLink("Новый кредит", "AddCredit", "Client")
                 </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ChooseCredits" ? "active" : "")">
+                    @Html.ActionLink("Подбор кредита", "ChooseCredits", "Client")
+                </li>
                 <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CreditRequests" ? "active" : "")">
                     @Html.ActionLink("Заявки", "CreditRequests", "Client")
                 </li>

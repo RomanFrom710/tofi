@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BLL.Services.Credits.BankCredits.CreditTypes.ViewModels.CreditTypeViewModel>
+
+@{
+    ViewBag.Title = "Подбор кредита";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_ClientMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+        
+        <div class="col-md-9">
+            @using (Html.BeginForm("ChooseCredits", "Client", FormMethod.Get))
+            {
+                <div class="form-group">
+                    <label for="month-duration">
+                        Желаемое количество месяцев
+                    </label>
+                    <input type="number" id="month-duration" name="MonthDuration" value="@ViewBag.Query.MonthDuration" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="credit-sum-value">Сумма кредита</label>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <input type="number" id="credit-sum-value" name="CreditSumValue" value="@ViewBag.Query.CreditSumValue" class="form-control" required />
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownList("CreditSumCurrencyId", (IEnumerable<SelectListItem>)ViewBag.Currency, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Поиск" />
+                </div>
+            }
+        </div>
+        @if (Model != null)
+        {
+            if (!Model.Any())
+            {
+                <p style="clear: both;">Нет кредитов, удовлетворяющих заданным условиям.</p>
+            }
+            foreach (var creditType in Model)
+            {
+                <div class="col-md-6">
+                    @Html.Partial("_CreditTypePartial", creditType)
+                    @Html.ActionLink("Оформить", "AddCredit", "Client", new { creditTypeId = creditType.Id }, new { @class="btn btn-primary" })
+                </div>
+            }
+        }
+    </div>
+</div>

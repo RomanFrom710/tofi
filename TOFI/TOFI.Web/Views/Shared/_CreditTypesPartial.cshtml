@@ -3,40 +3,6 @@
 
 @foreach (var creditType in Model)
 {
-    <h4>@creditType.Name</h4>
-    <p>@creditType.Description</p>
-    <h5>Требования</h5>
-    <table class="table table-striped">
-        <tbody>
-            @foreach (var creditRequirement in creditType.CreditRequirements)
-            {
-                <tr>
-                    <td>@creditRequirement.Description</td>
-                    <td>@creditRequirement.ExpectedValue</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <h5>Условия</h5>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Срок</th>
-                <th>Сумма</th>
-                <th>Валюта</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var creditCondition in creditType.CreditConditions)
-            {
-                <tr>
-                    <td>@creditCondition.MonthDurationFrom - @creditCondition.MonthDurationTo месяцев</td>
-                    <td>@creditCondition.MinCreditSum.Value - @creditCondition.MaxCreditSum.Value</td>
-                    <td>@creditCondition.MinCreditSum.Currency.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @Html.Partial("_CreditTypePartial", creditType)
     <hr/>
 }
