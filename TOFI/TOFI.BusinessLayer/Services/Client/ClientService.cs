@@ -87,10 +87,10 @@ namespace BLL.Services.Client
                     if (condition.MonthDurationFrom > query.MonthDuration ||
                         query.MonthDuration > condition.MonthDurationTo)
                         continue;
-                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSumCurrencyId)
                         continue;
-                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
-                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                    if (condition.MinCreditSum.Value > query.CreditSumValue ||
+                        query.CreditSumValue > condition.MaxCreditSum.Value)
                         continue;
                     return true;
                 }
@@ -113,10 +113,10 @@ namespace BLL.Services.Client
                     if (condition.MonthDurationFrom > query.MonthDuration ||
                         query.MonthDuration > condition.MonthDurationTo)
                         continue;
-                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSumCurrencyId)
                         continue;
-                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
-                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                    if (condition.MinCreditSum.Value > query.CreditSumValue ||
+                        query.CreditSumValue > condition.MaxCreditSum.Value)
                         continue;
                     return true;
                 }
@@ -139,10 +139,10 @@ namespace BLL.Services.Client
                     if (condition.MonthDurationFrom > query.MonthDuration ||
                         query.MonthDuration > condition.MonthDurationTo)
                         continue;
-                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSumCurrencyId)
                         continue;
-                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
-                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                    if (condition.MinCreditSum.Value > query.CreditSumValue ||
+                        query.CreditSumValue > condition.MaxCreditSum.Value)
                         continue;
                     return true;
                 }
@@ -165,10 +165,10 @@ namespace BLL.Services.Client
                     if (condition.MonthDurationFrom > query.MonthDuration ||
                         query.MonthDuration > condition.MonthDurationTo)
                         continue;
-                    if (condition.MinCreditSum.Currency.Id != query.CreditSum.Currency.Id)
+                    if (condition.MinCreditSum.Currency.Id != query.CreditSumCurrencyId)
                         continue;
-                    if (condition.MinCreditSum.Value > query.CreditSum.Value ||
-                        query.CreditSum.Value > condition.MaxCreditSum.Value)
+                    if (condition.MinCreditSum.Value > query.CreditSumValue ||
+                        query.CreditSumValue > condition.MaxCreditSum.Value)
                         continue;
                     return true;
                 }
