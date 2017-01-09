@@ -77,11 +77,11 @@
     <Compile Include="Result\ValueResult.cs" />
     <Compile Include="Services\Actions\ActionViewModel.cs" />
     <Compile Include="Services\Actions\PaymentAction\ViewModels\PaymentActionViewModel.cs" />
-    <Compile Include="Services\Actions\RequestAction\AuthService.cs" />
-    <Compile Include="Services\Actions\RequestAction\IAuthService.cs" />
+    <Compile Include="Services\Actions\RequestAction\RequestActionService.cs" />
+    <Compile Include="Services\Actions\RequestAction\IRequestActionService.cs" />
     <Compile Include="Services\Actions\RequestAction\ViewModels\RequestActionViewModel.cs" />
-    <Compile Include="Services\Actions\PaymentAction\AuthService.cs" />
-    <Compile Include="Services\Actions\PaymentAction\IAuthService.cs" />
+    <Compile Include="Services\Actions\PaymentAction\PaymentActionService.cs" />
+    <Compile Include="Services\Actions\PaymentAction\IPaymentActionService.cs" />
     <Compile Include="Services\Auth\AuthService.cs" />
     <Compile Include="Services\Auth\IAuthService.cs" />
     <Compile Include="Services\Auth\ViewModels\AuthViewModel.cs" />
