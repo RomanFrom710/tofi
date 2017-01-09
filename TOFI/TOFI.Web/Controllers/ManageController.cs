@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BLL.Services.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using TOFI.TransferObjects.User.Queries;
 using TOFI.Web.Infrastructure;
 using TOFI.Web.Models;
 
@@ -92,6 +94,40 @@ namespace TOFI.Web.Controllers
             TempData["PassNotChanged"] = true;
             AddErrors(result);
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ChangeEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangeEmail(ChangeEmailViewModel newEmail)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(newEmail);
+            }
+            var userService = DependencyResolver.Current.GetService<IUserService>();
+            var user = userService
+                    .GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
+            if (user.Email == newEmail?.NewEmail)
+            {
+                ModelState.AddModelError("", "Это ваш текущий e-mail! Введите другой");
+            }
+
+            user.Email = newEmail.NewEmail;
+            user.EmailConfirmed = false;
+            userService.UpdateModel(user);
+
+            var userId = User.Identity.GetUserId();
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = userId, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userId, "Подтверждение аккаунта", "Для активации своего аккаунта перейдите, пожалуйста, по <a href=\"" + callbackUrl + "\">ссылке</a>");
+
+            ViewBag.Success = true;
+            return View();
         }
 
         protected override void Dispose(bool disposing)

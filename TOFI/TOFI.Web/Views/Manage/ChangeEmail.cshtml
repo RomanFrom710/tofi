@@ -1,0 +1,32 @@
+﻿@model TOFI.Web.Models.ChangeEmailViewModel
+
+@{
+    ViewBag.Title = "Операции с электронной почтой";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_ClientMenuPartial")
+    </div>
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewEmail) 
+                    @Html.TextBoxFor(model => model.NewEmail, new { @class = "form-control", placeholder = "Новый e-mail" })
+                    @Html.ValidationMessageFor(model => model.NewEmail, String.Empty, new { @class = "text-danger" })
+                </div>
+
+            <button class="btn btn-primary" type="submit">Сохранить</button>
+
+            <p style="color: green" @(ViewBag.Success ?? "hidden")>Адрес электронной почты был успешно изменен! Вам отпралено письмо для подтверждения.</p>
+        }
+    </div>
+</div>
