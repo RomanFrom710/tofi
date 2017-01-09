@@ -8,11 +8,11 @@
     <ul class="nav navbar-nav navbar-right">
         @if (User.IsInRole("admin"))
         {
-            <li>@Html.ActionLink("Одменка", "Index", "Admin")</li>
+            <li>@Html.ActionLink("Администрирование", "Index", "Admin")</li>
         }
         @if (User.IsInRole("employee"))
         {
-            <li>@Html.ActionLink("Аппрувалка", "Index", "Employee")</li>
+            <li>@Html.ActionLink("Просмотр заявок", "Index", "Employee")</li>
         }
         <li>
             @Html.ActionLink(User.Identity.GetUserName(), "Index", "Client", null, new { title = "Управление" })
