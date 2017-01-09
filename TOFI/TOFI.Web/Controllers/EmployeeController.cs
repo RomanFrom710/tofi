@@ -194,7 +194,8 @@ namespace TOFI.Web.Controllers
             {
                 Id = command.CreditAccountId
             });
-            return RedirectToAction("CashierGetCreditAccounts", account.Value.CreditAccount.CreditAgreementNumber);
+            return RedirectToAction("CashierGetCreditAccounts", "Employee",
+                new {agreementNumber = account.Value.CreditAccount.CreditAgreementNumber});
         }
 
 
