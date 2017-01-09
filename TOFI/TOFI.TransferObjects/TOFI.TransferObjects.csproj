@@ -49,6 +49,7 @@
     <Compile Include="Client\Enums\Sex.cs" />
     <Compile Include="Client\Queries\ClientAccountsQuery.cs" />
     <Compile Include="Client\Queries\ClientQuery.cs" />
+    <Compile Include="Client\Queries\SelectCreditTypesQuery.cs" />
     <Compile Include="Common\Currency\DataObjects\CurrencyDto.cs" />
     <Compile Include="Common\Price\DataObjects\PriceDto.cs" />
     <Compile Include="Client\DataObjects\ClientDto.cs" />
