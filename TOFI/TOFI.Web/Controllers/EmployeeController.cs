@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using AutoMapper;
+using BLL.Services.Common.Price.ViewModels;
+using BLL.Services.Credits.CreditAccount;
+using BLL.Services.Credits.CreditAccountState.ViewModels;
 using BLL.Services.Credits.CreditRequest;
 using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Employee;
 using BLL.Services.Employee.ViewModels;
 using Microsoft.AspNet.Identity;
+using TOFI.TransferObjects.Common.Price.DataObjects;
+using TOFI.TransferObjects.Credits.CreditAccount.Queries;
 using TOFI.TransferObjects.Employee.Commands;
 using TOFI.TransferObjects.Employee.Queries;
 using TOFI.TransferObjects.Model.Queries;
@@ -18,12 +24,15 @@ namespace TOFI.Web.Controllers
     {
         private readonly IEmployeeService _employeeService;
         private readonly ICreditRequestService _creditRequestService;
+        private readonly ICreditAccountService _creditAccountService;
 
         public EmployeeController(IEmployeeService employeeService,
-                                  ICreditRequestService creditRequestService)
+                                  ICreditRequestService creditRequestService,
+                                  ICreditAccountService creditAccountService)
         {
             _employeeService = employeeService;
             _creditRequestService = creditRequestService;
+            _creditAccountService = creditAccountService;
         }
 
         public ActionResult Index()
@@ -158,6 +167,36 @@ namespace TOFI.Web.Controllers
             });
             return RedirectToAction("OperatorFinal", new { requests, passportNumber });
         }
+
+        [Authorize(Roles = "cashier")]
+        [HttpGet]
+        public ActionResult CashierGetCreditAccounts(string agreementNumber)
+        {
+            if (agreementNumber != null)
+            {
+                var res =  _creditAccountService.GetActualAccountStateDto(new ActualCreditAccountStateQuery()
+                {
+                    AgreementNumber = agreementNumber
+                }).Value;
+                ViewBag.agreementNumber = agreementNumber;
+                return View(Mapper.Map<CreditAccountStateViewModel>(res));
+            }
+            ViewBag.agreementNumber = string.Empty;
+            return View();
+        }
+
+        [Authorize(Roles = "cashier")]
+        [HttpPost]
+        public ActionResult CashierPaymentApprove(AddPaymentCommand command)
+        {
+            command.EmployeeId = int.Parse(User.Identity.GetUserId());
+            var account = _creditAccountService.GetActualAccountStateDto(new ActualCreditAccountStateQuery()
+            {
+                Id = command.CreditAccountId
+            });
+            return RedirectToAction("CashierGetCreditAccounts", account.Value.CreditAccount.CreditAgreementNumber);
+        }
+
 
         private EmployeeViewModel GetEmployee()
         {
