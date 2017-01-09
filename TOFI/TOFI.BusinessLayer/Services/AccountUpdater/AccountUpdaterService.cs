@@ -223,7 +223,7 @@ namespace BLL.Services.AccountUpdater
 
         private static bool ShouldAccountUpdate(CreditAccountDto account, DateTime today)
         {
-            return account.AgreementDate.Date != today && account.AgreementDate.Day == today.Day;
+            return account.AgreementDate.Date != today.Date && account.AgreementDate.Day == today.Day;
         }
 
         private static decimal GetDebtForMonth(CreditAccountStateDto accountState)

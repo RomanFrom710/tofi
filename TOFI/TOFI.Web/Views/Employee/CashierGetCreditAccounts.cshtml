@@ -38,8 +38,11 @@
                     <th>Кредитное предложение</th>
                     <th>Валюта</th>
                     <th>Ставка, % год.</th>
-                    <th>Основной долг</th>
-                    <th>Остаток по задолженности</th>
+                    <th>Осталось</th>
+                    <th>Долг за месяцы</th>
+                    <th>Всего</th>
+                    <th>Пеня</th>
+                    <th>Невыплаченные проценты</th>
                 </tr>
                 </thead>
                 <tr>
@@ -58,15 +61,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => modelItem.CreditAccount.Currency.Name)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => modelItem.CreditAccount.CreditType.InterestRate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => modelItem.MainDebtRemain.Value)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => modelItem.RemainDebt.Value)
-                    </td>
+                    <td>@(Model.CreditAccount.CreditType.InterestRate*100)</td>
+                    <td>@Model.RemainDebt.Value</td>
+                    <td>@Model.MainDebtRemain.Value</td>
+                    <td>@Model.CreditAccount.CreditRequest.CreditSum.Value</td>
+                    <td>@Model.FinesForOverdue.Value</td>
+                    <td>@Model.TotalInterestSumNotPaid.Value</td>
 
                     <td></td>
                 </tr>
@@ -75,7 +75,6 @@
             @Html.Partial("_PaymentPartial", new AddPaymentCommand()
                {
                    CreditAccountId = Model.CreditAccount.Id,
-                   EmployeeId = int.Parse(User.Identity.GetUserId()),
                    PaymentSum = new PriceDto()
                    {
                        Value = 0,
