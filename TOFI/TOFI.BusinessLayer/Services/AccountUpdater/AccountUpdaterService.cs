@@ -53,7 +53,142 @@ namespace BLL.Services.AccountUpdater
             return new ServiceResult(true);
         }
 
+        public ServiceResult UpdateAccount(int creditAccountId, DateTime specifiedDate)
+        {
+            try
+            {
+                Logger.Info("UpdateAccounts called");
+                UpdateAccount(creditAccountId, specifiedDate);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Failed to update accounts: {ex.Message}");
+                return new ServiceResult(false).Error($"Failed to update accounts: {ex.Message}", ex);
+            }
+            return new ServiceResult(true);
+        }
+
+        private void UpdateAccountInternal(int creditAccountId, DateTime specifiedDate)
+        {
+            var newCreditAccountState = UpdateFinesAndGetAccountState(creditAccountId, specifiedDate);
+            if (newCreditAccountState != null)
+            {
+                var createModelCommand = new CreateModelCommand<CreditAccountStateDto>()
+                {
+                    ModelDto = newCreditAccountState
+                };
+                _creditAccountStateCommandRepository.Execute(createModelCommand);
+            }
+        }
+
         #region Private Methods
+
+        private CreditAccountStateDto UpdateFinesAndGetAccountState(int creditAccountId, DateTime specifiedDate)
+        {
+            var query = new ModelQuery()
+            {
+                Id = creditAccountId
+            };
+            var account = _creditAccountQueryRepository.Handle(query);
+            var latestCreditAccountStateQuery = new ActualCreditAccountStateQuery()
+            {
+                CreditAccountId = account.Id
+            };
+            var latestCreditAccountState = _creditAccountQueryRepository.Handle(latestCreditAccountStateQuery);
+            var creditAccountPaymentsQuery = new CreditPaymentsQuery()
+            {
+                CreditAccountId = account.Id
+            };
+            var latestCreditAccountStateDate = account.AgreementDate.AddMonths(latestCreditAccountState.Month);
+            var accountPayments = _creditAccountQueryRepository.Handle(creditAccountPaymentsQuery);
+            var paymentsForLatestPeriod = accountPayments.Where(p => latestCreditAccountStateDate < p.Timestamp);
+
+            // S
+            var sumPaidForLatestPeriod = paymentsForLatestPeriod.Sum(p => p.PaymentSum.Value);
+            // Z
+            var totalDebtRemaining = latestCreditAccountState.RemainDebt.Value;
+            // A
+            var debtForMonth = GetDebtForMonth(latestCreditAccountState);
+            if (latestCreditAccountState.MainDebtRemain.Value > sumPaidForLatestPeriod)
+            {
+                var finesForOverdue = latestCreditAccountState.FinesForOverdue;
+                finesForOverdue.Value += account.CreditType.FineInterest *
+                                         latestCreditAccountState.MainDebtRemain.Value;
+                var updateFinesCommand = new UpdateModelCommand<PriceDto>()
+                {
+                    ModelDto = finesForOverdue
+                };
+                _priceCommandRepository.Execute(updateFinesCommand);
+            }
+            if (ShouldAccountUpdate(account, specifiedDate))
+            {
+                var previousFinesForOverdue = latestCreditAccountState.FinesForOverdue;
+                var accountCurrency = account.Currency;
+
+
+                // B
+                var interestForMonth = (decimal)account.CreditType.InterestRate / 12 * totalDebtRemaining;
+                var totalInterestNotPaid = latestCreditAccountState.TotalInterestSumNotPaid.Value;
+
+                var newTotalDebtRemaining = totalDebtRemaining;
+                var newTotalInterestNotPaid = totalInterestNotPaid;
+                var mainDebtRemain = latestCreditAccountState.MainDebtRemain.Value;
+                if (sumPaidForLatestPeriod < debtForMonth + mainDebtRemain)
+                {
+                    newTotalDebtRemaining -= sumPaidForLatestPeriod;
+                    newTotalDebtRemaining += debtForMonth;
+                    newTotalInterestNotPaid += interestForMonth;
+                    mainDebtRemain = debtForMonth + mainDebtRemain - sumPaidForLatestPeriod;
+                }
+                else if (sumPaidForLatestPeriod <
+                         debtForMonth + mainDebtRemain + totalInterestNotPaid + interestForMonth)
+                {
+                    newTotalDebtRemaining -= debtForMonth + mainDebtRemain;
+                    newTotalInterestNotPaid += interestForMonth -
+                                               (sumPaidForLatestPeriod - debtForMonth - mainDebtRemain);
+                    mainDebtRemain = 0m;
+                }
+                else
+                {
+                    newTotalInterestNotPaid = 0m;
+                    newTotalDebtRemaining -= sumPaidForLatestPeriod - interestForMonth - totalInterestNotPaid;
+                    mainDebtRemain = 0m;
+                }
+
+                var newCreditAccountState = new CreditAccountStateDto()
+                {
+                    CreditAccount = account,
+                    Month = latestCreditAccountState.Month + 1,
+                    FinesForOverdue = new PriceDto()
+                    {
+                        Currency = accountCurrency,
+                        Value = previousFinesForOverdue.Value
+                    },
+                    InterestCounted = new PriceDto()
+                    {
+                        Currency = accountCurrency,
+                        Value = interestForMonth
+                    },
+                    RemainDebt = new PriceDto()
+                    {
+                        Currency = accountCurrency,
+                        Value = newTotalDebtRemaining + previousFinesForOverdue.Value
+                    },
+                    TotalInterestSumNotPaid = new PriceDto()
+                    {
+                        Currency = accountCurrency,
+                        Value = newTotalInterestNotPaid
+                    },
+                    MainDebtRemain = new PriceDto()
+                    {
+                        Currency = accountCurrency,
+                        Value = mainDebtRemain
+                    }
+                };
+                return newCreditAccountState;
+            }
+            return null;
+        }
 
         private void UpdateAccountsInternal(DateTime specifiedDate)
         {
@@ -62,101 +197,9 @@ namespace BLL.Services.AccountUpdater
             var creditAccountsStates = new List<CreditAccountStateDto>();
             foreach (var account in accounts)
             {
-                var latestCreditAccountStateQuery = new ActualCreditAccountStateQuery()
+                var newCreditAccountState = UpdateFinesAndGetAccountState(account.Id, specifiedDate);
+                if (newCreditAccountState != null)
                 {
-                    CreditAccountId = account.Id
-                };
-                var latestCreditAccountState = _creditAccountQueryRepository.Handle(latestCreditAccountStateQuery);
-                var creditAccountPaymentsQuery = new CreditPaymentsQuery()
-                {
-                    CreditAccountId = account.Id
-                };
-                var latestCreditAccountStateDate = account.AgreementDate.AddMonths(latestCreditAccountState.Month);
-                var accountPayments = _creditAccountQueryRepository.Handle(creditAccountPaymentsQuery);
-                var paymentsForLatestPeriod = accountPayments.Where(p => latestCreditAccountStateDate < p.Timestamp);
-
-                // S
-                var sumPaidForLatestPeriod = paymentsForLatestPeriod.Sum(p => p.PaymentSum.Value);
-                // Z
-                var totalDebtRemaining = latestCreditAccountState.RemainDebt.Value;
-                // A
-                var debtForMonth = GetDebtForMonth(latestCreditAccountState);
-                if (latestCreditAccountState.MainDebtRemain.Value > sumPaidForLatestPeriod)
-                {
-                    var finesForOverdue = latestCreditAccountState.FinesForOverdue;
-                    finesForOverdue.Value += account.CreditType.FineInterest *
-                                             latestCreditAccountState.MainDebtRemain.Value;
-                    var updateFinesCommand = new UpdateModelCommand<PriceDto>()
-                    {
-                        ModelDto = finesForOverdue
-                    };
-                    _priceCommandRepository.Execute(updateFinesCommand);
-                }
-                if (ShouldAccountUpdate(account, specifiedDate))
-                {
-                    var previousFinesForOverdue = latestCreditAccountState.FinesForOverdue;
-                    var accountCurrency = account.Currency;
-
-
-                    // B
-                    var interestForMonth = (decimal)account.CreditType.InterestRate / 12 * totalDebtRemaining;
-                    var totalInterestNotPaid = latestCreditAccountState.TotalInterestSumNotPaid.Value;
-
-                    var newTotalDebtRemaining = totalDebtRemaining;
-                    var newTotalInterestNotPaid = totalInterestNotPaid;
-                    var mainDebtRemain = latestCreditAccountState.MainDebtRemain.Value;
-                    if (sumPaidForLatestPeriod < debtForMonth + mainDebtRemain)
-                    {
-                        newTotalDebtRemaining -= sumPaidForLatestPeriod;
-                        newTotalDebtRemaining += debtForMonth;
-                        newTotalInterestNotPaid += interestForMonth;
-                        mainDebtRemain = debtForMonth + mainDebtRemain - sumPaidForLatestPeriod;
-                    }
-                    else if (sumPaidForLatestPeriod <
-                             debtForMonth + mainDebtRemain + totalInterestNotPaid + interestForMonth)
-                    {
-                        newTotalDebtRemaining -= debtForMonth + mainDebtRemain;
-                        newTotalInterestNotPaid += interestForMonth -
-                                                   (sumPaidForLatestPeriod - debtForMonth - mainDebtRemain);
-                        mainDebtRemain = 0m;
-                    }
-                    else
-                    {
-                        newTotalInterestNotPaid = 0m;
-                        newTotalDebtRemaining -= sumPaidForLatestPeriod - interestForMonth - totalInterestNotPaid;
-                        mainDebtRemain = 0m;
-                    }
-
-                    var newCreditAccountState = new CreditAccountStateDto()
-                    {
-                        CreditAccount = account,
-                        Month = latestCreditAccountState.Month + 1,
-                        FinesForOverdue = new PriceDto()
-                        {
-                            Currency = accountCurrency,
-                            Value = previousFinesForOverdue.Value
-                        },
-                        InterestCounted = new PriceDto()
-                        {
-                            Currency = accountCurrency,
-                            Value = interestForMonth
-                        },
-                        RemainDebt = new PriceDto()
-                        {
-                            Currency = accountCurrency,
-                            Value = newTotalDebtRemaining + previousFinesForOverdue.Value
-                        },
-                        TotalInterestSumNotPaid = new PriceDto()
-                        {
-                            Currency = accountCurrency,
-                            Value = newTotalInterestNotPaid
-                        },
-                        MainDebtRemain = new PriceDto()
-                        {
-                            Currency = accountCurrency,
-                            Value = mainDebtRemain
-                        }
-                    };
                     creditAccountsStates.Add(newCreditAccountState);
                 }
             }
