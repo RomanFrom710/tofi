@@ -1,8 +1,12 @@
-﻿@model IEnumerable<BLL.Services.Credits.CreditRequest.ViewModels.CreditRequestViewModel>
+﻿@using System.Collections
+@model IEnumerable<BLL.Services.Credits.CreditRequest.ViewModels.CreditRequestViewModel>
 
 @{
     ViewBag.Title = "Необработанные заявки на кредит";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Currency = (new[] {new SelectListItem {Text = "Валюта...", Value = string.Empty}}).Concat((IEnumerable<SelectListItem>) ViewBag.Currency);
+    ViewBag.CreditTypes = new[] {new SelectListItem {Text = "Тип кредита...", Value = string.Empty}}.Concat((IEnumerable<SelectListItem>)ViewBag.CreditTypes);
 }
 
 <div class="row">
@@ -12,40 +16,53 @@
     <div class="col-md-9">
         <h2>@ViewBag.Title</h2>
 
-        @foreach (var request in Model)
+        @using (Html.BeginForm((string)ViewBag.EmployeeType, "Employee", FormMethod.Get, new { @class = "form-inline" }))
         {
-            <h3>@Html.ActionLink(request.Client.FullName, "RequestDetails", new { id = request.Id, type = ViewBag.EmployeeType })</h3>
-            <dl>
-                <dd>Тип кредита</dd>
-                <dt>@request.CreditType.Name</dt>
-            </dl>
-            <dl>
-                <dd>Цель кредита</dd>
-                <dt>@request.CreditPurpose</dt>
-            </dl>
-            <dl>
-                <dd>Сумма</dd>
-                <dt>@request.CreditSum.Value @request.CreditSum.Currency.Name</dt>
-            </dl>
-            <dl>
-                <dd>Период (месяцев)</dd>
-                <dt>@request.MonthDuration</dt>
-            </dl>
-            <dl>
-                <dd>Назначена на меня</dd>
-                <dt>
-                    @if (request.LatestEmployeeHandledBy != null)
-                    {
-                        <span class="yes">+</span>
-                    }
-                    else
-                    {
-                        <span class="no">-</span>
-                    }
-                </dt>
-            </dl>
-
-            <hr />
+            <label>
+                Минимальная сумма
+                <input type="number" name="MinCreditSumValue" class="form-control" value="@Request.QueryString["MinCreditSumValue"]" />
+            </label>
+            @Html.DropDownList("CreditSumCurrencyId", (IEnumerable<SelectListItem>)ViewBag.Currency, new { @class="form-control" })
+            @Html.DropDownList("CreditTypeId", (IEnumerable<SelectListItem>)ViewBag.CreditTypes, new { @class = "form-control" })
+            <button type="submit" class="btn btn-primary">Поиск</button>
         }
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ФИО</th>
+                <th>Тип кредита</th>
+                <th>Цель кредита</th>
+                <th>Сумма</th>
+                <th>Период (месяцев)</th>
+                <th>Назначена на меня</th>
+            </tr>
+            </thead>
+            <tbody>
+                @{ var index = 0; }
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td>@(++index)</td>
+                        <td>@Html.ActionLink(request.Client.FullName, "RequestDetails", new {id = request.Id, type = ViewBag.EmployeeType})</td>
+                        <td>@request.CreditType.Name</td>
+                        <td>@request.CreditPurpose</td>
+                        <td>@request.CreditSum.Value @request.CreditSum.Currency.Name</td>
+                        <td>@request.MonthDuration</td>
+                        <td>
+                            @if (request.LatestEmployeeHandledBy != null)
+                            {
+                                <span class="yes">+</span>
+                            }
+                            else
+                            {
+                                <span class="no">-</span>
+                            }
+                        </td>
+                    </tr>
+                    }
+            </tbody>
+        </table>
     </div>
 </div>

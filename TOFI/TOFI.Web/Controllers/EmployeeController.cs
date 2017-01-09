@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using BLL.Services.Common.Currency;
+using BLL.Services.Common.Currency.ViewModels;
+using BLL.Services.Credits.BankCredits.CreditTypes;
+using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Credits.CreditAccount;
 using BLL.Services.Credits.CreditAccountState.ViewModels;
 using BLL.Services.Credits.CreditRequest;
@@ -13,7 +18,6 @@ using TOFI.TransferObjects.Employee.Commands;
 using TOFI.TransferObjects.Employee.Queries;
 using TOFI.TransferObjects.Model.Queries;
 using TOFI.Web.Infrastructure;
-using System.Linq;
 
 namespace TOFI.Web.Controllers
 {
@@ -25,13 +29,21 @@ namespace TOFI.Web.Controllers
         private readonly ICreditRequestService _creditRequestService;
         private readonly ICreditAccountService _creditAccountService;
 
+        private readonly IEnumerable<CreditTypeViewModel> _creditTypes;
+        private readonly IEnumerable<CurrencyViewModel> _currencies;
+
         public EmployeeController(IEmployeeService employeeService,
+                                  ICurrencyService currencyService,
+                                  ICreditTypeService creditTypeService,
                                   ICreditRequestService creditRequestService,
                                   ICreditAccountService creditAccountService)
         {
             _employeeService = employeeService;
             _creditRequestService = creditRequestService;
             _creditAccountService = creditAccountService;
+
+            _currencies = currencyService.GetAllModels(new AllModelsQuery()).Value.ToArray();
+            _creditTypes = creditTypeService.GetAllModels(new AllModelsQuery()).Value.ToArray();
         }
 
         public ActionResult Index()
@@ -54,13 +66,19 @@ namespace TOFI.Web.Controllers
         
         [Authorize(Roles = "operator")]
         [HttpGet]
-        public ActionResult Operator()
+        public ActionResult Operator(OperatorCreditRequestsQuery query)
         {
             ViewBag.EmployeeType = "Operator";
 
+            ViewBag.Currency =
+                _currencies.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+            ViewBag.CreditTypes =
+                _creditTypes.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+
             var employee = GetEmployee();
+            query.EmployeeId = employee.Id;
             var requests =
-                _employeeService.GetOperatorCreditRequests(new OperatorCreditRequestsQuery {EmployeeId = employee.Id}).Value;
+                _employeeService.GetOperatorCreditRequests(query).Value;
             requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
@@ -79,13 +97,19 @@ namespace TOFI.Web.Controllers
 
         [Authorize(Roles = "security")]
         [HttpGet]
-        public ActionResult Security()
+        public ActionResult Security(SecurityCreditRequestsQuery query)
         {
             ViewBag.EmployeeType = "Security";
 
+            ViewBag.Currency =
+                _currencies.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+            ViewBag.CreditTypes =
+                _creditTypes.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+
             var employee = GetEmployee();
+            query.EmployeeId = employee.Id;
             var requests =
-                _employeeService.GetSecurityCreditRequests(new SecurityCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+                _employeeService.GetSecurityCreditRequests(query).Value;
             requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
@@ -104,13 +128,19 @@ namespace TOFI.Web.Controllers
 
         [Authorize(Roles = "committee member")]
         [HttpGet]
-        public ActionResult Committee()
+        public ActionResult Committee(CommiteeCreditRequestsQuery query)
         {
             ViewBag.EmployeeType = "Committee";
 
+            ViewBag.Currency =
+                _currencies.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+            ViewBag.CreditTypes =
+                _creditTypes.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+
             var employee = GetEmployee();
+            query.EmployeeId = employee.Id;
             var requests =
-                _employeeService.GetCommiteeCreditRequests(new CommiteeCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+                _employeeService.GetCommiteeCreditRequests(query).Value;
             requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
@@ -129,13 +159,19 @@ namespace TOFI.Web.Controllers
 
         [Authorize(Roles = "department chief")]
         [HttpGet]
-        public ActionResult Department()
+        public ActionResult Department(DepartmentCreditRequestsQuery query)
         {
             ViewBag.EmployeeType = "Department";
 
+            ViewBag.Currency =
+                _currencies.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+            ViewBag.CreditTypes =
+                _creditTypes.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+
             var employee = GetEmployee();
+            query.EmployeeId = employee.Id;
             var requests =
-                _employeeService.GetDepartmentCreditRequests(new DepartmentCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+                _employeeService.GetDepartmentCreditRequests(query).Value;
             requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
