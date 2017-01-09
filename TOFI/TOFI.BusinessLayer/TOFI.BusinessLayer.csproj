@@ -123,6 +123,8 @@
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\Signature\ISignatureService.cs" />
     <Compile Include="Services\Signature\SignatureService.cs" />
+    <Compile Include="Services\AccountUpdater\AccountUpdaterService.cs" />
+    <Compile Include="Services\AccountUpdater\IAccountUpdaterService.cs" />
     <Compile Include="Services\UserRole\IUserRoleService.cs" />
     <Compile Include="Services\UserRole\UserRoleService.cs" />
     <Compile Include="Services\User\IUserService.cs" />
@@ -130,7 +132,6 @@
     <Compile Include="Services\User\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Services\User\ViewModels\UserViewModel.cs" />
     <Compile Include="Services\ViewModel.cs" />
-    <Compile Include="Updater\AccountUpdaterService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TOFI.DataAccess\TOFI.DataAccess.csproj">

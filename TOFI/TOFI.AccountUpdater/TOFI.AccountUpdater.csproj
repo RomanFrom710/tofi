@@ -41,6 +41,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.4.1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
@@ -69,17 +73,9 @@
       <Project>{83E0CA30-658B-47BB-8431-C722E39CAD2D}</Project>
       <Name>TOFI.BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TOFI.DataAccess\TOFI.DataAccess.csproj">
-      <Project>{12d792cb-c027-4244-b9e0-9f33743dade3}</Project>
-      <Name>TOFI.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TOFI.TransferObjects\TOFI.TransferObjects.csproj">
-      <Project>{16C9F8F2-41FB-4FB1-9A2E-F976DFDF1352}</Project>
-      <Name>TOFI.TransferObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TOFI.Web\TOFI.Web.csproj">
-      <Project>{EF19289A-20D0-430A-9104-373A908ACBA4}</Project>
-      <Name>TOFI.Web</Name>
+    <ProjectReference Include="..\TOFI.DependencyInjection\TOFI.DependencyInjection.csproj">
+      <Project>{3e90398a-e2e3-4656-99e1-38fac57e96f8}</Project>
+      <Name>TOFI.DependencyInjection</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
