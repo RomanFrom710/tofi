@@ -100,7 +100,7 @@ namespace TOFI.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddCredit()
+        public ActionResult AddCredit(int? creditTypeId)
         {
             ViewBag.Currency = 
                 _currencies.Select(model => new SelectListItem {Value = model.Id.ToString(), Text = model.Name});
@@ -112,6 +112,7 @@ namespace TOFI.Web.Controllers
             {
                 CreditType = new CreditTypeViewModel
                 {
+                    Id = creditTypeId ?? 0,
                     CreditConditions = new List<CreditConditionViewModel>(),
                     CreditRequirements = new List<CreditRequirementViewModel>()
                 },
@@ -183,6 +184,20 @@ namespace TOFI.Web.Controllers
             var clientAccountsStates = GetClientAccountsStates(client);
             
             return View(clientAccountsStates);
+        }
+
+        public ActionResult ChooseCredits(SelectCreditTypesQuery query = null)
+        {
+            ViewBag.Currency =
+                _currencies.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+            ViewBag.Query = query ?? new SelectCreditTypesQuery();
+            if (string.IsNullOrEmpty(Request.Params["MonthDuration"]))
+            {
+                return View();
+            }
+
+            var types = _clientService.GetCreditTypes(query).Value;
+            return View(types);
         }
 
         private IEnumerable<CreditAccountStateViewModel> GetClientAccountsStates(ClientViewModel client)
