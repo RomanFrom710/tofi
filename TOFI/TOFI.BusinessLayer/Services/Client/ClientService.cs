@@ -105,30 +105,7 @@ namespace BLL.Services.Client
                 res.Add(new KeyValuePair<string, string>("", "Информация о клиенте не заполнена"));
                 return res;
             }
-            if (string.IsNullOrWhiteSpace(client.FirstName))
-                res.Add(new KeyValuePair<string, string>(nameof(client.FirstName), "Имя не указано"));
-            if (string.IsNullOrWhiteSpace(client.LastName))
-                res.Add(new KeyValuePair<string, string>(nameof(client.LastName), "Фамилия не указана"));
-            if (string.IsNullOrWhiteSpace(client.MiddleName))
-                res.Add(new KeyValuePair<string, string>(nameof(client.MiddleName), "Отчество не указано"));
-            if (string.IsNullOrWhiteSpace(client.Address))
-                res.Add(new KeyValuePair<string, string>(nameof(client.Address), "Адрес не указан"));
-            if (string.IsNullOrWhiteSpace(client.TelephoneNumber))
-                res.Add(new KeyValuePair<string, string>(nameof(client.TelephoneNumber), "Номер телефона не указан"));
-            if (string.IsNullOrWhiteSpace(client.PassportNumber))
-                res.Add(new KeyValuePair<string, string>(nameof(client.PassportNumber), "Серия и номер паспорта не указан"));
-            var clientRes = GetClient(new ClientQuery {PassportNumber = client.PassportNumber});
-            if (!clientRes.IsFailed && clientRes.Value != null && clientRes.Value.Id != client.Id)
-                res.Add(new KeyValuePair<string, string>(nameof(client.PassportNumber), "Номер паспорта уже зарегистрирован"));
-            if (string.IsNullOrWhiteSpace(client.PassportId))
-                res.Add(new KeyValuePair<string, string>(nameof(client.PassportId), "Идентификационный номер не указан"));
-            if (string.IsNullOrWhiteSpace(client.Authority))
-                res.Add(new KeyValuePair<string, string>(nameof(client.Authority), "Гражданство не указан"));
-            if (!client.Birthday.HasValue)
-            {
-                res.Add(new KeyValuePair<string, string>(nameof(client.Birthday), "Дата рождения не указана"));
-            }
-            else
+            if (client.Birthday.HasValue)
             {
                 var age = (int) Math.Floor((DateTime.Now.Date - client.Birthday.Value.Date).TotalDays/365);
                 if (age < 18)
@@ -137,14 +114,9 @@ namespace BLL.Services.Client
                     res.Add(new KeyValuePair<string, string>(nameof(client.Birthday),
                         "Рекорд долгожительства составляет 122 года, что ставит под сомнение корректность введенных данных"));
             }
-            if (!client.IssueDate.HasValue)
-                res.Add(new KeyValuePair<string, string>(nameof(client.IssueDate), "Дата выдачи не указана"));
             if (DateTime.Now.Date < client.IssueDate)
                 res.Add(new KeyValuePair<string, string>(nameof(client.IssueDate),
                     "Ваш паспорт из будущего. Извините, но мы не можем принять его"));
-            if (!client.ExpirationDate.HasValue)
-                res.Add(new KeyValuePair<string, string>(nameof(client.ExpirationDate),
-                    "Действителен до не указан"));
             if (DateTime.Now.Date > client.ExpirationDate)
                 res.Add(new KeyValuePair<string, string>(nameof(client.ExpirationDate),
                     "Ваш паспорт недействителен. Сначала получите новый"));
