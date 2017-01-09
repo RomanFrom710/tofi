@@ -27,7 +27,7 @@
         @if (User.IsInRole("operator"))
         {
             <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "OperatorFinal" ? "active" : "")">
-                @Html.ActionLink("Подтверждение заявок", "OperatorFinal", "Employee")
+                @Html.ActionLink("Оформление кредитов", "OperatorFinal", "Employee")
             </li>
         }
         @if (User.IsInRole("cashier"))
