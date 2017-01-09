@@ -26,14 +26,12 @@ namespace TOFI.DependencyInjection
             kernel.Bind(
                 m => m.From("BLL")
                     .Select(t => t.Namespace.Contains("BLL.Services"))
-                    .BindDefaultInterface()
-                    .Configure(i => i.InThreadScope()));
+                    .BindDefaultInterface());
             kernel.Bind(
                 m => m.From("DAL")
                     .Select(t => t.Namespace.Contains("DAL.Repositories"))
-                    .BindDefaultInterface()
-                    .Configure(i => i.InThreadScope()));
-            kernel.Bind<TofiContext>().ToSelf().InThreadScope();
+                    .BindDefaultInterface());
+            kernel.Bind<TofiContext>().ToSelf();
         }
     }
 }

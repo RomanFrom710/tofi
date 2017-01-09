@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using BLL.Services.AccountUpdater;
 using BLL.Services.Common.Currency;
 using BLL.Services.Common.Currency.ViewModels;
 using Ninject.Infrastructure.Language;
@@ -12,10 +14,13 @@ namespace TOFI.Web.Controllers
     public class AdminController : Controller
     {
         private readonly ICurrencyService _currencyService;
+        private readonly IAccountUpdaterService _accountUpdaterService;
 
-        public AdminController(ICurrencyService currencyService)
+
+        public AdminController(ICurrencyService currencyService, IAccountUpdaterService accountUpdaterService)
         {
             _currencyService = currencyService;
+            _accountUpdaterService = accountUpdaterService;
         }
 
         public ActionResult Index()
@@ -40,6 +45,29 @@ namespace TOFI.Web.Controllers
         {
             _currencyService.DeleteModel(id);
             return RedirectToAction("Currencies");
+        }
+
+        [Authorize(Roles = "superuser")]
+        [HttpGet]
+        public ActionResult BankDay()
+        {
+            if (!TempData.ContainsKey("EndBankDayFailed"))
+            {
+                TempData["EndBankDayFailed"] = null;
+                TempData["EndBankDayMessage"] = string.Empty;
+            }
+            return View();
+        }
+
+        [Authorize(Roles = "superuser")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EndBankDay()
+        {
+            var res = _accountUpdaterService.UpdateAccounts(DateTime.Now);
+            TempData["EndBankDayFailed"] = (bool?) res.IsFailed;
+            TempData["EndBankDayMessage"] = res.Message;
+            return RedirectToAction("BankDay");
         }
     }
 }

@@ -4,4 +4,12 @@
             @Html.ActionLink("Валюты", "Currencies", "Admin")
         </li>
     </ul>
+    @if (User.IsInRole("superuser"))
+    {
+        <ul class="nav nav-pills nav-stacked">
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "BankDay" ? "active" : "" )">
+                @Html.ActionLink("Банковский день", "BankDay", "Admin")
+            </li>
+        </ul>
+    }
 </nav>
