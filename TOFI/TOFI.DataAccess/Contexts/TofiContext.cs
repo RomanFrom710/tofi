@@ -159,6 +159,9 @@ namespace DAL.Contexts
                 .HasRequired(r => r.CreditSum)
                 .WithOptional()
                 .Map(config => config.MapKey("CreditSum_Id"));
+            modelBuilder.Entity<CreditRequestModel>()
+                .HasOptional(r => r.LatestEmployeeHandledBy)
+                .WithMany();
 
             modelBuilder.Entity<CreditPaymentModel>()
                 .HasRequired(p => p.PaymentSum)

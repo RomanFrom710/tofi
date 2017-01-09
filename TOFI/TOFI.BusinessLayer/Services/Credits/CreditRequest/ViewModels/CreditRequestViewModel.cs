@@ -72,6 +72,8 @@ namespace BLL.Services.Credits.CreditRequest.ViewModels
 
         public EmployeeViewModel RequestOpener { get; set; }
 
+        public EmployeeViewModel LatestEmployeeHandledBy { get; set; }
+
         #endregion
     }
 }

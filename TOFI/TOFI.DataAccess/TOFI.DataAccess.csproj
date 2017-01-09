@@ -62,6 +62,10 @@
     <Compile Include="Migrations\201701091317126_CreditAccountClosed.Designer.cs">
       <DependentUpon>201701091317126_CreditAccountClosed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701092252269_CreditRequestAssigned.cs" />
+    <Compile Include="Migrations\201701092252269_CreditRequestAssigned.Designer.cs">
+      <DependentUpon>201701092252269_CreditRequestAssigned.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Actions\PaymentActionModel.cs" />
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701091317126_CreditAccountClosed.resx">
       <DependentUpon>201701091317126_CreditAccountClosed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701092252269_CreditRequestAssigned.resx">
+      <DependentUpon>201701092252269_CreditRequestAssigned.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

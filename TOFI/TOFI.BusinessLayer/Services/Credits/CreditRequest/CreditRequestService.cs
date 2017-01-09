@@ -7,6 +7,7 @@ using DAL.Repositories.Credits.CreditRequest;
 using TOFI.TransferObjects.Credits.CreditRequest.DataObjects;
 using TOFI.TransferObjects.Credits.CreditRequest.Queries;
 using TOFI.TransferObjects.Model.Queries;
+using BLL.Services.Employee.ViewModels;
 
 namespace BLL.Services.Credits.CreditRequest
 {
@@ -206,6 +207,18 @@ namespace BLL.Services.Credits.CreditRequest
                 return new ValueResult<bool>(true, true);
             }
             return new ValueResult<bool>(false, true).Error("Ни одно из условий кредита не выполнено");
+        }
+
+        public CommandResult AssignToEmployee(CreditRequestViewModel request, EmployeeViewModel employee)
+        {
+            request.LatestEmployeeHandledBy = employee;
+            return UpdateModel(request);
+        }
+
+        public CommandResult UnassignEmployee(CreditRequestViewModel request)
+        {
+            request.LatestEmployeeHandledBy = null;
+            return UpdateModel(request);
         }
     }
 }

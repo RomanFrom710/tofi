@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
-using BLL.Services.Common.Price.ViewModels;
 using BLL.Services.Credits.CreditAccount;
 using BLL.Services.Credits.CreditAccountState.ViewModels;
 using BLL.Services.Credits.CreditRequest;
@@ -9,12 +8,12 @@ using BLL.Services.Credits.CreditRequest.ViewModels;
 using BLL.Services.Employee;
 using BLL.Services.Employee.ViewModels;
 using Microsoft.AspNet.Identity;
-using TOFI.TransferObjects.Common.Price.DataObjects;
 using TOFI.TransferObjects.Credits.CreditAccount.Queries;
 using TOFI.TransferObjects.Employee.Commands;
 using TOFI.TransferObjects.Employee.Queries;
 using TOFI.TransferObjects.Model.Queries;
 using TOFI.Web.Infrastructure;
+using System.Linq;
 
 namespace TOFI.Web.Controllers
 {
@@ -44,9 +43,15 @@ namespace TOFI.Web.Controllers
         {
             ViewBag.ApproveActionName = type + "Approve";
             var request = _creditRequestService.GetModel(new ModelQuery {Id = id}).Value;
+            var employee = GetEmployee();
+            if (request.LatestEmployeeHandledBy != null && request.LatestEmployeeHandledBy.Id != employee.Id)
+            {
+                return RedirectToAction("Index");
+            }
+            _creditRequestService.AssignToEmployee(request, employee);
             return View(request);
         }
-
+        
         [Authorize(Roles = "operator")]
         [HttpGet]
         public ActionResult Operator()
@@ -56,6 +61,7 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             var requests =
                 _employeeService.GetOperatorCreditRequests(new OperatorCreditRequestsQuery {EmployeeId = employee.Id}).Value;
+            requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
 
@@ -66,6 +72,8 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             command.EmployeeId = employee.Id;
             _employeeService.OperatorApproveCommand(command);
+            var request = GetRequest(command);
+            _creditRequestService.UnassignEmployee(request);
             return RedirectToAction("Operator");
         }
 
@@ -78,6 +86,7 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             var requests =
                 _employeeService.GetSecurityCreditRequests(new SecurityCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+            requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
 
@@ -88,6 +97,8 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             command.EmployeeId = employee.Id;
             _employeeService.SecurityApproveCommand(command);
+            var request = GetRequest(command);
+            _creditRequestService.UnassignEmployee(request);
             return RedirectToAction("Security");
         }
 
@@ -100,6 +111,7 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             var requests =
                 _employeeService.GetCommiteeCreditRequests(new CommiteeCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+            requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
 
@@ -110,6 +122,8 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             command.EmployeeId = employee.Id;
             _employeeService.CommiteeApproveCommand(command);
+            var request = GetRequest(command);
+            _creditRequestService.UnassignEmployee(request);
             return RedirectToAction("Committee");
         }
 
@@ -122,6 +136,7 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             var requests =
                 _employeeService.GetDepartmentCreditRequests(new DepartmentCreditRequestsQuery { EmployeeId = employee.Id }).Value;
+            requests = FilterAssignedRequests(requests);
             return View("CurrentRequests", requests);
         }
 
@@ -132,6 +147,8 @@ namespace TOFI.Web.Controllers
             var employee = GetEmployee();
             command.EmployeeId = employee.Id;
             _employeeService.DepartmentApproveCommand(command);
+            var request = GetRequest(command);
+            _creditRequestService.UnassignEmployee(request);
             return RedirectToAction("Department");
         }
 
@@ -207,6 +224,21 @@ namespace TOFI.Web.Controllers
             var userId = int.Parse(User.Identity.GetUserId());
             var res = _employeeService.GetEmployee(EmployeeQuery.WithUserId(userId));
             return res.Value;
+        }
+        
+        private CreditRequestViewModel GetRequest(ApproveCommand command)
+        {
+            var getRequestQuery = new ModelQuery()
+            {
+                Id = command.CreditRequestId
+            };
+            return _creditRequestService.GetModel(getRequestQuery).Value;
+        }
+
+        private IEnumerable<CreditRequestViewModel> FilterAssignedRequests(IEnumerable<CreditRequestViewModel> requests)
+        {
+            var employee = GetEmployee();
+            return requests.Where(r => r.LatestEmployeeHandledBy == null || r.LatestEmployeeHandledBy.Id == employee.Id);
         }
     }
 }

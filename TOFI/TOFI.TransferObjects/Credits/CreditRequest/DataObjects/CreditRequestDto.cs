@@ -60,6 +60,8 @@ namespace TOFI.TransferObjects.Credits.CreditRequest.DataObjects
 
         public EmployeeDto RequestOpener { get; set; }
 
+        public EmployeeDto LatestEmployeeHandledBy { get; set; }
+
         #endregion
     }
 }
