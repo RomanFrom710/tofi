@@ -91,7 +91,8 @@ namespace TOFI.Web.Controllers
                 ViewBag.Success = true;
                 return View();
             }
-            TempData["PassNotChanged"] = true;
+            if (User.IsInRole("employee") && !UserManager.IsEmailConfirmed(userId))
+                TempData["PassNotChanged"] = true;
             AddErrors(result);
             return View(model);
         }
