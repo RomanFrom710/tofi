@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BLL.Services.Credits.CreditAccount.ViewModels.CreditAccountViewModel>
+
+@{
+    ViewBag.Title = "Оформление договора";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_EmployeeMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+
+        @using (Html.BeginForm("ContractSearch", "Employee", FormMethod.Get))
+        {
+            <div class="form-group">
+                <label>
+                    Номер паспорта
+                    <input type="text" class="form-control" name="passportNumber" value="@ViewBag.passportNumber" required />
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        }
+
+        <hr />
+
+        @if (Model != null)
+        {
+            <ul>
+                @foreach (var account in Model)
+                {
+                    <li>
+                        <dl>
+                            <dd>Тип кредита</dd>
+                            <dt>@account.CreditType.Name</dt>
+                        </dl>
+                        <dl>
+                            <dd>ФИО</dd>
+                            <dt>@account.Client.FullName</dt>
+                        </dl>
+                        <dl>
+                            <dd>Количество месяцев</dd>
+                            <dt>@account.TotalMonthDuration</dt>
+                        </dl>
+                        <dl>
+                            <dd>Сумма</dd>
+                            <dt>@account.CreditRequest.CreditSum.Value @account.CreditRequest.CreditSum.Currency.Name</dt>
+                        </dl>
+                        
+                        @Html.ActionLink("Оформить контракт", "Contract", "Employee", new { id = account.Id }, new { @class="btn btn-primary", target="_blank"})
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
