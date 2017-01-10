@@ -127,6 +127,60 @@ namespace DAL.Migrations
                     },
                     FineInterest = 0.015m,
                     IsArchived = false
+                },
+                new CreditTypeModel()
+                {
+                    Name = "Наш деловой",
+                    Description = "Широкий выбор",
+                    InterestRate = 0.45,
+                    IsArchived = false,
+                    FineInterest = 0.017m,
+                    CreditRequirements = new List<CreditRequirementModel>
+                    {
+                        new CreditRequirementModel
+                        {
+                            Description = "Возраст кредитополучателя",
+                            ExpectedValue = "От 21 года"
+                        },
+                        new CreditRequirementModel
+                        {
+                            Description = "Гражданство",
+                            ExpectedValue = "Гражданин Республики Беларусь, либо вид на жительство на территории Республики Беларусь на срок действия кредита"
+                        }
+                    },
+                    CreditConditions = new List<CreditConditionModel>
+                    {
+                        new CreditConditionModel
+                        {
+                            MaxCreditSum = new PriceModel
+                            {
+                                Currency = currencies[1],
+                                Value = 50000
+                            },
+                            MinCreditSum = new PriceModel
+                            {
+                                Currency = currencies[1],
+                                Value = 1000
+                            },
+                            MonthDurationFrom = 13,
+                            MonthDurationTo = 40
+                        },
+                        new CreditConditionModel
+                        {
+                            MaxCreditSum = new PriceModel
+                            {
+                                Currency = currencies[0],
+                                Value = 30000
+                            },
+                            MinCreditSum = new PriceModel
+                            {
+                                Currency = currencies[0],
+                                Value = 1000
+                            },
+                            MonthDurationFrom = 24,
+                            MonthDurationTo = 48
+                        }
+                    },
                 }
             };
 
