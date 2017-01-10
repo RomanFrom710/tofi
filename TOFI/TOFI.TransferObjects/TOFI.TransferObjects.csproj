@@ -65,6 +65,7 @@
     <Compile Include="Credits\CreditAccount\DataObjects\CreditAccountDto.cs" />
     <Compile Include="Credits\CreditAccount\Queries\ActualCreditAccountStateQuery.cs" />
     <Compile Include="Credits\CreditAccount\Queries\CreditAccountQuery.cs" />
+    <Compile Include="Credits\CreditAccount\Queries\CreditAccountsQuery.cs" />
     <Compile Include="Credits\CreditAccount\Queries\CreditAccountStatesQuery.cs" />
     <Compile Include="Credits\CreditAccount\Queries\CreditPaymentsQuery.cs" />
     <Compile Include="Credits\CreditPayment\DataObjects\CreditPaymentDto.cs" />
