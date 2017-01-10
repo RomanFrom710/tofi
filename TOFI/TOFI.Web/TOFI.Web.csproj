@@ -388,6 +388,7 @@
     <Content Include="Views\Admin\CreditAdd.cshtml" />
     <Content Include="Views\Employee\Contract.cshtml" />
     <Content Include="Views\Employee\ContractSearch.cshtml" />
+    <Content Include="Views\Admin\CreditFullDescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
