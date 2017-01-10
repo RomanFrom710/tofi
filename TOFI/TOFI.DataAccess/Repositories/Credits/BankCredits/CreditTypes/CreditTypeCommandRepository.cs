@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using DAL.Contexts;
 using DAL.Models.Credits.BankCredits.CreditConditions;
@@ -26,11 +27,11 @@ namespace DAL.Repositories.Credits.BankCredits.CreditTypes
         protected override void UpdateDbModel(CreditTypeModel model, CreditTypeDto modelDto)
         {
             base.UpdateDbModel(model, modelDto);
-            foreach (var condition in model.CreditConditions)
+            foreach (var condition in model.CreditConditions.ToArray())
             {
                 Context.CreditConditions.Remove(condition);
             }
-            foreach (var requirement in model.CreditRequirements)
+            foreach (var requirement in model.CreditRequirements.ToArray())
             {
                 Context.CreditRequirements.Remove(requirement);
             }

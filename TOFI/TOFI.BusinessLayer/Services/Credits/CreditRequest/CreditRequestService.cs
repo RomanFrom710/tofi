@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using BLL.Result;
 using BLL.Services.Credits.BankCredits.CreditTypes;
 using BLL.Services.Credits.CreditRequest.ViewModels;
@@ -212,13 +213,23 @@ namespace BLL.Services.Credits.CreditRequest
         public CommandResult AssignToEmployee(CreditRequestViewModel request, EmployeeViewModel employee)
         {
             request.LatestEmployeeHandledBy = employee;
-            return UpdateModel(request);
+            var conditions = request.CreditType.CreditConditions.ToArray();
+            var requirements = request.CreditType.CreditRequirements.ToArray();
+            var res = UpdateModel(request);
+            request.CreditType.CreditConditions = conditions.ToList();
+            request.CreditType.CreditRequirements = requirements.ToList();
+            return res;
         }
 
         public CommandResult UnassignEmployee(CreditRequestViewModel request)
         {
             request.LatestEmployeeHandledBy = null;
-            return UpdateModel(request);
+            var conditions = request.CreditType.CreditConditions.ToArray();
+            var requirements = request.CreditType.CreditRequirements.ToArray();
+            var res = UpdateModel(request);
+            request.CreditType.CreditConditions = conditions.ToList();
+            request.CreditType.CreditRequirements = requirements.ToList();
+            return res;
         }
     }
 }
