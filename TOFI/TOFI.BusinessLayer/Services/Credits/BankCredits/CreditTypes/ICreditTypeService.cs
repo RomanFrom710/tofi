@@ -10,5 +10,7 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes
         decimal MinMonthPayment(SelectCreditTypesQuery query, CreditTypeViewModel creditType);
 
         decimal MaxMonthPayment(SelectCreditTypesQuery query, CreditTypeViewModel creditType);
+
+        decimal GetAveragePayment(SelectCreditTypesQuery query, CreditTypeViewModel creditType);
     }
 }
