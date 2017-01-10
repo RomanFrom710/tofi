@@ -134,6 +134,8 @@ namespace BLL.Services.Client
             }
             var credits = creditsRes.Value.Where(c =>
             {
+                if (c.IsArchived)
+                    return false;
                 foreach (var condition in c.CreditConditions)
                 {
                     if (condition.MonthDurationFrom > query.MonthDuration ||
@@ -162,6 +164,8 @@ namespace BLL.Services.Client
             }
             var credits = creditsRes.Value.Where(c =>
             {
+                if (c.IsArchived)
+                    return false;
                 foreach (var condition in c.CreditConditions)
                 {
                     if (condition.MonthDurationFrom > query.MonthDuration ||
