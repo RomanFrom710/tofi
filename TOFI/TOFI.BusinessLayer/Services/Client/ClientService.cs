@@ -211,7 +211,8 @@ namespace BLL.Services.Client
             {
                 return new ValueResult<bool>(false, false).From(validationRes);
             }
-            return new ValueResult<bool>(ValidateClientInfo(clientRes.Value).Value.Count == 0, true);
+            return new ValueResult<bool>(ValidateClientInfo(clientRes.Value).Value.Count == 0 &&
+                                         clientRes.Value.User.EmailConfirmed, true);
         }
 
         public ValueResult<List<KeyValuePair<string, string>>> ValidateClientInfo(ClientViewModel client)
@@ -236,8 +237,6 @@ namespace BLL.Services.Client
                 res.Add(new KeyValuePair<string, string>("", "Информация о клиенте не заполнена"));
                 return res;
             }
-            if (!client.User.EmailConfirmed)
-                res.Add(new KeyValuePair<string, string>("", "Email не подтвержден"));
             if (client.Birthday.HasValue)
             {
                 var age = (int) Math.Floor((DateTime.Now.Date - client.Birthday.Value.Date).TotalDays/365);
