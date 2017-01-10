@@ -56,6 +56,8 @@ namespace TOFI.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (User.IsInRole("employee"))
+                return RedirectToAction("ChangePassword", "Manage");
             var client = GetClient();
             var validationResult = _clientService.ValidateClientInfo(client);
             if (validationResult.IsFailed)
