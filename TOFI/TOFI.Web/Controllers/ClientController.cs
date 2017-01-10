@@ -113,6 +113,8 @@ namespace TOFI.Web.Controllers
                 CreditType = new CreditTypeViewModel
                 {
                     Id = creditTypeId ?? 0,
+                    Name = "Валидация работай",
+                    Description = "Ну пожалуйста",
                     CreditConditions = new List<CreditConditionViewModel>(),
                     CreditRequirements = new List<CreditRequirementViewModel>()
                 },
