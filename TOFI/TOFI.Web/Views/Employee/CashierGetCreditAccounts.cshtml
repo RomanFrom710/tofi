@@ -28,22 +28,22 @@
         }
         @if (Model != null)
         {
-            
+
             <table class="table table-striped">
                 <thead>
-                <tr>
-                    <th>ФИО клиента</th>
-                    <th>Номер пасспорта</th>
-                    <th>Дата договора</th>
-                    <th>Кредитное предложение</th>
-                    <th>Валюта</th>
-                    <th>Ставка, % год.</th>
-                    <th>Осталось</th>
-                    <th>Долг за месяцы</th>
-                    <th>Всего</th>
-                    <th>Пеня</th>
-                    <th>Невыплаченные проценты</th>
-                </tr>
+                    <tr>
+                        <th>ФИО клиента</th>
+                        <th>Номер пасспорта</th>
+                        <th>Дата договора</th>
+                        <th>Кредитное предложение</th>
+                        <th>Валюта</th>
+                        <th>Ставка, % год.</th>
+                        <th>Осталось</th>
+                        <th>Долг за месяцы</th>
+                        <th>Всего</th>
+                        <th>Пеня</th>
+                        <th>Невыплаченные проценты</th>
+                    </tr>
                 </thead>
                 <tr>
                     <td>
@@ -61,7 +61,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => modelItem.CreditAccount.Currency.Name)
                     </td>
-                    <td>@(Model.CreditAccount.CreditType.InterestRate*100)</td>
+                    <td>@(Model.CreditAccount.CreditType.InterestRate * 100)</td>
                     <td>@Model.RemainDebt.Value</td>
                     <td>@Model.MainDebtRemain.Value</td>
                     <td>@Model.CreditAccount.CreditRequest.CreditSum.Value</td>
@@ -71,16 +71,23 @@
                     <td></td>
                 </tr>
             </table>
-        
-            @Html.Partial("_PaymentPartial", new AddPaymentCommand()
-               {
-                   CreditAccountId = Model.CreditAccount.Id,
-                   PaymentSum = new PriceDto()
-                   {
-                       Value = 0,
-                       Currency = Mapper.Map<CurrencyDto>(Model.MainDebtRemain.Currency),
-                   }
-               })
+            if (Model.CreditAccount.IsClosed)
+            {
+                <h2>Кредит погашен</h2>
+            }
+            else
+            {
+                @Html.Partial("_PaymentPartial", new AddPaymentCommand()
+                {
+                    CreditAccountId = Model.CreditAccount.Id,
+                    PaymentSum = new PriceDto()
+                    {
+                        Value = 0,
+                        Currency = Mapper.Map<CurrencyDto>(Model.MainDebtRemain.Currency),
+                    }
+                })
+            }
+
         }
     </div>
 </div>
