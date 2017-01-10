@@ -1,7 +1,12 @@
-﻿@model TOFI.Web.Models.ChangeEmailViewModel
+﻿@using BLL.Services.User
+@using Microsoft.AspNet.Identity
+@using TOFI.TransferObjects.User.Queries
+@model TOFI.Web.Models.ChangeEmailViewModel
 
 @{
     ViewBag.Title = "Операции с электронной почтой";
+    var currentUser = DependencyResolver.Current.GetService<IUserService>().GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
+    var timeAllowed = (currentUser.Auth.PasswordChangedUtc?.Add(new TimeSpan(0, 0, 5, 0)) ?? DateTimeOffset.MinValue) < DateTimeOffset.Now;
 }
 
 <div class="row">
@@ -28,5 +33,24 @@
 
             <p style="color: green" @(ViewBag.Success ?? "hidden")>Адрес электронной почты был успешно изменен! Вам отпралено письмо для подтверждения.</p>
         }
+        
+        <hr/>
+        
+        @if (!currentUser.EmailConfirmed)
+        {
+
+            using (Html.BeginForm("AnotherConfirmationEmailSend", "Manage", FormMethod.Post))
+            {
+
+                <h4>Не пришло оповещение на почту для подтверждения E-mail?</h4>
+
+                <button class="btn btn-primary" @(timeAllowed ? "" : "disabled") type="submit">Отправить еще раз</button>
+
+                if (!timeAllowed)
+                {
+                    <p style="color: red">Отправка нового подтверждения разрешена не чаще раза в 5 минут</p>
+                    }
+                }
+            }
     </div>
 </div>
