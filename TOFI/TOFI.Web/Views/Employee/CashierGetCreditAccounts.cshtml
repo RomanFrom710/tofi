@@ -38,6 +38,7 @@
                         <th>Кредитное предложение</th>
                         <th>Валюта</th>
                         <th>Ставка, % год.</th>
+                        <th>Размер пени, %</th>
                         <th>Осталось</th>
                         <th>К оплате за месяц</th>
                         <th>Долг за месяцы</th>
@@ -63,6 +64,7 @@
                         @Html.DisplayFor(modelItem => modelItem.CreditAccount.Currency.Name)
                     </td>
                     <td>@(Model.CreditAccount.CreditType.InterestRate * 100)</td>
+                    <td>@(Model.CreditAccount.CreditType.FineInterest * 100)</td>
                     <td>@Model.RemainDebt.Value</td>
                     <td>@Model.ToBePaidForMonth.Value</td>
                     <td>@Model.MainDebtRemain.Value</td>

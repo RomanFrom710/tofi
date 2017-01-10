@@ -19,6 +19,8 @@
                     <th>Номер договора</th>
                     <th>Тип кредита</th>
                     <th>Валюта</th>
+                    <th>Ставка, % год.</th>
+                    <th>Размер пени, %</th>
                     <th>Осталось</th>
                     <th>К оплате за месяц</th>
                     <th>Долг за месяцы</th>
@@ -38,6 +40,8 @@
                         <td>@credit.CreditAccount.CreditAgreementNumber</td>
                         <td>@credit.CreditAccount.CreditType.Name</td>
                         <td>@credit.CreditAccount.Currency.Name</td>
+                        <td>@(credit.CreditAccount.CreditType.InterestRate * 100)</td>
+                        <td>@(credit.CreditAccount.CreditType.FineInterest * 100)</td>
                         <td>@credit.RemainDebt.Value</td>
                         <td>@credit.ToBePaidForMonth.Value</td>
                         <td>@credit.MainDebtRemain.Value</td>
