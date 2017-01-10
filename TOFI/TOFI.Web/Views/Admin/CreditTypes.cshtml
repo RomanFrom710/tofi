@@ -17,7 +17,7 @@
             @using (Html.BeginForm("CreditTypes", "Admin", FormMethod.Get))
             {
                 <div class="form-group col-md-offset-3 col-md-1">
-                    <input type="checkbox" class="form-control" name="showArchived" id="showArchived" value="true" required @(ViewBag.showArchived ? "checked" : "") />
+                    <input type="checkbox" class="form-control" name="showArchived" id="showArchived" value="true" @(ViewBag.showArchived ? "checked" : "") />
                     <input type="hidden" value="false" name="showArchived">
                 </div>
                 <div class="col-md-3">
@@ -69,6 +69,7 @@
                             @using (Html.BeginForm("CreditMoveToArchive", "Admin", FormMethod.Post))
                             {
                                 <input type="hidden" name="id" value="@credit.Id"/>
+                                <input type="hidden" name ="showArchived" value="@(ViewBag.showArchived)">
                                 <td><button type="submit" class="btn @(credit.IsArchived? "btn-success" : "btn-danger")">@(credit.IsArchived ? "Актуализировать" : "Архивировать")</button></td>
                             }
                         </tr>
