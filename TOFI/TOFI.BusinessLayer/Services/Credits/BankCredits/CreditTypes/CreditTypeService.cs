@@ -72,9 +72,9 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes
 
         private bool ValidateCreditInternal(CreditTypeViewModel creditType)
         {
-            if (creditType.FineInterest >= 1 || creditType.FineInterest <= 0)
+            if (creditType.FineInterest >= 100 || creditType.FineInterest <= 0)
                 return false;
-            if (creditType.InterestRate >= 1 || creditType.InterestRate <= 0)
+            if (creditType.InterestRate >= 100 || creditType.InterestRate <= 0)
                 return false;
             foreach (var condition in creditType.CreditConditions)
             {
@@ -86,6 +86,8 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes
                     condition.MinCreditSum.Currency.Id != condition.MaxCreditSum.Currency.Id)
                     return false;
             }
+            creditType.InterestRate /= 100.0;
+            creditType.FineInterest /= 100.0m;
             return true;
         }
     }
