@@ -12,6 +12,8 @@ namespace DAL.Models.Auth
 
         public string Salt { get; set; }
 
+        public DateTimeOffset? PasswordChangedUtc { get; set; }
+
         public string SecurityStamp { get; set; }
 
         public bool LockoutEnabled { get; set; }

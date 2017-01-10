@@ -7,6 +7,11 @@ namespace BLL.Services.User.ViewModels
     public class RegisterViewModel : ModelViewModel
     {
         [CustomRequired]
+        [StringLength(30, ErrorMessage = "{0} должен содержать минимум {2} символов.", MinimumLength = 4)]
+        [Display(Name = "Логин")]
+        public string Username { get; set; }
+
+        [CustomRequired]
         [EmailAddress(ErrorMessage = "Неправильный формат адреса электронной почты.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
