@@ -93,12 +93,12 @@ namespace TOFI.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreditMoveToArchive(int id)
+        public ActionResult CreditMoveToArchive(int id, bool showArchived=false)
         {
             var creditType = _creditTypeService.GetModel(new ModelQuery {Id = id}).Value;
             creditType.IsArchived = !creditType.IsArchived;
             _creditTypeService.UpdateModel(creditType);
-            return RedirectToAction("CreditTypes");
+            return RedirectToAction("CreditTypes", new { showArchived = showArchived});
         }
 
         public ActionResult CreditFullDescription(int typeId)
