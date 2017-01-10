@@ -88,6 +88,14 @@ namespace TOFI.Web.Controllers
             {
                 cond.MaxCreditSum.Currency.Id = cond.MinCreditSum.Currency.Id;
             }
+            if (!_creditTypeService.ValidateCredit(creditType).Value)
+            {
+                ViewBag.Currency = _currencyService
+                .GetAllModels(new AllModelsQuery()).Value
+                .Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Name });
+                ModelState.AddModelError("", "Проверьте правильность введенных данных");
+                return View(creditType);
+            }
             _creditTypeService.CreateModel(creditType);
             return RedirectToAction("CreditTypes");
         }
