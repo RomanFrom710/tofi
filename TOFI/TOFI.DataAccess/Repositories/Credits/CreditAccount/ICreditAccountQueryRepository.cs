@@ -10,7 +10,8 @@ namespace DAL.Repositories.Credits.CreditAccount
         IListQueryRepository<CreditPaymentsQuery, CreditPaymentDto>,
         IListQueryRepository<CreditAccountStatesQuery, CreditAccountStateDto>,
         IQueryRepository<ActualCreditAccountStateQuery, CreditAccountStateDto>,
-        IQueryRepository<CreditAccountQuery, CreditAccountDto>
+        IQueryRepository<CreditAccountQuery, CreditAccountDto>,
+        IListQueryRepository<CreditAccountsQuery, CreditAccountDto>
     {
     }
 }

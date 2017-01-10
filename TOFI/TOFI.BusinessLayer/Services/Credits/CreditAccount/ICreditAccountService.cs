@@ -46,6 +46,14 @@ namespace BLL.Services.Credits.CreditAccount
 
         Task<QueryResult<CreditAccountViewModel>> GetCreditAccountAsync(CreditAccountQuery query);
 
+        ListQueryResult<CreditAccountDto> GetAccountDtos(CreditAccountsQuery query);
+
+        Task<ListQueryResult<CreditAccountDto>> GetAccountDtosAsync(CreditAccountsQuery query);
+
+        ListQueryResult<CreditAccountViewModel> GetAccounts(CreditAccountsQuery query);
+
+        Task<ListQueryResult<CreditAccountViewModel>> GetAccountsAsync(CreditAccountsQuery query);
+
 
         CommandResult OpenCreditAccount(OpenAccountCommand command);
 

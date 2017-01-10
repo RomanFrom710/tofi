@@ -257,9 +257,9 @@ namespace TOFI.Web.Controllers
         public ActionResult ContractSearch(string passportNumber)
         {
 
-            var accounts = _creditAccountService.GetAllModels(new AllModelsQuery
+            var accounts = _creditAccountService.GetAccounts(new CreditAccountsQuery
             {
-                //AgreementNumber = passportNumber
+                PassportNumber = passportNumber
             }).Value;
 
             return View(accounts);

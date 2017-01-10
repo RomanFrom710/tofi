@@ -113,5 +113,31 @@ namespace DAL.Repositories.Credits.CreditAccount
             }
             return model == null ? null : Mapper.Map<CreditAccountDto>(model);
         }
+
+        public IEnumerable<CreditAccountDto> Handle(CreditAccountsQuery query)
+        {
+            if (query.ClientId.HasValue)
+            {
+                return ModelsDao.Where(a => a.Client.Id == query.ClientId).MapTo<CreditAccountDto>();
+            }
+            if (!string.IsNullOrWhiteSpace(query.PassportNumber))
+            {
+                return ModelsDao.Where(a => a.Client.PassportNumber == query.PassportNumber).MapTo<CreditAccountDto>();
+            }
+            return Enumerable.Empty<CreditAccountDto>();
+        }
+
+        public async Task<IEnumerable<CreditAccountDto>> HandleAsync(CreditAccountsQuery query)
+        {
+            if (query.ClientId.HasValue)
+            {
+                return await ModelsDao.Where(a => a.Client.Id == query.ClientId).MapToAsync<CreditAccountDto>();
+            }
+            if (!string.IsNullOrWhiteSpace(query.PassportNumber))
+            {
+                return await ModelsDao.Where(a => a.Client.PassportNumber == query.PassportNumber).MapToAsync<CreditAccountDto>();
+            }
+            return Enumerable.Empty<CreditAccountDto>();
+        }
     }
 }
