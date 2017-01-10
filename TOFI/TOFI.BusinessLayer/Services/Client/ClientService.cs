@@ -144,6 +144,9 @@ namespace BLL.Services.Client
                     if (condition.MinCreditSum.Value > query.CreditSumValue ||
                         query.CreditSumValue > condition.MaxCreditSum.Value)
                         continue;
+                    var minMonthPayment = _creditTypeService.MinMonthPayment(query, c);
+                    if (query.SumReadyToPay < minMonthPayment)
+                        continue;
                     return true;
                 }
                 return false;
@@ -169,6 +172,9 @@ namespace BLL.Services.Client
                         continue;
                     if (condition.MinCreditSum.Value > query.CreditSumValue ||
                         query.CreditSumValue > condition.MaxCreditSum.Value)
+                        continue;
+                    var minMonthPayment = _creditTypeService.MinMonthPayment(query, c);
+                    if (query.SumReadyToPay < minMonthPayment)
                         continue;
                     return true;
                 }

@@ -9,5 +9,7 @@
         public decimal CreditSumCurrencyId { get; set; }
 
         public string CreditPurpose { get; set; }
+
+        public decimal SumReadyToPay { get; set; }
     }
 }
