@@ -133,7 +133,7 @@ namespace DAL.Migrations
             var salt = SecurityProvider.GetNewSalt();
             var testUser = new UserModel
             {
-                Username = "test@test.test",
+                Username = "test",
                 Email = "test@test.test",
                 FirstName = "Test",
                 LastName = "Testovich",
@@ -166,7 +166,7 @@ namespace DAL.Migrations
             {
                 new UserModel
                 {
-                    Username = "empl@empl.empl",
+                    Username = "empl",
                     Email = "empl@empl.empl",
                     FirstName = "Employee",
                     LastName = "Employevich",
@@ -185,7 +185,7 @@ namespace DAL.Migrations
                 },
                 new UserModel
                 {
-                    Username = "cashier@gmail.com",
+                    Username = "cashier",
                     Email = "cashier@gmail.com",
                     FirstName = "Cashier",
                     LastName = "Cashierovich",
@@ -204,7 +204,7 @@ namespace DAL.Migrations
                 },
                 new UserModel
                 {
-                    Username = "operator@gmail.com",
+                    Username = "operator",
                     Email = "operator@gmail.com",
                     FirstName = "Operator",
                     LastName = "Operatorovich",
@@ -223,7 +223,7 @@ namespace DAL.Migrations
                 },
                 new UserModel
                 {
-                    Username = "committee@gmail.com",
+                    Username = "committee",
                     Email = "committee@gmail.com",
                     FirstName = "Committee",
                     LastName = "committeevich",
@@ -242,7 +242,7 @@ namespace DAL.Migrations
                 },
                 new UserModel
                 {
-                    Username = "depchef@gmail.com",
+                    Username = "depchef",
                     Email = "depchef@gmail.com",
                     FirstName = "Depchef",
                     LastName = "Depchefovich",
@@ -261,7 +261,7 @@ namespace DAL.Migrations
                 },
                 new UserModel
                 {
-                    Username = "security@gmail.com",
+                    Username = "security",
                     Email = "security@gmail.com",
                     FirstName = "Security",
                     LastName = "Securitievich",
@@ -283,7 +283,7 @@ namespace DAL.Migrations
             salt = SecurityProvider.GetNewSalt();
             var adminUser = new UserModel
             {
-                Username = "admin@admin.admin",
+                Username = "admin",
                 Email = "admin@admin.admin",
                 FirstName = "Admin",
                 LastName = "Adminovich",
@@ -304,7 +304,7 @@ namespace DAL.Migrations
             salt = SecurityProvider.GetNewSalt();
             var superUser = new UserModel
             {
-                Username = "super@super.super",
+                Username = "super",
                 Email = "super@super.super",
                 FirstName = "Super",
                 LastName = "Superovich",

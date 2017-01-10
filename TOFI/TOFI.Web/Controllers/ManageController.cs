@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TOFI.TransferObjects.User.Queries;
-using TOFI.Web.Infrastructure;
 using TOFI.Web.Models;
 
 namespace TOFI.Web.Controllers
@@ -91,7 +90,8 @@ namespace TOFI.Web.Controllers
                 ViewBag.Success = true;
                 return View();
             }
-            TempData["PassNotChanged"] = true;
+            if (User.IsInRole("employee") && !UserManager.IsEmailConfirmed(userId))
+                TempData["PassNotChanged"] = true;
             AddErrors(result);
             return View(model);
         }
@@ -103,21 +103,21 @@ namespace TOFI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ChangeEmail(ChangeEmailViewModel newEmail)
+        public async Task<ActionResult> ChangeEmail(ChangeEmailViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(newEmail);
+                return View(model);
             }
             var userService = DependencyResolver.Current.GetService<IUserService>();
             var user = userService
                     .GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
-            if (user.Email == newEmail?.NewEmail)
+            if (user.Email == model?.NewEmail)
             {
                 ModelState.AddModelError("", "Это ваш текущий e-mail! Введите другой");
             }
 
-            user.Email = newEmail.NewEmail;
+            user.Email = model.NewEmail;
             user.EmailConfirmed = false;
             userService.UpdateModel(user);
 

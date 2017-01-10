@@ -50,14 +50,14 @@ namespace TOFI.Web.Models
     public class LoginViewModel
     {
         [CustomRequired]
-        [Display(Name = "Email")]
-        [EmailAddress(ErrorMessage = "Неправильный формат адреса электронной почты.")]
-        public string Email { get; set; }
+        [StringLength(30, ErrorMessage = "{0} должен содержать минимум {2} символов.", MinimumLength = 4)]
+        [Display(Name = "Логин")]
+        public string Username { get; set; }
 
         [CustomRequired]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
-        [Unlike("Email", ErrorMessage = "Пароль не должен совпадать с адресом e-mail")]
+        [Unlike("Username", ErrorMessage = "Пароль не должен совпадать с адресом e-mail")]
         public string Password { get; set; }
 
         [Display(Name = "Запомнить меня")]
@@ -72,14 +72,13 @@ namespace TOFI.Web.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Повторите пароль")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

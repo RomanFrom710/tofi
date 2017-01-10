@@ -12,8 +12,14 @@ namespace TOFI.Web.Auth
 
         public string UserName
         {
-            get { return Email; }
-            set { Email = value; }
+            get { return Dto?.Username; }
+            set
+            {
+                if (Dto != null)
+                {
+                    Dto.Username = value;
+                }
+            }
         }
 
         public UserDto Dto { get; set; } = new UserDto {Auth = new AuthDto()};
