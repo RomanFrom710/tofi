@@ -34,6 +34,14 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes
             .Max(cond => GetMaxMonthPaymentForCondition(creditType, cond));
         }
 
+        public decimal GetAveragePayment(SelectCreditTypesQuery query, CreditTypeViewModel creditType)
+        {
+            var debt = query.CreditSumValue / query.MonthDuration;
+            var interest = (decimal)creditType.InterestRate / 12 * query.CreditSumValue;
+            return debt + interest;
+        }
+
+
         private decimal GetMinMonthPaymentForCondition(CreditTypeViewModel creditType, CreditConditionViewModel creditCondition)
         {
             var debt = creditCondition.MinCreditSum.Value / creditCondition.MonthDurationTo;
