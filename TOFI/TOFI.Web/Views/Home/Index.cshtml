@@ -1,10 +1,26 @@
-﻿@{
+﻿@using BLL.Services.User
+@using Microsoft.AspNet.Identity
+@using TOFI.TransferObjects.User.Queries
+@{
     ViewBag.Title = "Главная";
+    var showBadMessage = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        var isConfirmed = DependencyResolver.Current.GetService<IUserService>().GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value.EmailConfirmed;
+        if (User.IsInRole("client") && !isConfirmed)
+        {
+            showBadMessage = true;
+        }
+    }
 }
 
 <div class="jumbotron">
     <h1>Home Chaley Bank</h1>
     <p>Добро пожаловать в наш банк</p>
+    @if (showBadMessage)
+    {
+        <p style="color: red">Подтвердите Ваш e-mail!</p>
+    }
 </div>
 
 @if (User.Identity.IsAuthenticated)
