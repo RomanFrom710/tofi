@@ -4,6 +4,11 @@
             @Html.ActionLink("Валюты", "Currencies", "Admin")
         </li>
     </ul>
+    <ul class="nav nav-pills nav-stacked">
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString().StartsWith("Credit") ? "active" : "")">
+            @Html.ActionLink("Кредиты", "CreditTypes", "Admin")
+        </li>
+    </ul>
     @if (User.IsInRole("superuser"))
     {
         <ul class="nav nav-pills nav-stacked">

@@ -20,7 +20,7 @@ namespace TOFI.Web.Infrastructure
                         {
                             Id = int.Parse(filterContext.HttpContext.User.Identity.GetUserId())
                         });
-                    if (user.Value != null && !user.Value.EmailConfirmed)
+                    if (user.Value?.Auth.PasswordChangedUtc == null)
                     {
                         filterContext.Result = new RedirectToRouteResult(new
                             RouteValueDictionary(new { controller = "Manage", action = "ChangePassword" }));
