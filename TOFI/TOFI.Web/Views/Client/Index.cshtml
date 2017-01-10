@@ -1,7 +1,19 @@
-﻿@model BLL.Services.Client.ViewModels.ClientViewModel
+﻿@using BLL.Services.User
+@using Microsoft.AspNet.Identity
+@using TOFI.TransferObjects.User.Queries
+@model BLL.Services.Client.ViewModels.ClientViewModel
 @{
     ViewBag.Title = "Личный кабинет";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var showBadMessage = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        var isConfirmed = DependencyResolver.Current.GetService<IUserService>().GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value.EmailConfirmed;
+        if (User.IsInRole("client") && !isConfirmed)
+        {
+            showBadMessage = true;
+        }
+    }
 }
 
 <div class="row">
@@ -9,96 +21,102 @@
         @Html.Partial("_ClientMenuPartial")
     </div>
     <div class="col-md-6">
-        <h2>@ViewBag.Title</h2>
         
+        @if (showBadMessage)
+        {
+            <p style="color: red">Подтвердите Ваш e-mail!</p>
+        }
+
+        <h2>@ViewBag.Title</h2>
+
         @using (Html.BeginForm("Index", "Client", FormMethod.Post))
         {
-            @Html.ValidationSummary(true, "Чтобы иметь возможность получать кредиты необходимо полностью заполнить данные о себе: ", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "Чтобы иметь возможность получать кредиты необходимо полностью заполнить данные о себе: ", new {@class = "text-danger"})
 
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.User.Id)
 
             <div class="form-group">
                 @Html.LabelFor(model => model.FirstName)
-                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Иван" })
-                @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control", placeholder = "Иван"})
+                @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.MiddleName)
-                @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", placeholder = "Иванович" })
-                @Html.ValidationMessageFor(model => model.MiddleName, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control", placeholder = "Иванович"})
+                @Html.ValidationMessageFor(model => model.MiddleName, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.LastName)
-                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Иванов" })
-                @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.LastName, new {@class = "form-control", placeholder = "Иванов"})
+                @Html.ValidationMessageFor(model => model.LastName, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Birthday)
-                @Html.TextBoxFor(model => model.Birthday, new { @class = "form-control enable-datepicker", placeholder = "22/11/1990" })
-                @Html.ValidationMessageFor(model => model.Birthday, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.Birthday, new {@class = "form-control enable-datepicker", placeholder = "22/11/1990"})
+                @Html.ValidationMessageFor(model => model.Birthday, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Sex)
-                @Html.EnumDropDownListFor(model => model.Sex, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Sex, string.Empty, new { @class = "text-danger" })
+                @Html.EnumDropDownListFor(model => model.Sex, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Sex, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.TelephoneNumber)
-                @Html.TextBoxFor(model => model.TelephoneNumber, new { @class = "form-control", placeholder = "+375-29-777-77-77" })
-                @Html.ValidationMessageFor(model => model.TelephoneNumber, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.TelephoneNumber, new {@class = "form-control", placeholder = "+375-29-777-77-77"})
+                @Html.ValidationMessageFor(model => model.TelephoneNumber, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.PassportId)
-                @Html.TextBoxFor(model => model.PassportId, new { @class = "form-control", placeholder = "3210781М064РВ6" })
-                @Html.ValidationMessageFor(model => model.PassportId, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.PassportId, new {@class = "form-control", placeholder = "3210781М064РВ6"})
+                @Html.ValidationMessageFor(model => model.PassportId, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.PassportNumber)
-                @Html.TextBoxFor(model => model.PassportNumber, new { @class = "form-control", placeholder = "АВ1234567" })
-                @Html.ValidationMessageFor(model => model.PassportNumber, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.PassportNumber, new {@class = "form-control", placeholder = "АВ1234567"})
+                @Html.ValidationMessageFor(model => model.PassportNumber, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Authority)
-                @Html.TextBoxFor(model => model.Authority, new { @class = "form-control", placeholder = "Гражданство" })
-                @Html.ValidationMessageFor(model => model.Authority, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.Authority, new {@class = "form-control", placeholder = "Гражданство"})
+                @Html.ValidationMessageFor(model => model.Authority, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.IssueDate)
-                @Html.TextBoxFor(model => model.IssueDate, new { @class = "form-control enable-datepicker", placeholder = "22/11/2009" })
-                @Html.ValidationMessageFor(model => model.IssueDate, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.IssueDate, new {@class = "form-control enable-datepicker", placeholder = "22/11/2009"})
+                @Html.ValidationMessageFor(model => model.IssueDate, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ExpirationDate)
-                @Html.TextBoxFor(model => model.ExpirationDate, new { @class = "form-control enable-datepicker", placeholder = "22/11/2019" })
-                @Html.ValidationMessageFor(model => model.ExpirationDate, string.Empty, new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.ExpirationDate, new {@class = "form-control enable-datepicker", placeholder = "22/11/2019"})
+                @Html.ValidationMessageFor(model => model.ExpirationDate, string.Empty, new {@class = "text-danger"})
             </div>
 
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Address)
-                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", placeholder = "Минск, ул. Гикало, д.9, а.207" })
-                @Html.ValidationMessageFor(model => model.Address, string.Empty, new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.Address, new {@class = "form-control", placeholder = "Минск, ул. Гикало, д.9, а.207"})
+                @Html.ValidationMessageFor(model => model.Address, string.Empty, new {@class = "text-danger"})
             </div>
 
             <button class="btn btn-primary" type="submit">Сохранить</button>

@@ -7,6 +7,15 @@
     ViewBag.Title = "Операции с электронной почтой";
     var currentUser = DependencyResolver.Current.GetService<IUserService>().GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
     var timeAllowed = (currentUser.Auth.PasswordChangedUtc?.Add(new TimeSpan(0, 0, 5, 0)) ?? DateTimeOffset.MinValue) < DateTimeOffset.Now;
+    var showBadMessage = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        var isConfirmed = DependencyResolver.Current.GetService<IUserService>().GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value.EmailConfirmed;
+        if (User.IsInRole("client") && !isConfirmed)
+        {
+            showBadMessage = true;
+        }
+    }
 }
 
 <div class="row">
@@ -14,28 +23,34 @@
         @Html.Partial("_ClientMenuPartial")
     </div>
     <div class="col-md-6">
+        
+        @if (showBadMessage)
+        {
+            <p style="color: red">Подтвердите Ваш e-mail!</p>
+        }
+
         <h2>@ViewBag.Title</h2>
 
 
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewEmail) 
-                    @Html.TextBoxFor(model => model.NewEmail, new { @class = "form-control", placeholder = "Новый e-mail" })
-                    @Html.ValidationMessageFor(model => model.NewEmail, String.Empty, new { @class = "text-danger" })
-                </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewEmail)
+                @Html.TextBoxFor(model => model.NewEmail, new {@class = "form-control", placeholder = "Новый e-mail"})
+                @Html.ValidationMessageFor(model => model.NewEmail, String.Empty, new {@class = "text-danger"})
+            </div>
 
             <button class="btn btn-primary" type="submit">Сохранить</button>
 
             <p style="color: green" @(ViewBag.Success ?? "hidden")>Адрес электронной почты был успешно изменен! Вам отпралено письмо для подтверждения.</p>
         }
-        
+
         <hr/>
-        
+
         @if (!currentUser.EmailConfirmed)
         {
 
@@ -49,8 +64,8 @@
                 if (!timeAllowed)
                 {
                     <p style="color: red">Отправка нового подтверждения разрешена не чаще раза в 5 минут</p>
-                    }
                 }
             }
+        }
     </div>
 </div>
