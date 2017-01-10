@@ -1,4 +1,5 @@
-﻿using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
+﻿using BLL.Result;
+using BLL.Services.Credits.BankCredits.CreditTypes.ViewModels;
 using BLL.Services.Model;
 using TOFI.TransferObjects.Client.Queries;
 using TOFI.TransferObjects.Credits.BankCredits.CreditTypes.DataObjects;
@@ -12,5 +13,7 @@ namespace BLL.Services.Credits.BankCredits.CreditTypes
         decimal MaxMonthPayment(SelectCreditTypesQuery query, CreditTypeViewModel creditType);
 
         decimal GetAveragePayment(SelectCreditTypesQuery query, CreditTypeViewModel creditType);
+
+        ValueResult<bool> ValidateCredit(CreditTypeViewModel creditType);
     }
 }
