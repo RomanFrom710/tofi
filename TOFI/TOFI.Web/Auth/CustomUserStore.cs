@@ -60,7 +60,7 @@ namespace TOFI.Web.Auth
 
         public async Task<AuthUser> FindByNameAsync(string userName)
         {
-            var result = await _userService.GetUserDtoAsync(new UserQuery { Email = userName});
+            var result = await _userService.GetUserDtoAsync(new UserQuery {Username = userName});
             return AuthUser.FromDto(ProcessQueryResult(result));
         }
 
@@ -76,6 +76,7 @@ namespace TOFI.Web.Auth
             var passwordParts = passwordHash.Split(' ');
             user.Dto.Auth.PasswordHash = passwordParts[0];
             user.Dto.Auth.Salt = passwordParts[1];
+            user.Dto.Auth.PasswordChangedUtc = DateTimeOffset.UtcNow;
             return Task.FromResult(0);
         }
 
