@@ -87,23 +87,24 @@
                 </table>
 
                 <h3>Условия</h3>
-                <table class="table">
+                <table class="table form-inline">
                     @for (var i = 0; i < Model.CreditConditions.Count; ++i)
                     {
                         <tr>
                             <td>
                                 От
-                                @Html.TextBoxFor(model => model.CreditConditions[i].MonthDurationFrom, new {@class = "form-control", placeholder = "Месяцы", required = "required"})
+                                @Html.TextBoxFor(model => model.CreditConditions[i].MonthDurationFrom, new {@class = "form-control", placeholder = "месяцы", required = "required", style="width: 80px"})
                                 до
-                                @Html.TextBoxFor(model => model.CreditConditions[i].MonthDurationFrom, new {@class = "form-control", placeholder = "Месяцы", required = "required"})
+                                @Html.TextBoxFor(model => model.CreditConditions[i].MonthDurationFrom, new {@class = "form-control", placeholder = "месяцы", required = "required", style = "width: 80px" })
                             </td>
                             <td>
                                 От
-                                @Html.TextBoxFor(model => model.CreditConditions[i].MinCreditSum.Value, new {@class = "form-control", placeholder = "Сумма", required = "required"})
+                                @Html.TextBoxFor(model => model.CreditConditions[i].MinCreditSum.Value, new {@class = "form-control", placeholder = "сумма", required = "required", style = "width: 80px" })
                                 до
-                                @Html.TextBoxFor(model => model.CreditConditions[i].MaxCreditSum.Value, new {@class = "form-control", placeholder = "Сумма", required = "required"})
+                                @Html.TextBoxFor(model => model.CreditConditions[i].MaxCreditSum.Value, new {@class = "form-control", placeholder = "сумма", required = "required", style = "width: 80px" })
                             </td>
                             <td>
+                                @Html.HiddenFor(model => model.CreditConditions[i].MaxCreditSum.Currency.Id)
                                 Валюта
                                 @Html.DropDownListFor(model => model.CreditConditions[i].MinCreditSum.Currency.Id, (IEnumerable<SelectListItem>) ViewBag.Currency, new {@class = "form-control"})
                             </td>
