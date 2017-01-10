@@ -1,0 +1,24 @@
+﻿@model IEnumerable<BLL.Services.Credits.BankCredits.CreditTypes.ViewModels.CreditTypeViewModel>
+
+@{
+    ViewBag.Title = "Кредитные предложения";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_AdminMenuPartial")
+    </div>
+    <div class="col-md-9">
+        <h2>@ViewBag.Title</h2>
+        @Html.ActionLink("Добавить", "CreditAdd", "Admin", new { reqNum = 1, condNum = 1 }, new { @class="btn btn-primary" })
+        <div class="row">
+            @foreach (var credit in Model)
+            {
+                <div class="col-md-4">
+                    @Html.Partial("_CreditTypePartial", credit)
+                </div>
+            }
+        </div>
+    </div>
+</div>

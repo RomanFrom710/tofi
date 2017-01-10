@@ -384,6 +384,8 @@
     <Content Include="Views\Client\ChooseCredits.cshtml" />
     <Content Include="Views\Shared\_CreditTypePartial.cshtml" />
     <Content Include="Views\Manage\ChangeEmail.cshtml" />
+    <Content Include="Views\Admin\CreditTypes.cshtml" />
+    <Content Include="Views\Admin\CreditAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
