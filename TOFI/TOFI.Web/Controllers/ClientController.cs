@@ -50,7 +50,7 @@ namespace TOFI.Web.Controllers
             _creditAccountService = creditAccountService;
 
             _currencies = currencyService.GetAllModels(new AllModelsQuery()).Value.ToArray();
-            _creditTypes = creditTypeService.GetAllModels(new AllModelsQuery()).Value.ToArray();
+            _creditTypes = creditTypeService.GetAllModels(new AllModelsQuery()).Value.Where(c => !c.IsArchived).ToArray();
         }
 
         [HttpGet]
