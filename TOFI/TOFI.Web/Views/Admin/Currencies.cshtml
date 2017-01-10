@@ -17,7 +17,6 @@
                 <tr>
                     <th>#</th>
                     <th>Название</th>
-                    <th>Удалить</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,11 +30,7 @@
                     <tr>
                         <td>@index</td>
                         <td>@currency.Name</td>
-                        <td>
-                            <a href="@Url.Action("RemoveCurrency", new { id = currency.Id })" onclick="return confirm('Вы уверены?');">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
-                        </td>
+                        
                     </tr>
                 }
                 @using (Html.BeginForm("AddCurrency", "Admin", FormMethod.Post))
