@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BLL.Services.User;
@@ -16,15 +17,18 @@ namespace TOFI.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IUserService _userService;
 
-        public ManageController()
+        public ManageController(IUserService userService)
         {
+            _userService = userService;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(IUserService userService, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _userService = userService;
         }
 
         public ApplicationSignInManager SignInManager
@@ -55,7 +59,7 @@ namespace TOFI.Web.Controllers
         public ActionResult ChangePassword()
         {
             var userId = User.Identity.GetUserId();
-            if (User.IsInRole("employee") && !UserManager.IsEmailConfirmed(userId))
+            if (CheckEmployeePasswordNotChanged())
                 TempData["PassNotChanged"] = true;
             return View();
         }
@@ -69,7 +73,7 @@ namespace TOFI.Web.Controllers
             var userId = User.Identity.GetUserId();
             if (!ModelState.IsValid)
             {
-                if (User.IsInRole("employee") && !UserManager.IsEmailConfirmed(userId))
+                if (CheckEmployeePasswordNotChanged())
                     TempData["PassNotChanged"] = true;
                 return View(model);
             }
@@ -83,14 +87,14 @@ namespace TOFI.Web.Controllers
                 }
                 if (User.IsInRole("employee"))
                 {
-                    var res = await UserManager.IsEmailConfirmedAsync(userId);
-                    if (!res) await UserManager.ConfirmEmailAsync(userId,
-                        await UserManager.GenerateEmailConfirmationTokenAsync(User.Identity.GetUserId()));
+                    var user1 = _userService.GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
+                    user1.Auth.PasswordChangedUtc = DateTimeOffset.Now;
+                    _userService.UpdateModel(user1);
                 }
                 ViewBag.Success = true;
                 return View();
             }
-            if (User.IsInRole("employee") && !UserManager.IsEmailConfirmed(userId))
+            if (CheckEmployeePasswordNotChanged())
                 TempData["PassNotChanged"] = true;
             AddErrors(result);
             return View(model);
@@ -109,17 +113,17 @@ namespace TOFI.Web.Controllers
             {
                 return View(model);
             }
-            var userService = DependencyResolver.Current.GetService<IUserService>();
-            var user = userService
+            var user = _userService
                     .GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
             if (user.Email == model?.NewEmail)
             {
                 ModelState.AddModelError("", "Это ваш текущий e-mail! Введите другой");
+                return View(model);
             }
 
             user.Email = model.NewEmail;
             user.EmailConfirmed = false;
-            userService.UpdateModel(user);
+            _userService.UpdateModel(user);
 
             var userId = User.Identity.GetUserId();
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
@@ -128,6 +132,21 @@ namespace TOFI.Web.Controllers
 
             ViewBag.Success = true;
             return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AnotherConfirmationEmailSend()
+        {
+            var userId = User.Identity.GetUserId();
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = userId, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userId, "Подтверждение аккаунта", "Для активации своего аккаунта перейдите, пожалуйста, по <a href=\"" + callbackUrl + "\">ссылке</a>");
+           
+            var user = _userService
+                    .GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
+            user.Auth.PasswordChangedUtc = DateTimeOffset.Now;
+            _userService.UpdateModel(user);
+            return RedirectToAction("ChangeEmail");
         }
 
         protected override void Dispose(bool disposing)
@@ -144,6 +163,13 @@ namespace TOFI.Web.Controllers
 #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+
+        private bool CheckEmployeePasswordNotChanged()
+        {
+            if (!User.IsInRole("employee")) return false;
+            var user = _userService.GetUser(UserQuery.WithId(int.Parse(User.Identity.GetUserId()))).Value;
+            return user?.Auth?.PasswordChangedUtc == null;
+        }
 
         private IAuthenticationManager AuthenticationManager
         {
