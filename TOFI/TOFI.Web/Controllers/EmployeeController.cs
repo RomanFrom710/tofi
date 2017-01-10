@@ -254,6 +254,23 @@ namespace TOFI.Web.Controllers
                 new {agreementNumber = account.Value.CreditAccount.CreditAgreementNumber});
         }
 
+        public ActionResult ContractSearch(string passportNumber)
+        {
+
+            var accounts = _creditAccountService.GetAllModels(new AllModelsQuery
+            {
+                //AgreementNumber = passportNumber
+            }).Value;
+
+            return View(accounts);
+        }
+
+        public ActionResult Contract(int id)
+        {
+            var request = _creditAccountService.GetModel(new ModelQuery {Id = id}).Value;
+            return View(request);
+        }
+
 
         private EmployeeViewModel GetEmployee()
         {
