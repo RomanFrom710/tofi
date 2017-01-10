@@ -20,6 +20,7 @@
                     <th>Тип кредита</th>
                     <th>Валюта</th>
                     <th>Осталось</th>
+                    <th>К оплате за месяц</th>
                     <th>Долг за месяцы</th>
                     <th>Всего</th>
                     <th>Пеня</th>
@@ -38,6 +39,7 @@
                         <td>@credit.CreditAccount.CreditType.Name</td>
                         <td>@credit.CreditAccount.Currency.Name</td>
                         <td>@credit.RemainDebt.Value</td>
+                        <td>@credit.ToBePaidForMonth.Value</td>
                         <td>@credit.MainDebtRemain.Value</td>
                         <td>@credit.CreditAccount.CreditRequest.CreditSum.Value</td>
                         <td>@credit.FinesForOverdue.Value</td>
