@@ -39,6 +39,7 @@
                         <th>Валюта</th>
                         <th>Ставка, % год.</th>
                         <th>Осталось</th>
+                        <th>К оплате за месяц</th>
                         <th>Долг за месяцы</th>
                         <th>Всего</th>
                         <th>Пеня</th>
@@ -63,6 +64,7 @@
                     </td>
                     <td>@(Model.CreditAccount.CreditType.InterestRate * 100)</td>
                     <td>@Model.RemainDebt.Value</td>
+                    <td>@Model.ToBePaidForMonth.Value</td>
                     <td>@Model.MainDebtRemain.Value</td>
                     <td>@Model.CreditAccount.CreditRequest.CreditSum.Value</td>
                     <td>@Model.FinesForOverdue.Value</td>

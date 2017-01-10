@@ -16,7 +16,7 @@ namespace DAL.Models.Credits.CreditAccount
         // for latest month
         public virtual PriceModel InterestCounted { get; set; }
 
-        // for latest month
+        // for latest day
         public virtual PriceModel FinesForOverdue { get; set; }
 
         // overall

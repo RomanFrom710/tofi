@@ -89,9 +89,14 @@ namespace BLL.Services.AccountUpdater
             var latestCreditAccountStateDate = account.AgreementDate.AddMonths(latestCreditAccountState.Month);
             var accountPayments = _creditAccountQueryRepository.Handle(creditAccountPaymentsQuery);
             var paymentsForLatestPeriod = accountPayments.Where(p => latestCreditAccountStateDate < p.Timestamp);
-
+            var accountCurrency = account.Currency;
             // S
             var sumPaidForLatestPeriod = paymentsForLatestPeriod.Sum(p => p.PaymentSum.Value);
+            if (latestCreditAccountState.RemainDebt.Value <= sumPaidForLatestPeriod)
+            {
+                return CloseAccount(account, latestCreditAccountState);
+            }
+
             // Z
             var totalDebtRemaining = latestCreditAccountState.RemainDebt.Value;
             // A
@@ -118,9 +123,6 @@ namespace BLL.Services.AccountUpdater
             if (ShouldAccountUpdate(account, specifiedDate))
             {
                 var previousFinesForOverdue = latestCreditAccountState.FinesForOverdue;
-                var accountCurrency = account.Currency;
-
-
                 // B
                 var interestForMonth = (decimal)account.CreditType.InterestRate / 12 * totalDebtRemaining;
                 var totalInterestNotPaid = latestCreditAccountState.TotalInterestSumNotPaid.Value;
@@ -244,6 +246,39 @@ namespace BLL.Services.AccountUpdater
         {
             var totalDebtRemaining = accountState.RemainDebt.Value;
             return totalDebtRemaining / (accountState.CreditAccount.TotalMonthDuration - accountState.Month);
+        }
+
+        private CreditAccountStateDto CloseAccount(CreditAccountDto account, CreditAccountStateDto latestCreditAccountState)
+        {
+            var accountCurrency = account.Currency;
+            account.IsClosed = true;
+            var updateCreditAccountCommand = new UpdateModelCommand<CreditAccountDto>()
+            {
+                ModelDto = account
+            };
+            _creditAccountCommandRepository.Execute(updateCreditAccountCommand);
+
+            var zeroPrice = new PriceDto()
+            {
+                Currency = accountCurrency,
+                Value = 0m
+            };
+            var closingCreditAccountState = new CreditAccountStateDto()
+            {
+                CreditAccount = account,
+                FinesForOverdue = zeroPrice,
+                InterestCounted = zeroPrice,
+                MainDebtRemain = zeroPrice,
+                RemainDebt = zeroPrice,
+                Month = latestCreditAccountState.Month + 1,
+                TotalInterestSumNotPaid = zeroPrice
+            };
+            var newCreditAccountStateCommand = new CreateModelCommand<CreditAccountStateDto>()
+            {
+                ModelDto = closingCreditAccountState
+            };
+            _creditAccountStateCommandRepository.Execute(newCreditAccountStateCommand);
+            return closingCreditAccountState;
         }
 
         #endregion

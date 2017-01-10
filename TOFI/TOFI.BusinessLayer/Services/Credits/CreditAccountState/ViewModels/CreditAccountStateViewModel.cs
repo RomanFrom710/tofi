@@ -19,5 +19,20 @@ namespace BLL.Services.Credits.CreditAccountState.ViewModels
         public PriceViewModel TotalInterestSumNotPaid { get; set; }
 
         public CreditAccountViewModel CreditAccount { get; set; }
+
+        public PriceViewModel ToBePaidForMonth
+        {
+            get
+            {
+                var debtForMonth = RemainDebt.Value / (CreditAccount.TotalMonthDuration - Month);
+                var interestForMonth = (decimal)CreditAccount.CreditType.InterestRate / 12 * RemainDebt.Value;
+                return new PriceViewModel()
+                {
+                    Value = debtForMonth + interestForMonth,
+                    Currency = CreditAccount.Currency
+                };
+            }
+        }
+
     }
 }
