@@ -23,8 +23,10 @@ namespace DAL.Models.Credits.BankCredits.CreditTypes
 
         #region Virtual Properties
 
+        [IgnoreMap]
         public virtual ICollection<CreditConditionModel> CreditConditions { get; set; }
 
+        [IgnoreMap]
         public virtual ICollection<CreditRequirementModel> CreditRequirements { get; set; }
 
         [IgnoreMap]
