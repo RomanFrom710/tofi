@@ -58,10 +58,13 @@ namespace TOFI.Web.Controllers
             return RedirectToAction("Currencies");
         }
 
-        public ActionResult CreditTypes()
+        public ActionResult CreditTypes(bool? showArchived)
         {
+            if (showArchived == null) showArchived = false;
             var credits = _creditTypeService.GetAllModels(new AllModelsQuery()).Value;
-            return View(credits);
+            ViewBag.showArchived = showArchived;
+            if (showArchived.Value) return View(credits);
+            return View(credits.Where(c => !c.IsArchived));
         }
 
         [HttpGet]
@@ -87,6 +90,21 @@ namespace TOFI.Web.Controllers
             }
             _creditTypeService.CreateModel(creditType);
             return RedirectToAction("CreditTypes");
+        }
+
+        [HttpPost]
+        public ActionResult CreditMoveToArchive(int id)
+        {
+            var creditType = _creditTypeService.GetModel(new ModelQuery {Id = id}).Value;
+            creditType.IsArchived = !creditType.IsArchived;
+            _creditTypeService.UpdateModel(creditType);
+            return RedirectToAction("CreditTypes");
+        }
+
+        public ActionResult CreditFullDescription(int typeId)
+        {
+            var credit = _creditTypeService.GetModel(new ModelQuery {Id = typeId}).Value;
+            return View(credit);
         }
 
         [Authorize(Roles = "superuser")]
