@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201701092252269_CreditRequestAssigned.Designer.cs">
       <DependentUpon>201701092252269_CreditRequestAssigned.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701100035389_PasswordChangedTime.cs" />
+    <Compile Include="Migrations\201701100035389_PasswordChangedTime.Designer.cs">
+      <DependentUpon>201701100035389_PasswordChangedTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actions\ActionModel.cs" />
     <Compile Include="Models\Actions\PaymentActionModel.cs" />
@@ -181,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701092252269_CreditRequestAssigned.resx">
       <DependentUpon>201701092252269_CreditRequestAssigned.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701100035389_PasswordChangedTime.resx">
+      <DependentUpon>201701100035389_PasswordChangedTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
