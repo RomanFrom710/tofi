@@ -2,7 +2,7 @@
   "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
   "webJobName": "AccountUpdater",
   "startTime": "2017-01-02T20:10:00+00:00",
-  "jobRecurrenceFrequency": "Hour",
+  "jobRecurrenceFrequency": "Day",
   "interval": 1,
   "runMode": "Scheduled"
 }
